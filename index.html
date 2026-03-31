@@ -1,586 +1,601 @@
-import React, { useState } from 'react';
-
-// Inline SVG Icon Components for maximum reliability and zero dependency errors
-const Icons = {
-  Lightbulb: ({ size = 24, ...props }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-      <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A5 5 0 0 0 8 8c0 1.3.5 2.6 1.5 3.5.8.8 1.3 1.5 1.5 2.5" /><path d="M9 18h6" /><path d="M10 22h4" />
-    </svg>
-  ),
-  Settings: ({ size = 24, ...props }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-      <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" /><circle cx="12" cy="12" r="3" />
-    </svg>
-  ),
-  ChartLine: ({ size = 24, ...props }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-      <path d="M3 3v18h18" /><path d="m19 9-5 5-4-4-3 3" />
-    </svg>
-  ),
-  TrendingUp: ({ size = 24, ...props }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-      <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" /><polyline points="16 7 22 7 22 13" />
-    </svg>
-  ),
-  Award: ({ size = 24, ...props }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-      <circle cx="12" cy="8" r="6" /><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" />
-    </svg>
-  ),
-  Target: ({ size = 24, ...props }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-      <circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" />
-    </svg>
-  ),
-  Rocket: ({ size = 24, ...props }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-      <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" /><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" /><path d="M9 12H4s.55-3.03 2-5c1.62-2.2 5-3 5-3" /><path d="M12 15v5s.8 3.38 3 5c1.97 1.45 5 2 5 2" />
-    </svg>
-  ),
-  Briefcase: ({ size = 24, ...props }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-      <rect width="20" height="14" x="2" y="7" rx="2" ry="2" /><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-    </svg>
-  ),
-  ChevronRight: ({ size = 24, ...props }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-      <polyline points="9 18 15 12 9 6" />
-    </svg>
-  ),
-  Mail: ({ size = 24, ...props }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-      <rect width="20" height="16" x="2" y="4" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-    </svg>
-  ),
-  Github: ({ size = 24, ...props }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-      <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.28 1.15-.28 2.35 0 3.5-.73 1.02-1.08 2.25-1 3.5 0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /><path d="M9 18c-4.51 2-5-3-7-2" />
-    </svg>
-  ),
-  Linkedin: ({ size = 24, ...props }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect width="4" height="12" x="2" y="9" /><circle cx="4" cy="4" r="2" />
-    </svg>
-  ),
-  Download: ({ size = 24, ...props }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" x2="12" y1="15" y2="3" />
-    </svg>
-  ),
-  Users: ({ size = 24, ...props }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><circle cx="19" cy="11" r="3" />
-    </svg>
-  ),
-  Code: ({ size = 24, ...props }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-      <polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" />
-    </svg>
-  ),
-  Terminal: ({ size = 24, ...props }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-      <polyline points="4 17 10 11 4 5" /><line x1="12" x2="20" y1="19" y2="19" />
-    </svg>
-  ),
-  Database: ({ size = 24, ...props }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-      <ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M3 5V19A9 3 0 0 0 21 19V5" /><path d="M3 12A9 3 0 0 0 21 12" />
-    </svg>
-  ),
-  Shield: ({ size = 24, ...props }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
-    </svg>
-  ),
-  ChevronDown: ({ size = 24, ...props }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-      <polyline points="6 9 12 15 18 9" />
-    </svg>
-  ),
-  ChevronUp: ({ size = 24, ...props }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-      <polyline points="18 15 12 9 6 15" />
-    </svg>
-  ),
-  ArrowUp: ({ size = 24, ...props }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-      <line x1="12" x2="12" y1="19" y2="5" /><polyline points="5 12 12 5 19 12" />
-    </svg>
-  ),
-  Copy: ({ size = 24, ...props }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-      <rect width="14" height="14" x="8" y="8" rx="2" ry="2" /><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
-    </svg>
-  ),
-  Check: ({ size = 24, ...props }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-      <polyline points="20 6 9 17 4 12" />
-    </svg>
-  ),
-  Layout: ({ size = 24, ...props }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-      <rect width="18" height="18" x="3" y="3" rx="2" ry="2" /><line x1="3" x2="21" y1="9" y2="9" /><line x1="9" x2="9" y1="21" y2="9" />
-    </svg>
-  ),
-  MessageSquare: ({ size = 24, ...props }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-    </svg>
-  ),
-  PenTool: ({ size = 24, ...props }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-      <path d="m12 19 7-7 3 3-7 7-3-3z" /><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" /><path d="m2 2 5 5" /><path d="m11 8 2 2" />
-    </svg>
-  )
-};
-
-const App = () => {
-  const [activeTab, setActiveTab] = useState('landing');
-  const [expandedTool, setExpandedTool] = useState(null);
-  const [showEmail, setShowEmail] = useState(false);
-  const [copied, setCopied] = useState(false);
-
-  // Core Color Palette
-  const colors = {
-    midnight: "#1E2D40",   // Primary
-    teal: "#1A8B8B",       // Secondary
-    ember: "#F0684C",      // Accent
-    cloud: "#F7F8FA",      // Background
-    graphite: "#2C2C2C",   // Text
-  };
-
-  const toolStack = [
-    { 
-      name: "Python / SQL", 
-      cat: "Data Science", 
-      icon: <Icons.Database size={16}/>,
-      impact: "Enables data-driven decision making by transforming raw telemetry into predictive insights.",
-      productivity: "Automates repetitive ETL tasks and report generation, reducing manual analysis time by 60%."
-    },
-    { 
-      name: "Jira", 
-      cat: "Product Mgmt", 
-      icon: <Icons.Target size={16}/>,
-      impact: "Maintains clear roadmap visibility and accountability across engineering and product teams.",
-      productivity: "Streamlines sprint planning and issue tracking, ensuring zero-waste cycles."
-    },
-    { 
-      name: "Asana", 
-      cat: "Ops Mgmt", 
-      icon: <Icons.Layout size={16}/>,
-      impact: "Provides a single source of truth for high-level program milestones and cross-functional goals.",
-      productivity: "Reduces 'work about work' by automating task handoffs and progress reporting."
-    },
-    { 
-      name: "Tableau", 
-      cat: "Analytics", 
-      icon: <Icons.ChartLine size={16}/>,
-      impact: "Democratizes data access for non-technical stakeholders through intuitive visual storytelling.",
-      productivity: "Reduces custom data requests by empowering users with self-service dashboards."
-    },
-    { 
-      name: "Miro", 
-      cat: "Strategy", 
-      icon: <Icons.PenTool size={16}/>,
-      impact: "Accelerates the discovery phase by facilitating real-time collaborative brainstorming.",
-      productivity: "Speeds up the transition from ideation to technical specification via visual mapping."
-    },
-    { 
-      name: "Slack", 
-      cat: "Communication", 
-      icon: <Icons.MessageSquare size={16}/>,
-      impact: "Cultivates an agile communication culture where blockers are identified instantly.",
-      productivity: "Integrates with technical toolchains to provide real-time alerts."
-    }
-  ];
-
-  const toggleTool = (name) => {
-    setExpandedTool(expandedTool === name ? null : name);
-  };
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const handleCopyEmail = () => {
-    const email = "kerenwangombe@gmail.com";
-    navigator.clipboard.writeText(email).then(() => {
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-    }).catch(() => {
-        const el = document.createElement('textarea');
-        el.value = email;
-        document.body.appendChild(el);
-        el.select();
-        document.execCommand('copy');
-        document.body.removeChild(el);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-    });
-  };
-
-  return (
-    <div className="min-h-screen flex flex-col selection:bg-[#1A8B8B] selection:text-white" style={{ backgroundColor: colors.cloud, color: colors.graphite, fontFamily: "'DM Sans', sans-serif" }}>
-      {/* Import DM Serif Display and DM Sans via Style Tag */}
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=DM+Serif+Display:ital@0;1&display=swap');
-        
-        h1, h2, h3, h4, .serif-font {
-          font-family: 'DM Serif Display', serif;
-        }
-
-        .animate-in {
-          animation: fadeIn 0.5s ease-out forwards;
-        }
-
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
-
-      {/* Header Section */}
-      <header id="top" style={{ backgroundColor: colors.midnight }} className="pt-16 pb-20 px-6 text-center relative overflow-hidden">
-        <div className="max-w-4xl mx-auto relative z-10">
-          <h1 className="text-4xl md:text-6xl font-normal mb-3 tracking-tight text-white italic">
-            Keren Wang'ombe
-          </h1>
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <div className="h-[1px] w-12" style={{ backgroundColor: colors.teal }}></div>
-            <p className="text-xs md:text-sm text-white font-medium tracking-[0.4em] uppercase opacity-70" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-              Technical Leadership & Strategy
-            </p>
-            <div className="h-[1px] w-12" style={{ backgroundColor: colors.teal }}></div>
-          </div>
-          <p className="max-w-xl mx-auto text-white/50 text-sm md:text-base font-light leading-relaxed tracking-wider">
-            Bridging data-driven insights with scalable operational excellence across high-growth technical ecosystems.
-          </p>
-        </div>
-        
-        {/* Decorative elements */}
-        <div className="absolute top-0 right-0 w-64 h-64 rounded-full blur-[120px] opacity-10" style={{ backgroundColor: colors.teal }} />
-        <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full blur-[120px] opacity-10" style={{ backgroundColor: colors.ember }} />
-      </header>
-
-      {/* Navigation */}
-      <div className="max-w-7xl mx-auto -mt-7 px-4 relative z-20 w-full">
-        <div className="bg-white rounded-2xl shadow-2xl border border-slate-200 p-2 flex flex-wrap gap-1">
-          {[
-            { id: 'landing', label: 'TECH STACK', icon: <Icons.Terminal size={14} /> },
-            { id: 'pm', label: 'PRODUCT MANAGEMENT' },
-            { id: 'ops', label: 'PROGRAM OPERATIONS' },
-            { id: 'ds', label: 'DATA SCIENCE' },
-            { id: 'community', label: 'COMMUNITY MANAGEMENT' }
-          ].map((tab) => (
-            <button 
-              key={tab.id}
-              onClick={() => {
-                setActiveTab(tab.id);
-                setExpandedTool(null);
-              }}
-              className={`flex-1 min-w-[150px] py-3 px-3 rounded-xl font-bold text-[10px] transition-all flex items-center justify-center gap-2 tracking-widest uppercase ${
-                activeTab === tab.id 
-                ? 'text-white shadow-lg' 
-                : 'text-slate-400 hover:text-slate-900 hover:bg-slate-50'
-              }`}
-              style={{ 
-                backgroundColor: activeTab === tab.id ? colors.midnight : 'transparent',
-                fontFamily: "'DM Sans', sans-serif"
-              }}
-            >
-              {tab.icon} {tab.label}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <main className="max-w-7xl mx-auto mt-20 px-6 flex-grow w-full mb-24">
-        
-        {/* LANDING PAGE: TECHNICAL INFRASTRUCTURE */}
-        {activeTab === 'landing' && (
-          <div className="animate-in">
-            {/* Executive Impact Metrics Section */}
-            <div className="mb-20">
-               <div className="flex items-center gap-4 mb-10">
-                  <div className="h-[2px] flex-grow bg-slate-200" />
-                  <h3 className="text-sm font-bold uppercase tracking-[0.3em] text-slate-400" style={{ fontFamily: "'DM Sans', sans-serif" }}>Executive Impact Metrics</h3>
-                  <div className="h-[2px] flex-grow bg-slate-200" />
-               </div>
-               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                  <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm text-center group hover:shadow-md transition-shadow">
-                     <p className="text-4xl serif-font mb-2" style={{ color: colors.midnight }}>14%</p>
-                     <p className="text-[10px] font-black uppercase tracking-widest text-[#1A8B8B] mb-3">Churn reduction</p>
-                     <p className="text-xs text-slate-500 italic leading-relaxed">Achieved via ML-driven retention engine discovery and launch.</p>
-                  </div>
-                  <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm text-center group hover:shadow-md transition-shadow">
-                     <p className="text-4xl serif-font mb-2" style={{ color: colors.midnight }}>40%</p>
-                     <p className="text-[10px] font-black uppercase tracking-widest text-[#F0684C] mb-3">Velocity Increase</p>
-                     <p className="text-xs text-slate-500 italic leading-relaxed">Realized through automated Jira triage and workflow optimization.</p>
-                  </div>
-                  <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm text-center group hover:shadow-md transition-shadow">
-                     <p className="text-4xl serif-font mb-2" style={{ color: colors.midnight }}>98%</p>
-                     <p className="text-[10px] font-black uppercase tracking-widest text-[#1E2D40] mb-3">Model Accuracy</p>
-                     <p className="text-xs text-slate-500 italic leading-relaxed">Statistical validation for high-stakes regional budget allocation.</p>
-                  </div>
-               </div>
-            </div>
-
-            <div className="mb-14 text-center">
-                <h2 className="text-4xl md:text-5xl font-normal mb-3 tracking-tight" style={{ color: colors.midnight }}>Technical Infrastructure</h2>
-                <p className="text-[11px] uppercase tracking-[0.4em] font-bold" style={{ color: colors.teal, fontFamily: "'DM Sans', sans-serif" }}>The specialized engines driving modern enterprise results</p>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              {toolStack.map((tool, i) => (
-                <div key={i} className={`bg-white rounded-3xl border transition-all overflow-hidden ${expandedTool === tool.name ? 'shadow-2xl' : 'border-slate-200 shadow-sm'}`}
-                     style={{ borderColor: expandedTool === tool.name ? colors.teal : '' }}>
-                  <button 
-                    onClick={() => toggleTool(tool.name)}
-                    className="w-full p-8 flex items-center justify-between group"
-                  >
-                    <div className="flex items-center gap-6">
-                      <div className="transition-transform group-hover:scale-110" style={{ color: colors.teal }}>
-                        {tool.icon}
-                      </div>
-                      <div className="text-left">
-                        <p className="text-xl serif-font leading-none" style={{ color: colors.midnight }}>{tool.name}</p>
-                        <p className="text-[9px] uppercase font-bold tracking-widest mt-1 opacity-40" style={{ fontFamily: "'DM Sans', sans-serif" }}>{tool.cat}</p>
-                      </div>
-                    </div>
-                    {expandedTool === tool.name ? <Icons.ChevronUp size={20} /> : <Icons.ChevronDown size={20} className="opacity-20 group-hover:opacity-100" />}
-                  </button>
-                  
-                  {expandedTool === tool.name && (
-                    <div className="px-8 pb-8 animate-in">
-                      <div className="pt-6 border-t border-slate-100 space-y-6">
-                        <div>
-                          <p className="text-[10px] font-black uppercase tracking-[0.2em] mb-2" style={{ color: colors.ember, fontFamily: "'DM Sans', sans-serif" }}>
-                            [01] Strategic Impact
-                          </p>
-                          <p className="text-sm font-normal leading-relaxed text-slate-600 italic">{tool.impact}</p>
-                        </div>
-                        <div>
-                          <p className="text-[10px] font-black uppercase tracking-[0.2em] mb-2" style={{ color: colors.ember, fontFamily: "'DM Sans', sans-serif" }}>
-                            [02] Productivity Output
-                          </p>
-                          <p className="text-sm font-normal leading-relaxed text-slate-600 italic">{tool.productivity}</p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-24 p-12 rounded-[2.5rem] border bg-white text-center max-w-4xl mx-auto relative overflow-hidden group shadow-2xl" style={{ borderTop: `1px solid ${colors.teal}` }}>
-              <p className="text-xl md:text-3xl font-normal leading-tight italic max-w-2xl mx-auto relative z-10 serif-font" style={{ color: colors.midnight }}>
-                "I view these tools as more than software—they are the operational framework through which I translate complex data strategy into scalable results."
-              </p>
-              <div className="absolute top-0 right-0 p-8 opacity-[0.02] group-hover:opacity-[0.04] transition-opacity">
-                <Icons.Shield size={220} />
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* DOMAIN TABS */}
-        {['pm', 'ops', 'ds', 'community'].includes(activeTab) && (
-          <div className="animate-in">
-            <div className="flex flex-col md:flex-row items-baseline gap-4 mb-16 border-b pb-8" style={{ borderColor: colors.midnight }}>
-              <h2 className="text-4xl md:text-5xl font-normal tracking-tight italic" style={{ color: colors.midnight }}>
-                {activeTab === 'pm' ? "Product Management" : activeTab === 'ops' ? "Program Operations" : activeTab === 'ds' ? "Data Science" : "Community Management"}
-              </h2>
-              <span className="text-white font-bold text-[10px] uppercase tracking-[0.3em] px-4 py-1.5 rounded-full" style={{ backgroundColor: colors.teal, fontFamily: "'DM Sans', sans-serif" }}>Domain Focus</span>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
-              <div className="lg:col-span-1">
-                <h3 className="text-[11px] font-bold uppercase mb-10 tracking-[0.4em]" style={{ color: colors.teal, fontFamily: "'DM Sans', sans-serif" }}>Core Competencies</h3>
-                <div className="space-y-12">
-                  {activeTab === 'pm' && (
-                    <>
-                      <div className="group border-l-4 pl-6 transition-colors" style={{ borderColor: colors.midnight }}>
-                        <p className="text-2xl font-normal mb-1 serif-font">GTM Strategy</p>
-                        <p className="text-sm font-light leading-relaxed opacity-60">Market entry mapping, competitive positioning, and tiered pricing architectures.</p>
-                      </div>
-                      <div className="group border-l-4 pl-6 transition-colors" style={{ borderColor: colors.midnight }}>
-                        <p className="text-2xl font-normal mb-1 serif-font">AI Roadmapping</p>
-                        <p className="text-sm font-light leading-relaxed opacity-60">Prioritizing ML integration and high-impact feature discovery for enterprise value.</p>
-                      </div>
-                    </>
-                  )}
-                  {activeTab === 'ops' && (
-                    <>
-                      <div className="group border-l-4 pl-6 transition-colors" style={{ borderColor: colors.midnight }}>
-                        <p className="text-2xl font-normal mb-1 serif-font">Agile Optimization</p>
-                        <p className="text-sm font-light leading-relaxed opacity-60">Refining sprint cycles, removing systemic blockers, and scaling velocity.</p>
-                      </div>
-                      <div className="group border-l-4 pl-6 transition-colors" style={{ borderColor: colors.midnight }}>
-                        <p className="text-2xl font-normal mb-1 serif-font">Workflow Automation</p>
-                        <p className="text-sm font-light leading-relaxed opacity-60">Scaling internal organizational systems via no-code and custom API integrations.</p>
-                      </div>
-                    </>
-                  )}
-                  {activeTab === 'ds' && (
-                    <>
-                      <div className="group border-l-4 pl-6 transition-colors" style={{ borderColor: colors.midnight }}>
-                        <p className="text-2xl font-normal mb-1 serif-font">Predictive Modeling</p>
-                        <p className="text-sm font-light leading-relaxed opacity-60">Leveraging telemetry for deep churn forecasting and customer lifetime value.</p>
-                      </div>
-                      <div className="group border-l-4 pl-6 transition-colors" style={{ borderColor: colors.midnight }}>
-                        <p className="text-2xl font-normal mb-1 serif-font">ETL Engineering</p>
-                        <p className="text-sm font-light leading-relaxed opacity-60">Architecting scalable data warehouses and automated ingestion logic pipelines.</p>
-                      </div>
-                    </>
-                  )}
-                  {activeTab === 'community' && (
-                    <>
-                      <div className="group border-l-4 pl-6 transition-colors" style={{ borderColor: colors.midnight }}>
-                        <p className="text-2xl font-normal mb-1 serif-font">Retention Flywheels</p>
-                        <p className="text-sm font-light leading-relaxed opacity-60">Building self-sustaining growth loops via value-led member programming.</p>
-                      </div>
-                      <div className="group border-l-4 pl-6 transition-colors" style={{ borderColor: colors.midnight }}>
-                        <p className="text-2xl font-normal mb-1 serif-font">Global Orchestration</p>
-                        <p className="text-sm font-light leading-relaxed opacity-60">Managing ecosystem standards across global Discord/Slack infrastructure.</p>
-                      </div>
-                    </>
-                  )}
-                </div>
-              </div>
-
-              <div className="lg:col-span-2 space-y-8">
-                <div className="bg-white p-12 rounded-[2.5rem] shadow-2xl border border-slate-100 relative overflow-hidden group">
-                  <div className="relative z-10">
-                    <div className="flex items-center gap-4 mb-10">
-                        <span className="px-4 py-1 text-white text-[9px] font-bold uppercase tracking-widest rounded-full" style={{ backgroundColor: colors.midnight, fontFamily: "'DM Sans', sans-serif" }}>Project Brief</span>
-                        <div className="h-[1px] flex-grow bg-slate-100"></div>
-                    </div>
-                    
-                    <h4 className="text-4xl md:text-5xl font-normal mb-6 tracking-tight text-slate-800 italic">
-                      {activeTab === 'pm' && "Predictive Retention Engine"}
-                      {activeTab === 'ops' && "Global QA Lifecycle Revamp"}
-                      {activeTab === 'ds' && "Revenue Predictor Model"}
-                      {activeTab === 'community' && "Scale & Retention Framework"}
-                    </h4>
-                    
-                    <p className="text-lg mb-12 font-light leading-relaxed max-w-xl italic border-l-8 pl-8" style={{ color: colors.graphite, borderColor: colors.ember }}>
-                      {activeTab === 'pm' && "Led the discovery and launch of an ML-driven dashboard for CS teams to identify at-risk accounts before churn."}
-                      {activeTab === 'ops' && "Replaced legacy manual ticketing with a custom automated triage system powered by Jira and Slack APIs."}
-                      {activeTab === 'ds' && "Architected a time-series forecasting pipeline to optimize regional budget allocation for growth squads."}
-                      {activeTab === 'community' && "Scaled a 10k member base via peer-led technical education and automated onboarding workflows."}
-                    </p>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                      <div>
-                        <p className="text-[11px] font-bold uppercase tracking-[0.4em] mb-4 opacity-40" style={{ fontFamily: "'DM Sans', sans-serif" }}>Quantifiable Result</p>
-                        <p className="text-4xl serif-font tracking-tight" style={{ color: colors.midnight }}>
-                          {activeTab === 'pm' && "14% Churn reduction"}
-                          {activeTab === 'ops' && "+40% Sprint Velocity"}
-                          {activeTab === 'ds' && "98% Model Accuracy"}
-                          {activeTab === 'community' && "3x Active Engagement"}
-                        </p>
-                      </div>
-                      <div className="flex flex-col justify-end">
-                        <p className="text-[11px] font-bold uppercase tracking-[0.4em] mb-4 opacity-40" style={{ fontFamily: "'DM Sans', sans-serif" }}>Project Status</p>
-                        <p className="text-2xl font-bold uppercase tracking-tight underline decoration-1 underline-offset-8" style={{ color: colors.midnight, textDecorationColor: colors.teal }}>Live Production</p>
-                      </div>
-                    </div>
-                  </div>
-                  <Icons.Rocket size={180} className="absolute -right-16 -bottom-16 opacity-[0.05] group-hover:rotate-12 group-hover:scale-110 transition-all duration-1000" style={{ color: colors.teal }} />
-                </div>
-
-                <div className="flex justify-between items-center p-8 bg-white rounded-3xl border border-slate-100 shadow-sm">
-                    <div className="flex items-center gap-4">
-                      <Icons.Award size={28} style={{ color: colors.ember }} />
-                      <p className="text-lg serif-font" style={{ color: colors.midnight }}>Validated Stakeholder Impact</p>
-                    </div>
-                    <span className="text-[10px] font-bold opacity-30 tracking-[0.2em] uppercase" style={{ fontFamily: "'DM Sans', sans-serif" }}>Verified Milestone</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-      </main>
-
-      {/* Footer */}
-      <footer className="max-w-7xl mx-auto px-6 mb-24 w-full">
-        <div style={{ backgroundColor: colors.midnight }} className="p-12 md:p-20 rounded-[3.5rem] text-white flex flex-col md:flex-row gap-16 items-center relative overflow-hidden group shadow-2xl">
-          <div className="flex-1 relative z-10 text-center md:text-left">
-            <h3 className="text-5xl md:text-7xl font-normal mb-8 tracking-tight italic">Connect.</h3>
-            <p className="text-white/60 text-lg mb-12 font-light leading-relaxed max-w-sm tracking-wide">
-              Strategic leadership at the intersection of product, data, and ecosystem growth.
-            </p>
-            <div className="flex flex-col md:items-start items-center gap-6">
-                <div className="flex flex-wrap justify-center md:justify-start gap-6">
-                    {/* Contact Me Trigger */}
-                    <button 
-                        onClick={() => setShowEmail(!showEmail)} 
-                        style={{ backgroundColor: colors.ember, fontFamily: "'DM Sans', sans-serif" }} 
-                        className="text-white px-10 py-4 rounded-full font-bold uppercase text-[11px] tracking-widest hover:scale-105 transition-all shadow-xl shadow-black/20 flex items-center gap-2"
-                    >
-                        <Icons.Mail size={16} /> {showEmail ? 'Close Email' : 'Contact Me'}
-                    </button>
-                    {/* Download CV Path */}
-                    <a href="assets/pdf" className="bg-transparent text-white border-2 border-white/20 px-10 py-4 rounded-full font-bold uppercase text-[11px] tracking-widest hover:bg-white/5 transition-all flex items-center gap-2" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                        <Icons.Download size={16} /> Download CV
-                    </a>
-                </div>
-
-                {/* DYNAMIC EMAIL DISPLAY */}
-                {showEmail && (
-                    <div className="p-6 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 flex flex-col sm:flex-row items-center gap-4 w-full max-w-md animate-in">
-                        <div className="flex-grow text-center sm:text-left">
-                            <p className="text-[10px] font-bold text-[#1A8B8B] uppercase tracking-widest mb-1">Direct Communication</p>
-                            <a href="mailto:kerenwangombe@gmail.com" className="text-lg font-bold hover:text-[#1A8B8B] transition-colors underline decoration-dotted underline-offset-4">kerenwangombe@gmail.com</a>
-                        </div>
-                        <button 
-                            onClick={handleCopyEmail}
-                            className="p-3 bg-white/10 hover:bg-white/20 rounded-xl transition-all group"
-                            title="Copy to clipboard"
-                        >
-                            {copied ? <Icons.Check size={18} className="text-[#05F283]" /> : <Icons.Copy size={18} className="text-white opacity-60 group-hover:opacity-100" />}
-                        </button>
-                    </div>
-                )}
-            </div>
-          </div>
-          
-          <div className="w-full md:w-1/3 flex flex-col items-center md:items-end justify-center relative z-10">
-             <div className="flex gap-10 mb-12">
-                {/* LinkedIn Link with Target _blank */}
-                <a href="https://www.linkedin.com/in/keren-wangombe/" target="_blank" rel="noopener noreferrer" className="text-white/30 hover:text-white transition-colors" style={{ hoverColor: colors.teal }}><Icons.Linkedin size={40} /></a>
-                <a href="#" className="text-white/30 hover:text-white transition-colors" style={{ hoverColor: colors.teal }}><Icons.Github size={40} /></a>
-             </div>
-             <p className="text-[10px] font-bold text-white/30 uppercase tracking-[0.5em] text-center md:text-right" style={{ fontFamily: "'DM Sans', sans-serif" }}>Architecture Driven Strategy</p>
-             <p className="text-sm font-normal mt-2 serif-font italic opacity-60" style={{ color: colors.teal }}>Edition v2.5.0</p>
-          </div>
-          
-          <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full blur-[180px] opacity-10" style={{ backgroundColor: colors.teal }} />
-        </div>
-      </footer>
-
-      {/* FOOTER RIBBON */}
-      <div className="bg-white border-t border-slate-100 py-14 px-8">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10">
-           <div className="text-center md:text-left">
-              <p className="text-[11px] font-bold uppercase tracking-[0.5em] mb-3 opacity-30" style={{ fontFamily: "'DM Sans', sans-serif" }}>Technical Leadership & Precision</p>
-              <p className="text-sm serif-font italic" style={{ color: colors.midnight }}>© 2026 Keren Wang'ombe — Built with Data & Logic</p>
-           </div>
-           
-           <button 
-             onClick={scrollToTop}
-             className="group flex flex-col items-center gap-3 transition-all duration-500 opacity-40 hover:opacity-100"
-           >
-             <p className="text-[10px] font-bold uppercase tracking-[0.5em] group-hover:tracking-[0.8em] transition-all" style={{ fontFamily: "'DM Sans', sans-serif" }}>Back to Top</p>
-             <div className="p-4 rounded-full border-2 border-slate-100 group-hover:border-slate-900 transition-colors">
-               <Icons.ArrowUp size={20} />
-             </div>
-           </button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default App;
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2487.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">import React, { useState } from 'react';</p>
+<p class="p2"><br></p>
+<p class="p1">// Inline SVG Icon Components for maximum reliability and zero dependency errors</p>
+<p class="p1">const Icons = {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>Lightbulb: ({ size = 24, ...props }) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A5 5 0 0 0 8 8c0 1.3.5 2.6 1.5 3.5.8.8 1.3 1.5 1.5 2.5" /&gt;&lt;path d="M9 18h6" /&gt;&lt;path d="M10 22h4" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>),</p>
+<p class="p1"><span class="Apple-converted-space">  </span>Settings: ({ size = 24, ...props }) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" /&gt;&lt;circle cx="12" cy="12" r="3" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>),</p>
+<p class="p1"><span class="Apple-converted-space">  </span>ChartLine: ({ size = 24, ...props }) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;path d="M3 3v18h18" /&gt;&lt;path d="m19 9-5 5-4-4-3 3" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>),</p>
+<p class="p1"><span class="Apple-converted-space">  </span>TrendingUp: ({ size = 24, ...props }) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;polyline points="22 7 13.5 15.5 8.5 10.5 2 17" /&gt;&lt;polyline points="16 7 22 7 22 13" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>),</p>
+<p class="p1"><span class="Apple-converted-space">  </span>Award: ({ size = 24, ...props }) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;circle cx="12" cy="8" r="6" /&gt;&lt;path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>),</p>
+<p class="p1"><span class="Apple-converted-space">  </span>Target: ({ size = 24, ...props }) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;circle cx="12" cy="12" r="10" /&gt;&lt;circle cx="12" cy="12" r="6" /&gt;&lt;circle cx="12" cy="12" r="2" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>),</p>
+<p class="p1"><span class="Apple-converted-space">  </span>Rocket: ({ size = 24, ...props }) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" /&gt;&lt;path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" /&gt;&lt;path d="M9 12H4s.55-3.03 2-5c1.62-2.2 5-3 5-3" /&gt;&lt;path d="M12 15v5s.8 3.38 3 5c1.97 1.45 5 2 5 2" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>),</p>
+<p class="p1"><span class="Apple-converted-space">  </span>Briefcase: ({ size = 24, ...props }) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;rect width="20" height="14" x="2" y="7" rx="2" ry="2" /&gt;&lt;path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>),</p>
+<p class="p1"><span class="Apple-converted-space">  </span>ChevronRight: ({ size = 24, ...props }) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;polyline points="9 18 15 12 9 6" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>),</p>
+<p class="p1"><span class="Apple-converted-space">  </span>Mail: ({ size = 24, ...props }) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;rect width="20" height="16" x="2" y="4" rx="2" /&gt;&lt;path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>),</p>
+<p class="p1"><span class="Apple-converted-space">  </span>Github: ({ size = 24, ...props }) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.28 1.15-.28 2.35 0 3.5-.73 1.02-1.08 2.25-1 3.5 0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /&gt;&lt;path d="M9 18c-4.51 2-5-3-7-2" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>),</p>
+<p class="p1"><span class="Apple-converted-space">  </span>Linkedin: ({ size = 24, ...props }) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /&gt;&lt;rect width="4" height="12" x="2" y="9" /&gt;&lt;circle cx="4" cy="4" r="2" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>),</p>
+<p class="p1"><span class="Apple-converted-space">  </span>Download: ({ size = 24, ...props }) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /&gt;&lt;polyline points="7 10 12 15 17 10" /&gt;&lt;line x1="12" x2="12" y1="15" y2="3" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>),</p>
+<p class="p1"><span class="Apple-converted-space">  </span>Users: ({ size = 24, ...props }) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /&gt;&lt;circle cx="9" cy="7" r="4" /&gt;&lt;path d="M22 21v-2a4 4 0 0 0-3-3.87" /&gt;&lt;circle cx="19" cy="11" r="3" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>),</p>
+<p class="p1"><span class="Apple-converted-space">  </span>Code: ({ size = 24, ...props }) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;polyline points="16 18 22 12 16 6" /&gt;&lt;polyline points="8 6 2 12 8 18" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>),</p>
+<p class="p1"><span class="Apple-converted-space">  </span>Terminal: ({ size = 24, ...props }) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;polyline points="4 17 10 11 4 5" /&gt;&lt;line x1="12" x2="20" y1="19" y2="19" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>),</p>
+<p class="p1"><span class="Apple-converted-space">  </span>Database: ({ size = 24, ...props }) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;ellipse cx="12" cy="5" rx="9" ry="3" /&gt;&lt;path d="M3 5V19A9 3 0 0 0 21 19V5" /&gt;&lt;path d="M3 12A9 3 0 0 0 21 12" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>),</p>
+<p class="p1"><span class="Apple-converted-space">  </span>Shield: ({ size = 24, ...props }) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>),</p>
+<p class="p1"><span class="Apple-converted-space">  </span>ChevronDown: ({ size = 24, ...props }) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;polyline points="6 9 12 15 18 9" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>),</p>
+<p class="p1"><span class="Apple-converted-space">  </span>ChevronUp: ({ size = 24, ...props }) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;polyline points="18 15 12 9 6 15" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>),</p>
+<p class="p1"><span class="Apple-converted-space">  </span>ArrowUp: ({ size = 24, ...props }) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;line x1="12" x2="12" y1="19" y2="5" /&gt;&lt;polyline points="5 12 12 5 19 12" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>),</p>
+<p class="p1"><span class="Apple-converted-space">  </span>Copy: ({ size = 24, ...props }) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;rect width="14" height="14" x="8" y="8" rx="2" ry="2" /&gt;&lt;path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>),</p>
+<p class="p1"><span class="Apple-converted-space">  </span>Check: ({ size = 24, ...props }) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;polyline points="20 6 9 17 4 12" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>),</p>
+<p class="p1"><span class="Apple-converted-space">  </span>Layout: ({ size = 24, ...props }) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;rect width="18" height="18" x="3" y="3" rx="2" ry="2" /&gt;&lt;line x1="3" x2="21" y1="9" y2="9" /&gt;&lt;line x1="9" x2="9" y1="21" y2="9" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>),</p>
+<p class="p1"><span class="Apple-converted-space">  </span>MessageSquare: ({ size = 24, ...props }) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>),</p>
+<p class="p1"><span class="Apple-converted-space">  </span>PenTool: ({ size = 24, ...props }) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;path d="m12 19 7-7 3 3-7 7-3-3z" /&gt;&lt;path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" /&gt;&lt;path d="m2 2 5 5" /&gt;&lt;path d="m11 8 2 2" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>)</p>
+<p class="p1">};</p>
+<p class="p2"><br></p>
+<p class="p1">const App = () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [activeTab, setActiveTab] = useState('landing');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [expandedTool, setExpandedTool] = useState(null);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [showEmail, setShowEmail] = useState(false);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [copied, setCopied] = useState(false);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// Core Color Palette</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const colors = {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>midnight: "#1E2D40", <span class="Apple-converted-space">  </span>// Primary</p>
+<p class="p1"><span class="Apple-converted-space">    </span>teal: "#1A8B8B", <span class="Apple-converted-space">      </span>// Secondary</p>
+<p class="p1"><span class="Apple-converted-space">    </span>ember: "#F0684C",<span class="Apple-converted-space">      </span>// Accent</p>
+<p class="p1"><span class="Apple-converted-space">    </span>cloud: "#F7F8FA",<span class="Apple-converted-space">      </span>// Background</p>
+<p class="p1"><span class="Apple-converted-space">    </span>graphite: "#2C2C2C", <span class="Apple-converted-space">  </span>// Text</p>
+<p class="p1"><span class="Apple-converted-space">  </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>const toolStack = [</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>name: "Python / SQL",<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>cat: "Data Science",<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>icon: &lt;Icons.Database size={16}/&gt;,</p>
+<p class="p1"><span class="Apple-converted-space">      </span>impact: "Enables data-driven decision making by transforming raw telemetry into predictive insights.",</p>
+<p class="p1"><span class="Apple-converted-space">      </span>productivity: "Automates repetitive ETL tasks and report generation, reducing manual analysis time by 60%."</p>
+<p class="p1"><span class="Apple-converted-space">    </span>},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>name: "Jira",<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>cat: "Product Mgmt",<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>icon: &lt;Icons.Target size={16}/&gt;,</p>
+<p class="p1"><span class="Apple-converted-space">      </span>impact: "Maintains clear roadmap visibility and accountability across engineering and product teams.",</p>
+<p class="p1"><span class="Apple-converted-space">      </span>productivity: "Streamlines sprint planning and issue tracking, ensuring zero-waste cycles."</p>
+<p class="p1"><span class="Apple-converted-space">    </span>},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>name: "Asana",<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>cat: "Ops Mgmt",<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>icon: &lt;Icons.Layout size={16}/&gt;,</p>
+<p class="p1"><span class="Apple-converted-space">      </span>impact: "Provides a single source of truth for high-level program milestones and cross-functional goals.",</p>
+<p class="p1"><span class="Apple-converted-space">      </span>productivity: "Reduces 'work about work' by automating task handoffs and progress reporting."</p>
+<p class="p1"><span class="Apple-converted-space">    </span>},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>name: "Tableau",<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>cat: "Analytics",<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>icon: &lt;Icons.ChartLine size={16}/&gt;,</p>
+<p class="p1"><span class="Apple-converted-space">      </span>impact: "Democratizes data access for non-technical stakeholders through intuitive visual storytelling.",</p>
+<p class="p1"><span class="Apple-converted-space">      </span>productivity: "Reduces custom data requests by empowering users with self-service dashboards."</p>
+<p class="p1"><span class="Apple-converted-space">    </span>},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>name: "Miro",<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>cat: "Strategy",<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>icon: &lt;Icons.PenTool size={16}/&gt;,</p>
+<p class="p1"><span class="Apple-converted-space">      </span>impact: "Accelerates the discovery phase by facilitating real-time collaborative brainstorming.",</p>
+<p class="p1"><span class="Apple-converted-space">      </span>productivity: "Speeds up the transition from ideation to technical specification via visual mapping."</p>
+<p class="p1"><span class="Apple-converted-space">    </span>},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>name: "Slack",<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>cat: "Communication",<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>icon: &lt;Icons.MessageSquare size={16}/&gt;,</p>
+<p class="p1"><span class="Apple-converted-space">      </span>impact: "Cultivates an agile communication culture where blockers are identified instantly.",</p>
+<p class="p1"><span class="Apple-converted-space">      </span>productivity: "Integrates with technical toolchains to provide real-time alerts."</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>const toggleTool = (name) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>setExpandedTool(expandedTool === name ? null : name);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>const scrollToTop = () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>window.scrollTo({ top: 0, behavior: 'smooth' });</p>
+<p class="p1"><span class="Apple-converted-space">  </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>const handleCopyEmail = () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const email = "kerenwangombe@gmail.com";</p>
+<p class="p1"><span class="Apple-converted-space">    </span>navigator.clipboard.writeText(email).then(() =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>setCopied(true);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>setTimeout(() =&gt; setCopied(false), 2000);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}).catch(() =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const el = document.createElement('textarea');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>el.value = email;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.body.appendChild(el);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>el.select();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.execCommand('copy');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.body.removeChild(el);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>setCopied(true);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>setTimeout(() =&gt; setCopied(false), 2000);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>return (</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div className="min-h-screen flex flex-col selection:bg-[#1A8B8B] selection:text-white" style={{ backgroundColor: colors.cloud, color: colors.graphite, fontFamily: "'DM Sans', sans-serif" }}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{/* Import DM Serif Display and DM Sans via Style Tag */}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;style&gt;{`</p>
+<p class="p1"><span class="Apple-converted-space">        </span>@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=DM+Serif+Display:ital@0;1&amp;display=swap');</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>h1, h2, h3, h4, .serif-font {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>font-family: 'DM Serif Display', serif;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.animate-in {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>animation: fadeIn 0.5s ease-out forwards;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>@keyframes fadeIn {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>from { opacity: 0; transform: translateY(10px); }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>to { opacity: 1; transform: translateY(0); }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>`}&lt;/style&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>{/* Header Section */}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;header id="top" style={{ backgroundColor: colors.midnight }} className="pt-16 pb-20 px-6 text-center relative overflow-hidden"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div className="max-w-4xl mx-auto relative z-10"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;h1 className="text-4xl md:text-6xl font-normal mb-3 tracking-tight text-white italic"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>Keren Wang'ombe</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div className="flex items-center justify-center gap-4 mb-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div className="h-[1px] w-12" style={{ backgroundColor: colors.teal }}&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p className="text-xs md:text-sm text-white font-medium tracking-[0.4em] uppercase opacity-70" style={{ fontFamily: "'DM Sans', sans-serif" }}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>Technical Leadership &amp; Strategy</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div className="h-[1px] w-12" style={{ backgroundColor: colors.teal }}&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;p className="max-w-xl mx-auto text-white/50 text-sm md:text-base font-light leading-relaxed tracking-wider"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>Bridging data-driven insights with scalable operational excellence across high-growth technical ecosystems.</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>{/* Decorative elements */}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div className="absolute top-0 right-0 w-64 h-64 rounded-full blur-[120px] opacity-10" style={{ backgroundColor: colors.teal }} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div className="absolute bottom-0 left-0 w-64 h-64 rounded-full blur-[120px] opacity-10" style={{ backgroundColor: colors.ember }} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/header&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>{/* Navigation */}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div className="max-w-7xl mx-auto -mt-7 px-4 relative z-20 w-full"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div className="bg-white rounded-2xl shadow-2xl border border-slate-200 p-2 flex flex-wrap gap-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>{[</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ id: 'landing', label: 'TECH STACK', icon: &lt;Icons.Terminal size={14} /&gt; },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ id: 'pm', label: 'PRODUCT MANAGEMENT' },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ id: 'ops', label: 'PROGRAM OPERATIONS' },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ id: 'ds', label: 'DATA SCIENCE' },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ id: 'community', label: 'COMMUNITY MANAGEMENT' }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>].map((tab) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">              </span>key={tab.id}</p>
+<p class="p1"><span class="Apple-converted-space">              </span>onClick={() =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>setActiveTab(tab.id);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>setExpandedTool(null);</p>
+<p class="p1"><span class="Apple-converted-space">              </span>}}</p>
+<p class="p1"><span class="Apple-converted-space">              </span>className={`flex-1 min-w-[150px] py-3 px-3 rounded-xl font-bold text-[10px] transition-all flex items-center justify-center gap-2 tracking-widest uppercase ${</p>
+<p class="p1"><span class="Apple-converted-space">                </span>activeTab === tab.id<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>? 'text-white shadow-lg'<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>: 'text-slate-400 hover:text-slate-900 hover:bg-slate-50'</p>
+<p class="p1"><span class="Apple-converted-space">              </span>}`}</p>
+<p class="p1"><span class="Apple-converted-space">              </span>style={{<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>backgroundColor: activeTab === tab.id ? colors.midnight : 'transparent',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>fontFamily: "'DM Sans', sans-serif"</p>
+<p class="p1"><span class="Apple-converted-space">              </span>}}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>{tab.icon} {tab.label}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>))}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;main className="max-w-7xl mx-auto mt-20 px-6 flex-grow w-full mb-24"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>{/* LANDING PAGE: TECHNICAL INFRASTRUCTURE */}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{activeTab === 'landing' &amp;&amp; (</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div className="animate-in"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{/* Executive Impact Metrics Section */}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div className="mb-20"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">               </span>&lt;div className="flex items-center gap-4 mb-10"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;div className="h-[2px] flex-grow bg-slate-200" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;h3 className="text-sm font-bold uppercase tracking-[0.3em] text-slate-400" style={{ fontFamily: "'DM Sans', sans-serif" }}&gt;Executive Impact Metrics&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;div className="h-[2px] flex-grow bg-slate-200" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">               </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">               </span>&lt;div className="grid grid-cols-1 md:grid-cols-3 gap-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm text-center group hover:shadow-md transition-shadow"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                     </span>&lt;p className="text-4xl serif-font mb-2" style={{ color: colors.midnight }}&gt;14%&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                     </span>&lt;p className="text-[10px] font-black uppercase tracking-widest text-[#1A8B8B] mb-3"&gt;Churn reduction&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                     </span>&lt;p className="text-xs text-slate-500 italic leading-relaxed"&gt;Achieved via ML-driven retention engine discovery and launch.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm text-center group hover:shadow-md transition-shadow"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                     </span>&lt;p className="text-4xl serif-font mb-2" style={{ color: colors.midnight }}&gt;40%&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                     </span>&lt;p className="text-[10px] font-black uppercase tracking-widest text-[#F0684C] mb-3"&gt;Velocity Increase&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                     </span>&lt;p className="text-xs text-slate-500 italic leading-relaxed"&gt;Realized through automated Jira triage and workflow optimization.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm text-center group hover:shadow-md transition-shadow"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                     </span>&lt;p className="text-4xl serif-font mb-2" style={{ color: colors.midnight }}&gt;98%&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                     </span>&lt;p className="text-[10px] font-black uppercase tracking-widest text-[#1E2D40] mb-3"&gt;Model Accuracy&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                     </span>&lt;p className="text-xs text-slate-500 italic leading-relaxed"&gt;Statistical validation for high-stakes regional budget allocation.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">               </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div className="mb-14 text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 className="text-4xl md:text-5xl font-normal mb-3 tracking-tight" style={{ color: colors.midnight }}&gt;Technical Infrastructure&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p className="text-[11px] uppercase tracking-[0.4em] font-bold" style={{ color: colors.teal, fontFamily: "'DM Sans', sans-serif" }}&gt;The specialized engines driving modern enterprise results&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>{toolStack.map((tool, i) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div key={i} className={`bg-white rounded-3xl border transition-all overflow-hidden ${expandedTool === tool.name ? 'shadow-2xl' : 'border-slate-200 shadow-sm'}`}</p>
+<p class="p1"><span class="Apple-converted-space">                     </span>style={{ borderColor: expandedTool === tool.name ? colors.teal : '' }}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;button<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>onClick={() =&gt; toggleTool(tool.name)}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>className="w-full p-8 flex items-center justify-between group"</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div className="flex items-center gap-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;div className="transition-transform group-hover:scale-110" style={{ color: colors.teal }}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{tool.icon}</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;div className="text-left"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p className="text-xl serif-font leading-none" style={{ color: colors.midnight }}&gt;{tool.name}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p className="text-[9px] uppercase font-bold tracking-widest mt-1 opacity-40" style={{ fontFamily: "'DM Sans', sans-serif" }}&gt;{tool.cat}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{expandedTool === tool.name ? &lt;Icons.ChevronUp size={20} /&gt; : &lt;Icons.ChevronDown size={20} className="opacity-20 group-hover:opacity-100" /&gt;}</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;/button&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                  </span></p>
+<p class="p1"><span class="Apple-converted-space">                  </span>{expandedTool === tool.name &amp;&amp; (</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div className="px-8 pb-8 animate-in"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;div className="pt-6 border-t border-slate-100 space-y-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                          </span>&lt;p className="text-[10px] font-black uppercase tracking-[0.2em] mb-2" style={{ color: colors.ember, fontFamily: "'DM Sans', sans-serif" }}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>[01] Strategic Impact</p>
+<p class="p1"><span class="Apple-converted-space">                          </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                          </span>&lt;p className="text-sm font-normal leading-relaxed text-slate-600 italic"&gt;{tool.impact}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                          </span>&lt;p className="text-[10px] font-black uppercase tracking-[0.2em] mb-2" style={{ color: colors.ember, fontFamily: "'DM Sans', sans-serif" }}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>[02] Productivity Output</p>
+<p class="p1"><span class="Apple-converted-space">                          </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                          </span>&lt;p className="text-sm font-normal leading-relaxed text-slate-600 italic"&gt;{tool.productivity}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>)}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>))}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div className="mt-24 p-12 rounded-[2.5rem] border bg-white text-center max-w-4xl mx-auto relative overflow-hidden group shadow-2xl" style={{ borderTop: `1px solid ${colors.teal}` }}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;p className="text-xl md:text-3xl font-normal leading-tight italic max-w-2xl mx-auto relative z-10 serif-font" style={{ color: colors.midnight }}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>"I view these tools as more than software—they are the operational framework through which I translate complex data strategy into scalable results."</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div className="absolute top-0 right-0 p-8 opacity-[0.02] group-hover:opacity-[0.04] transition-opacity"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;Icons.Shield size={220} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>)}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>{/* DOMAIN TABS */}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{['pm', 'ops', 'ds', 'community'].includes(activeTab) &amp;&amp; (</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div className="animate-in"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div className="flex flex-col md:flex-row items-baseline gap-4 mb-16 border-b pb-8" style={{ borderColor: colors.midnight }}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;h2 className="text-4xl md:text-5xl font-normal tracking-tight italic" style={{ color: colors.midnight }}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{activeTab === 'pm' ? "Product Management" : activeTab === 'ops' ? "Program Operations" : activeTab === 'ds' ? "Data Science" : "Community Management"}</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;span className="text-white font-bold text-[10px] uppercase tracking-[0.3em] px-4 py-1.5 rounded-full" style={{ backgroundColor: colors.teal, fontFamily: "'DM Sans', sans-serif" }}&gt;Domain Focus&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div className="grid grid-cols-1 lg:grid-cols-3 gap-16"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div className="lg:col-span-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3 className="text-[11px] font-bold uppercase mb-10 tracking-[0.4em]" style={{ color: colors.teal, fontFamily: "'DM Sans', sans-serif" }}&gt;Core Competencies&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div className="space-y-12"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>{activeTab === 'pm' &amp;&amp; (</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;div className="group border-l-4 pl-6 transition-colors" style={{ borderColor: colors.midnight }}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p className="text-2xl font-normal mb-1 serif-font"&gt;GTM Strategy&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p className="text-sm font-light leading-relaxed opacity-60"&gt;Market entry mapping, competitive positioning, and tiered pricing architectures.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;div className="group border-l-4 pl-6 transition-colors" style={{ borderColor: colors.midnight }}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p className="text-2xl font-normal mb-1 serif-font"&gt;AI Roadmapping&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p className="text-sm font-light leading-relaxed opacity-60"&gt;Prioritizing ML integration and high-impact feature discovery for enterprise value.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>)}</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>{activeTab === 'ops' &amp;&amp; (</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;div className="group border-l-4 pl-6 transition-colors" style={{ borderColor: colors.midnight }}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p className="text-2xl font-normal mb-1 serif-font"&gt;Agile Optimization&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p className="text-sm font-light leading-relaxed opacity-60"&gt;Refining sprint cycles, removing systemic blockers, and scaling velocity.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;div className="group border-l-4 pl-6 transition-colors" style={{ borderColor: colors.midnight }}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p className="text-2xl font-normal mb-1 serif-font"&gt;Workflow Automation&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p className="text-sm font-light leading-relaxed opacity-60"&gt;Scaling internal organizational systems via no-code and custom API integrations.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>)}</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>{activeTab === 'ds' &amp;&amp; (</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;div className="group border-l-4 pl-6 transition-colors" style={{ borderColor: colors.midnight }}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p className="text-2xl font-normal mb-1 serif-font"&gt;Predictive Modeling&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p className="text-sm font-light leading-relaxed opacity-60"&gt;Leveraging telemetry for deep churn forecasting and customer lifetime value.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;div className="group border-l-4 pl-6 transition-colors" style={{ borderColor: colors.midnight }}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p className="text-2xl font-normal mb-1 serif-font"&gt;ETL Engineering&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p className="text-sm font-light leading-relaxed opacity-60"&gt;Architecting scalable data warehouses and automated ingestion logic pipelines.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>)}</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>{activeTab === 'community' &amp;&amp; (</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;div className="group border-l-4 pl-6 transition-colors" style={{ borderColor: colors.midnight }}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p className="text-2xl font-normal mb-1 serif-font"&gt;Retention Flywheels&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p className="text-sm font-light leading-relaxed opacity-60"&gt;Building self-sustaining growth loops via value-led member programming.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;div className="group border-l-4 pl-6 transition-colors" style={{ borderColor: colors.midnight }}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p className="text-2xl font-normal mb-1 serif-font"&gt;Global Orchestration&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p className="text-sm font-light leading-relaxed opacity-60"&gt;Managing ecosystem standards across global Discord/Slack infrastructure.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>)}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div className="lg:col-span-2 space-y-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div className="bg-white p-12 rounded-[2.5rem] shadow-2xl border border-slate-100 relative overflow-hidden group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;div className="relative z-10"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div className="flex items-center gap-4 mb-10"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span className="px-4 py-1 text-white text-[9px] font-bold uppercase tracking-widest rounded-full" style={{ backgroundColor: colors.midnight, fontFamily: "'DM Sans', sans-serif" }}&gt;Project Brief&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div className="h-[1px] flex-grow bg-slate-100"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                    </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h4 className="text-4xl md:text-5xl font-normal mb-6 tracking-tight text-slate-800 italic"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>{activeTab === 'pm' &amp;&amp; "Predictive Retention Engine"}</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>{activeTab === 'ops' &amp;&amp; "Global QA Lifecycle Revamp"}</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>{activeTab === 'ds' &amp;&amp; "Revenue Predictor Model"}</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>{activeTab === 'community' &amp;&amp; "Scale &amp; Retention Framework"}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/h4&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                    </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p className="text-lg mb-12 font-light leading-relaxed max-w-xl italic border-l-8 pl-8" style={{ color: colors.graphite, borderColor: colors.ember }}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>{activeTab === 'pm' &amp;&amp; "Led the discovery and launch of an ML-driven dashboard for CS teams to identify at-risk accounts before churn."}</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>{activeTab === 'ops' &amp;&amp; "Replaced legacy manual ticketing with a custom automated triage system powered by Jira and Slack APIs."}</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>{activeTab === 'ds' &amp;&amp; "Architected a time-series forecasting pipeline to optimize regional budget allocation for growth squads."}</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>{activeTab === 'community' &amp;&amp; "Scaled a 10k member base via peer-led technical education and automated onboarding workflows."}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/p&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                    </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div className="grid grid-cols-1 md:grid-cols-2 gap-12"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p className="text-[11px] font-bold uppercase tracking-[0.4em] mb-4 opacity-40" style={{ fontFamily: "'DM Sans', sans-serif" }}&gt;Quantifiable Result&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p className="text-4xl serif-font tracking-tight" style={{ color: colors.midnight }}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                          </span>{activeTab === 'pm' &amp;&amp; "14% Churn reduction"}</p>
+<p class="p1"><span class="Apple-converted-space">                          </span>{activeTab === 'ops' &amp;&amp; "+40% Sprint Velocity"}</p>
+<p class="p1"><span class="Apple-converted-space">                          </span>{activeTab === 'ds' &amp;&amp; "98% Model Accuracy"}</p>
+<p class="p1"><span class="Apple-converted-space">                          </span>{activeTab === 'community' &amp;&amp; "3x Active Engagement"}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;div className="flex flex-col justify-end"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p className="text-[11px] font-bold uppercase tracking-[0.4em] mb-4 opacity-40" style={{ fontFamily: "'DM Sans', sans-serif" }}&gt;Project Status&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p className="text-2xl font-bold uppercase tracking-tight underline decoration-1 underline-offset-8" style={{ color: colors.midnight, textDecorationColor: colors.teal }}&gt;Live Production&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;Icons.Rocket size={180} className="absolute -right-16 -bottom-16 opacity-[0.05] group-hover:rotate-12 group-hover:scale-110 transition-all duration-1000" style={{ color: colors.teal }} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div className="flex justify-between items-center p-8 bg-white rounded-3xl border border-slate-100 shadow-sm"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div className="flex items-center gap-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;Icons.Award size={28} style={{ color: colors.ember }} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;p className="text-lg serif-font" style={{ color: colors.midnight }}&gt;Validated Stakeholder Impact&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span className="text-[10px] font-bold opacity-30 tracking-[0.2em] uppercase" style={{ fontFamily: "'DM Sans', sans-serif" }}&gt;Verified Milestone&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>)}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/main&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>{/* Footer */}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;footer className="max-w-7xl mx-auto px-6 mb-24 w-full"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div style={{ backgroundColor: colors.midnight }} className="p-12 md:p-20 rounded-[3.5rem] text-white flex flex-col md:flex-row gap-16 items-center relative overflow-hidden group shadow-2xl"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div className="flex-1 relative z-10 text-center md:text-left"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h3 className="text-5xl md:text-7xl font-normal mb-8 tracking-tight italic"&gt;Connect.&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p className="text-white/60 text-lg mb-12 font-light leading-relaxed max-w-sm tracking-wide"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>Strategic leadership at the intersection of product, data, and ecosystem growth.</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div className="flex flex-col md:items-start items-center gap-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div className="flex flex-wrap justify-center md:justify-start gap-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{/* Contact Me Trigger */}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;button<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                        </span>onClick={() =&gt; setShowEmail(!showEmail)}<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                        </span>style={{ backgroundColor: colors.ember, fontFamily: "'DM Sans', sans-serif" }}<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                        </span>className="text-white px-10 py-4 rounded-full font-bold uppercase text-[11px] tracking-widest hover:scale-105 transition-all shadow-xl shadow-black/20 flex items-center gap-2"</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;Icons.Mail size={16} /&gt; {showEmail ? 'Close Email' : 'Contact Me'}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{/* Download CV Path */}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="assets/pdf" className="bg-transparent text-white border-2 border-white/20 px-10 py-4 rounded-full font-bold uppercase text-[11px] tracking-widest hover:bg-white/5 transition-all flex items-center gap-2" style={{ fontFamily: "'DM Sans', sans-serif" }}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;Icons.Download size={16} /&gt; Download CV</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>{/* DYNAMIC EMAIL DISPLAY */}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{showEmail &amp;&amp; (</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div className="p-6 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 flex flex-col sm:flex-row items-center gap-4 w-full max-w-md animate-in"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div className="flex-grow text-center sm:text-left"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p className="text-[10px] font-bold text-[#1A8B8B] uppercase tracking-widest mb-1"&gt;Direct Communication&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;a href="mailto:kerenwangombe@gmail.com" className="text-lg font-bold hover:text-[#1A8B8B] transition-colors underline decoration-dotted underline-offset-4"&gt;kerenwangombe@gmail.com&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;button<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                            </span>onClick={handleCopyEmail}</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>className="p-3 bg-white/10 hover:bg-white/20 rounded-xl transition-all group"</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>title="Copy to clipboard"</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>{copied ? &lt;Icons.Check size={18} className="text-[#05F283]" /&gt; : &lt;Icons.Copy size={18} className="text-white opacity-60 group-hover:opacity-100" /&gt;}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>)}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">          </span></p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div className="w-full md:w-1/3 flex flex-col items-center md:items-end justify-center relative z-10"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;div className="flex gap-10 mb-12"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{/* LinkedIn Link with Target _blank */}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;a href="https://www.linkedin.com/in/keren-wangombe/" target="_blank" rel="noopener noreferrer" className="text-white/30 hover:text-white transition-colors" style={{ hoverColor: colors.teal }}&gt;&lt;Icons.Linkedin size={40} /&gt;&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;a href="#" className="text-white/30 hover:text-white transition-colors" style={{ hoverColor: colors.teal }}&gt;&lt;Icons.Github size={40} /&gt;&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;p className="text-[10px] font-bold text-white/30 uppercase tracking-[0.5em] text-center md:text-right" style={{ fontFamily: "'DM Sans', sans-serif" }}&gt;Architecture Driven Strategy&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;p className="text-sm font-normal mt-2 serif-font italic opacity-60" style={{ color: colors.teal }}&gt;Edition v2.5.0&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">          </span></p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div className="absolute -top-20 -right-20 w-80 h-80 rounded-full blur-[180px] opacity-10" style={{ backgroundColor: colors.teal }} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/footer&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>{/* FOOTER RIBBON */}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div className="bg-white border-t border-slate-100 py-14 px-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">           </span>&lt;div className="text-center md:text-left"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;p className="text-[11px] font-bold uppercase tracking-[0.5em] mb-3 opacity-30" style={{ fontFamily: "'DM Sans', sans-serif" }}&gt;Technical Leadership &amp; Precision&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;p className="text-sm serif-font italic" style={{ color: colors.midnight }}&gt;© 2026 Keren Wang'ombe — Built with Data &amp; Logic&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">           </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">           </span></p>
+<p class="p1"><span class="Apple-converted-space">           </span>&lt;button<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">             </span>onClick={scrollToTop}</p>
+<p class="p1"><span class="Apple-converted-space">             </span>className="group flex flex-col items-center gap-3 transition-all duration-500 opacity-40 hover:opacity-100"</p>
+<p class="p1"><span class="Apple-converted-space">           </span>&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;p className="text-[10px] font-bold uppercase tracking-[0.5em] group-hover:tracking-[0.8em] transition-all" style={{ fontFamily: "'DM Sans', sans-serif" }}&gt;Back to Top&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;div className="p-4 rounded-full border-2 border-slate-100 group-hover:border-slate-900 transition-colors"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">               </span>&lt;Icons.ArrowUp size={20} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">           </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>);</p>
+<p class="p1">};</p>
+<p class="p2"><br></p>
+<p class="p1">export default App;</p>
+</body>
+</html>
