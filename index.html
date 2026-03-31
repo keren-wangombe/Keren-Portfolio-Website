@@ -177,6 +177,42 @@
             padding-left: 20px;
         }
 
+        .video-thumbnail {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            aspect-ratio: 16/9;
+            background: #0f1c2e;
+        }
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        .video-thumbnail:hover img { transform: scale(1.03); }
+        .video-play-btn {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.35);
+            transition: background 0.2s;
+        }
+        .video-thumbnail:hover .video-play-btn { background: rgba(0,0,0,0.2); }
+        .play-circle {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
         @media (max-width: 768px) {
             .nav-scroll { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
             .nav-scroll::-webkit-scrollbar { display: none; }
@@ -211,9 +247,10 @@
         Shield:       (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,
         Plus:         (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>,
         Settings:     (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>,
+        Play:         (p) => <svg {...p} viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>,
+        ExternalLink: (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>,
     };
 
-    /* ─── Tool Stack (real tools) ─── */
     const toolStack = [
         { name: "Notion & Airtable", cat: "Program Management", icon: I.Layout, impact: "Creates a single source of truth for program tracking, team wikis, and cross-functional OKRs — keeping distributed teams aligned without extra meetings.", productivity: "Replaces fragmented email threads and docs with structured, searchable systems that cut 'where is that info?' time by over 50%.", skill: 90 },
         { name: "Asana & ClickUp", cat: "Project Operations", icon: I.Target, impact: "Manages end-to-end program delivery across large cohorts and multi-country teams, from task assignment through milestone reporting.", productivity: "Automates recurring workflows and status updates, saving an estimated 15+ hours per week in manual coordination overhead.", skill: 88 },
@@ -223,7 +260,6 @@
         { name: "Canva & Google Workspace", cat: "Communication Design", icon: I.MessageSquare, impact: "Produces crisp programme materials, facilitator guides, stakeholder reports, and community content that reflect strong operational presence.", productivity: "Cuts production time for recurring comms by templating everything — consistent quality at scale with minimal rework.", skill: 87 },
     ];
 
-    /* ─── Domain Content ─── */
     const domainContent = {
         ops: {
             title: "Program Operations",
@@ -237,12 +273,18 @@
             ],
             projects: [
                 {
-                    badge: "Coming Soon",
-                    title: "Cohort Operations Tracker",
-                    summary: "A full-lifecycle tracking system built in Notion and Google Sheets to manage multi-country programme cohorts — from enrolment through completion — with automated health scores and weekly stakeholder reports.",
-                    outcomes: ["Placeholder — project case study coming soon", "Real metrics and outcomes will be added here", "Built with Notion, Google Sheets, and Zapier"],
-                    tools: ["Notion", "Google Sheets", "Zapier", "Google Apps Script"],
-                    placeholder: true,
+                    badge: "Project Operations",
+                    title: "LaunchCode Academy — Cohort 7 Delivery Tracker",
+                    summary: "LaunchCode Academy was coordinating a 12-week coding bootcamp across 3 facilitator groups and 24 students using email threads and a shared Google Doc. Built a fully structured Asana project covering the complete delivery arc — from pre-cohort setup through Demo Day and closeout — with every task dependency-mapped so nothing moves forward until prerequisites are complete.",
+                    outcomes: [
+                        "24 tasks across 5 phases with 9 critical dependency pairs — the programme sequences itself",
+                        "4 custom fields giving real-time delivery status, group, task type, and facilitator sign-off at a glance",
+                        "2 automated rules: blocked tasks escalate to the Programme Director; completions auto-confirm facilitator",
+                        "Goals, milestones, and portfolio connected — leadership sees targets and programme health in one view",
+                    ],
+                    tools: ["Asana", "Custom Fields", "Dependencies", "Automations", "Timeline View", "Goals & Milestones"],
+                    placeholder: false,
+                    youtubeId: "8v5r37T_dDo",
                 },
                 {
                     badge: "Coming Soon",
@@ -329,8 +371,6 @@
         },
     };
 
-    /* ─── Sub-components ─── */
-
     const Pill = ({ children, color = "#1A8B8B" }) => (
         <span style={{ background: color + '18', color, border: `1px solid ${color}30` }}
               className="inline-block text-[9px] font-black uppercase tracking-[0.18em] px-3 py-1 rounded-full">
@@ -344,6 +384,55 @@
             Case Study Coming Soon
         </div>
     );
+
+    const YouTubeEmbed = ({ youtubeId, color }) => {
+        const [playing, setPlaying] = useState(false);
+        const thumbUrl = `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`;
+        const embedUrl = `https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0`;
+
+        return (
+            <div className="mt-6 rounded-2xl overflow-hidden border" style={{ borderColor: color + '30' }}>
+                <div className="px-4 py-2.5 flex items-center gap-2" style={{ background: color + '10', borderBottom: `1px solid ${color}20` }}>
+                    <div className="w-2 h-2 rounded-full" style={{ background: color }} />
+                    <span className="text-[10px] font-black uppercase tracking-[0.18em]" style={{ color }}>Project Walkthrough</span>
+                </div>
+                {!playing ? (
+                    <div className="video-thumbnail" onClick={() => setPlaying(true)}>
+                        <img src={thumbUrl} alt="Project walkthrough" onError={(e) => { e.target.style.display='none'; }} />
+                        <div className="video-play-btn">
+                            <div className="play-circle">
+                                <I.Play className="w-5 h-5 ml-1" style={{ color: color }} />
+                            </div>
+                        </div>
+                        <div className="absolute bottom-3 left-3">
+                            <span className="text-white text-xs font-bold bg-black/50 px-3 py-1 rounded-full backdrop-blur-sm">
+                                Watch walkthrough
+                            </span>
+                        </div>
+                    </div>
+                ) : (
+                    <div style={{ position:'relative', paddingBottom:'56.25%', height:0, background:'#000' }}>
+                        <iframe
+                            src={embedUrl}
+                            style={{ position:'absolute', top:0, left:0, width:'100%', height:'100%' }}
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                        />
+                    </div>
+                )}
+                <div className="px-4 py-3 flex items-center justify-between" style={{ background: color + '06' }}>
+                    <span className="text-[10px] text-slate-400">LaunchCode Academy · Asana · 12-Week Bootcamp</span>
+                    <a href={`https://youtu.be/${youtubeId}`} target="_blank" rel="noopener noreferrer"
+                       className="flex items-center gap-1 text-[10px] font-bold transition-opacity hover:opacity-70"
+                       style={{ color }}>
+                        <I.ExternalLink className="w-3 h-3" />
+                        Open in YouTube
+                    </a>
+                </div>
+            </div>
+        );
+    };
 
     const ProjectCard = ({ project, color, delay }) => (
         <div className={`rounded-3xl border p-8 card-hover anim-fadeUp ${delay} ${project.placeholder ? 'placeholder-card' : 'bg-white border-slate-100'}`}>
@@ -374,6 +463,9 @@
                     <span key={i} className={project.placeholder ? 'tool-tag opacity-50' : 'tool-tag'}>{t}</span>
                 ))}
             </div>
+            {project.youtubeId && (
+                <YouTubeEmbed youtubeId={project.youtubeId} color={color} />
+            )}
         </div>
     );
 
@@ -395,7 +487,6 @@
         </div>
     );
 
-    /* ─── Main App ─── */
     const App = () => {
         const [activeTab, setActiveTab] = useState('landing');
         const [expandedTool, setExpandedTool] = useState(null);
@@ -430,7 +521,6 @@
         return (
             <div className="min-h-screen flex flex-col">
 
-                {/* ── HERO ── */}
                 <header className="header-mesh pt-16 pb-28 px-6 text-center relative overflow-hidden">
                     <div style={{ position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)',
                                   width:'600px', height:'600px', border:'1px solid rgba(255,255,255,0.04)',
@@ -452,7 +542,6 @@
                             Keren Wang'ombe
                         </h1>
 
-                        {/* One-liner bio */}
                         <p className="text-white/60 text-base md:text-lg font-light leading-relaxed max-w-2xl mx-auto tracking-wide mb-3">
                             I build the systems, structures, and communities that help organisations run complex programmes with clarity and confidence.
                         </p>
@@ -476,7 +565,6 @@
                     </div>
                 </header>
 
-                {/* ── NAVIGATION ── */}
                 <div className="max-w-5xl mx-auto w-full px-4 -mt-7 relative z-20">
                     <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-2">
                         <div className="nav-scroll flex gap-1">
@@ -497,14 +585,10 @@
                     </div>
                 </div>
 
-                {/* ── MAIN CONTENT ── */}
                 <main ref={mainRef} className="max-w-5xl mx-auto w-full px-4 py-14 flex-grow">
 
-                    {/* ─────────── ABOUT & TOOLS ─────────── */}
                     {activeTab === 'landing' && (
                         <div>
-
-                            {/* About block */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16 anim-fadeUp">
                                 <div className="bg-white rounded-3xl border border-slate-100 p-8 flex flex-col justify-between">
                                     <div>
@@ -540,7 +624,6 @@
                                 </div>
                             </div>
 
-                            {/* What I can do for you */}
                             <div className="mb-12">
                                 <p className="divider-label text-[10px] font-black uppercase tracking-[0.35em] text-slate-400 mb-8">What I Bring to Your Organisation</p>
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -563,7 +646,6 @@
                                 </div>
                             </div>
 
-                            {/* Tech Stack */}
                             <div className="mb-10 text-center">
                                 <h2 className="text-4xl md:text-5xl font-normal serif tracking-tight mb-2" style={{ color: '#1E2D40' }}>
                                     Tool Stack
@@ -625,10 +707,8 @@
                         </div>
                     )}
 
-                    {/* ─────────── DOMAIN PAGES ─────────── */}
                     {activeTab !== 'landing' && domain && (
                         <div className="anim-fadeUp">
-                            {/* Domain header */}
                             <div className="mb-10">
                                 <Pill color={domain.color}>{domain.tagline}</Pill>
                                 <h2 className="text-4xl md:text-6xl font-normal serif italic tracking-tight mt-3 mb-4" style={{ color:'#1E2D40' }}>
@@ -639,7 +719,6 @@
                                 </p>
                             </div>
 
-                            {/* Domain metrics */}
                             <div className="grid grid-cols-3 gap-4 mb-12">
                                 {domain.metrics.map((m, i) => (
                                     <div key={i} className={`metric-card bg-white rounded-2xl p-5 md:p-7 text-center border border-slate-100 anim-fadeUp delay-${i+1}`}>
@@ -650,7 +729,6 @@
                                 ))}
                             </div>
 
-                            {/* Projects */}
                             <p className="divider-label text-[10px] font-black uppercase tracking-[0.35em] text-slate-400 mb-8">Featured Projects</p>
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
                                 {domain.projects.map((proj, i) => (
@@ -658,7 +736,6 @@
                                 ))}
                             </div>
 
-                            {/* Skills — grouped */}
                             <p className="divider-label text-[10px] font-black uppercase tracking-[0.35em] text-slate-400 mb-8">Core Competencies</p>
                             <div className="bg-white rounded-3xl border border-slate-100 p-8">
                                 <SkillsSection groups={domain.skillGroups} color={domain.color} />
@@ -667,14 +744,12 @@
                     )}
                 </main>
 
-                {/* ── CONNECT FOOTER — compact ── */}
                 <footer className="max-w-5xl mx-auto px-4 mb-12 w-full">
                     <div className="footer-glow rounded-2xl text-white px-8 py-8 relative overflow-hidden">
                         <div style={{ position:'absolute', right:'-60px', top:'-60px', width:'220px', height:'220px',
                                       borderRadius:'50%', border:'1px solid rgba(255,255,255,0.05)', pointerEvents:'none' }} />
 
                         <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-                            {/* Left */}
                             <div>
                                 <h3 className="text-2xl md:text-3xl font-normal serif italic mb-1">Let's work together.</h3>
                                 <p className="text-white/45 text-xs leading-relaxed max-w-xs">
@@ -682,7 +757,6 @@
                                 </p>
                             </div>
 
-                            {/* Actions */}
                             <div className="flex flex-col gap-3 flex-shrink-0">
                                 <div className="flex gap-2">
                                     <button onClick={() => setShowEmail(!showEmail)}
@@ -721,7 +795,6 @@
                     </div>
                 </footer>
 
-                {/* ── BOTTOM STRIP ── */}
                 <div className="border-t border-slate-100 bg-white py-6 px-6">
                     <div className="max-w-5xl mx-auto flex justify-between items-center gap-6">
                         <p className="serif italic text-sm" style={{ color:'#1E2D40' }}>
