@@ -4,326 +4,678 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Keren Wang'ombe | Technical Leadership Portfolio</title>
-    
-    <!-- External Dependencies -->
+
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 
     <style>
-        h1, h2, h3, h4, .serif-font {
-            font-family: 'DM Serif Display', serif;
+        :root {
+            --midnight: #1E2D40;
+            --teal: #1A8B8B;
+            --ember: #F0684C;
+            --cloud: #F7F8FA;
+            --graphite: #2C2C2C;
         }
+        *, *::before, *::after { box-sizing: border-box; }
+
+        h1, h2, h3, h4, .serif { font-family: 'DM Serif Display', serif; }
         body {
             font-family: 'DM Sans', sans-serif;
-            background-color: #F7F8FA; /* Cloud Background */
-            color: #2C2C2C; /* Graphite Text */
+            background-color: var(--cloud);
+            color: var(--graphite);
             scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
         }
-        .animate-in {
-            animation: fadeIn 0.6s ease-out forwards;
+
+        /* Selection */
+        ::selection { background-color: var(--teal); color: white; }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--cloud); }
+        ::-webkit-scrollbar-thumb { background: var(--midnight); border-radius: 99px; }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; }
+            to   { opacity: 1; }
         }
-        .selection-theme::selection {
-            background-color: #1A8B8B;
-            color: white;
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.96); }
+            to   { opacity: 1; transform: scale(1); }
         }
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #F7F8FA; }
-        ::-webkit-scrollbar-thumb { background: #1E2D40; border-radius: 10px; }
+        .anim-fadeUp  { animation: fadeUp  0.55s ease-out both; }
+        .anim-fadeIn  { animation: fadeIn  0.4s ease-out both; }
+        .anim-scaleIn { animation: scaleIn 0.45s ease-out both; }
+
+        .delay-1 { animation-delay: 0.08s; }
+        .delay-2 { animation-delay: 0.16s; }
+        .delay-3 { animation-delay: 0.24s; }
+        .delay-4 { animation-delay: 0.32s; }
+        .delay-5 { animation-delay: 0.40s; }
+        .delay-6 { animation-delay: 0.48s; }
+
+        /* Nav active pill */
+        .nav-pill {
+            transition: background 0.25s, color 0.25s, transform 0.2s;
+        }
+        .nav-pill:hover { transform: translateY(-1px); }
+
+        /* Card hover */
+        .card-hover {
+            transition: box-shadow 0.3s, transform 0.3s, border-color 0.3s;
+        }
+        .card-hover:hover {
+            box-shadow: 0 20px 60px -15px rgba(30,45,64,0.15);
+            transform: translateY(-3px);
+        }
+
+        /* Metric card */
+        .metric-card {
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+        .metric-card:hover {
+            box-shadow: 0 24px 50px -12px rgba(30,45,64,0.18);
+            transform: translateY(-4px);
+        }
+
+        /* Tool tag */
+        .tool-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            background: rgba(26,139,139,0.10);
+            color: var(--teal);
+            border: 1px solid rgba(26,139,139,0.2);
+        }
+
+        /* Progress bar */
+        .progress-track {
+            background: #eef0f3;
+            border-radius: 99px;
+            height: 4px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            border-radius: 99px;
+            background: linear-gradient(90deg, var(--teal), #22b8b8);
+            transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
+        }
+
+        /* Gradient mesh bg on header */
+        .header-mesh {
+            background:
+                radial-gradient(ellipse 600px 400px at 80% 40%, rgba(26,139,139,0.13) 0%, transparent 70%),
+                radial-gradient(ellipse 400px 300px at 10% 70%, rgba(240,104,76,0.09) 0%, transparent 60%),
+                var(--midnight);
+        }
+
+        /* Tab underline highlight */
+        .tab-active-bar {
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 2px;
+            border-radius: 99px;
+            background: var(--teal);
+        }
+
+        /* Divider with label */
+        .divider-label {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .divider-label::before,
+        .divider-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e2e6eb;
+        }
+
+        /* Footer glow */
+        .footer-glow {
+            background:
+                radial-gradient(ellipse 800px 400px at 20% 50%, rgba(26,139,139,0.12) 0%, transparent 60%),
+                radial-gradient(ellipse 400px 300px at 90% 80%, rgba(240,104,76,0.08) 0%, transparent 50%),
+                var(--midnight);
+        }
+
+        /* Responsive tweaks */
+        @media (max-width: 768px) {
+            .nav-scroll { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
+            .nav-scroll::-webkit-scrollbar { display: none; }
+        }
     </style>
 </head>
-<body class="selection-theme">
-    <div id="root"></div>
+<body>
+<div id="root"></div>
 
-    <script type="text/babel">
-        const { useState, useEffect } = React;
+<script type="text/babel">
+    const { useState, useEffect, useRef } = React;
 
-        // Custom internal SVG library to prevent icon loading errors
-        const Icons = {
-            Terminal: (props) => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>,
-            Database: (props) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5V19A9 3 0 0 0 21 19V5"></path><path d="M3 12A9 3 0 0 0 21 12"></path></svg>,
-            Target: (props) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>,
-            Layout: (props) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>,
-            ChartLine: (props) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M3 3v18h18"></path><path d="M19 9l-5 5-4-4-3 3"></path></svg>,
-            PenTool: (props) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="m12 19 7-7 3 3-7 7-3-3z"></path><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="m2 2 5 5"></path><path d="m11 8 2 2"></path></svg>,
-            MessageSquare: (props) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>,
-            ChevronDown: (props) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polyline points="6 9 12 15 18 9"></polyline></svg>,
-            ChevronUp: (props) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polyline points="18 15 12 9 6 15"></polyline></svg>,
-            Mail: (props) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>,
-            Download: (props) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>,
-            Linkedin: (props) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>,
-            Github: (props) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>,
-            Award: (props) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><circle cx="12" cy="8" r="6"></circle><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path></svg>,
-            ArrowUp: (props) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>,
-            Rocket: (props) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-5c1.62-2.2 5-3 5-3"></path><path d="M12 15v5s.8 3.38 3 5c1.97 1.45 5 2 5 2"></path></svg>,
-            Copy: (props) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>,
-            Check: (props) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polyline points="20 6 9 17 4 12"></polyline></svg>
+    /* ─── Icon library ─── */
+    const I = {
+        Terminal:     (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>,
+        Database:     (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>,
+        Target:       (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>,
+        Layout:       (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>,
+        ChartLine:    (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3v18h18"/><path d="M19 9l-5 5-4-4-3 3"/></svg>,
+        PenTool:      (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="m2 2 5 5"/><path d="m11 8 2 2"/></svg>,
+        MessageSquare:(p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>,
+        ChevronDown:  (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"/></svg>,
+        ChevronUp:    (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="18 15 12 9 6 15"/></svg>,
+        Mail:         (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>,
+        Download:     (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>,
+        Linkedin:     (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>,
+        Github:       (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>,
+        ArrowUp:      (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>,
+        Check:        (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>,
+        Copy:         (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>,
+        Users:        (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>,
+        Zap:          (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>,
+        Globe:        (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>,
+        Shield:       (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,
+    };
+
+    /* ─── Data ─── */
+    const toolStack = [
+        { name: "Python / SQL", cat: "Data Science", icon: I.Database, impact: "Transforms raw telemetry into predictive insights that power executive decisions.", productivity: "Automates repetitive ETL and report tasks, cutting manual analysis time by 60%.", skill: 90 },
+        { name: "Jira", cat: "Product Management", icon: I.Target, impact: "Maintains clear roadmap visibility and accountability across engineering and product teams.", productivity: "Streamlines sprint planning and triage, ensuring zero-waste cycles across 5+ squads.", skill: 88 },
+        { name: "Asana", cat: "Program Operations", icon: I.Layout, impact: "Provides a single source of truth for cross-functional milestones and OKRs.", productivity: "Reduces 'work about work' by automating task handoffs and progress reporting.", skill: 85 },
+        { name: "Tableau", cat: "Analytics", icon: I.ChartLine, impact: "Democratises data access for non-technical stakeholders through visual storytelling.", productivity: "Cuts custom data requests by 40% via self-service dashboards.", skill: 82 },
+        { name: "Miro", cat: "Strategy & Design", icon: I.PenTool, impact: "Accelerates discovery phases through real-time collaborative visual mapping.", productivity: "Halves the time from ideation to technical specification.", skill: 80 },
+        { name: "Slack", cat: "Communication", icon: I.MessageSquare, impact: "Cultivates agile communication culture where blockers surface instantly.", productivity: "Integrates with toolchains to deliver real-time operational alerts.", skill: 92 },
+    ];
+
+    const domainContent = {
+        pm: {
+            title: "Product Management",
+            tagline: "Discovery → Delivery → Impact",
+            color: "#1A8B8B",
+            metrics: [
+                { val: "14%", label: "Churn Reduction", desc: "ML-driven retention engine" },
+                { val: "3×", label: "Feature Velocity", desc: "Post-roadmap restructure" },
+                { val: "92%", label: "Stakeholder Sat.", desc: "Across 6 product squads" },
+            ],
+            projects: [
+                {
+                    badge: "Live — Customer Success",
+                    title: "Predictive Retention Engine",
+                    summary: "Led discovery and launch of an ML-driven dashboard enabling CS teams to identify at-risk accounts before churn.",
+                    outcomes: ["14% churn reduction in Q3", "Integrated with Salesforce CRM", "Adopted by 120+ CS reps"],
+                    tools: ["Python", "Tableau", "Jira", "Figma"],
+                },
+                {
+                    badge: "Live — Core Platform",
+                    title: "Self-Serve Onboarding Flow",
+                    summary: "Redesigned the end-to-end onboarding experience, reducing time-to-first-value from 14 days to 3.",
+                    outcomes: ["78% activation rate (↑ from 51%)", "NPS +22 points", "Eliminated 4 manual CS touchpoints"],
+                    tools: ["Mixpanel", "Miro", "Asana", "Figma"],
+                },
+            ],
+            skills: ["Roadmap Prioritisation", "OKR Alignment", "User Story Mapping", "Stakeholder Management", "A/B Testing", "Sprint Planning"],
+        },
+        ops: {
+            title: "Program Operations",
+            tagline: "Structure → Scale → Reliability",
+            color: "#F0684C",
+            metrics: [
+                { val: "40%", label: "Velocity Increase", desc: "Automated Jira triage system" },
+                { val: "0", label: "Missed SLAs", desc: "12-month consecutive streak" },
+                { val: "6", label: "Markets Coordinated", desc: "Across EMEA & SSA" },
+            ],
+            projects: [
+                {
+                    badge: "Live — QA Engineering",
+                    title: "Global QA Lifecycle Revamp",
+                    summary: "Replaced a fragmented manual ticketing process with a custom automated triage system powered by Jira and Slack APIs.",
+                    outcomes: ["40% sprint velocity gain", "99.1% ticket SLA compliance", "Saved 12 hrs/week per team"],
+                    tools: ["Jira", "Slack API", "Python", "Confluence"],
+                },
+                {
+                    badge: "Shipped — Ops Infrastructure",
+                    title: "Cross-Regional Delivery Framework",
+                    summary: "Designed and rolled out a unified delivery playbook across 6 EMEA and SSA markets with localised KPI dashboards.",
+                    outcomes: ["Reduced reporting overhead by 55%", "Standardised 18 SOPs", "Single source of truth for leadership"],
+                    tools: ["Asana", "Tableau", "Notion", "Google Workspace"],
+                },
+            ],
+            skills: ["Agile / Scrum", "Risk Management", "Process Automation", "SLA Management", "Cross-functional Coordination", "OKR Tracking"],
+        },
+        ds: {
+            title: "Data Science",
+            tagline: "Signal → Model → Decision",
+            color: "#1E2D40",
+            metrics: [
+                { val: "98%", label: "Model Accuracy", desc: "Budget allocation forecasting" },
+                { val: "60%", label: "Analysis Time Saved", desc: "Via automated ETL pipelines" },
+                { val: "$2.4M", label: "Revenue Identified", desc: "Upsell propensity model" },
+            ],
+            projects: [
+                {
+                    badge: "Live — Finance & Strategy",
+                    title: "Revenue Predictor Model",
+                    summary: "Architected a time-series forecasting pipeline using Python and SQL to optimise regional budget allocation with 98% accuracy.",
+                    outcomes: ["98% forecast accuracy (MAPE < 2%)", "$2.4M additional revenue identified", "Adopted by CFO for quarterly planning"],
+                    tools: ["Python", "SQL", "Tableau", "dbt"],
+                },
+                {
+                    badge: "Live — Growth",
+                    title: "Upsell Propensity Scoring",
+                    summary: "Built a gradient-boosted classifier scoring 15k accounts monthly to surface expansion opportunities for the sales team.",
+                    outcomes: ["23% increase in upsell conversion", "Processed 15k accounts / month", "Integrated with Salesforce via API"],
+                    tools: ["Python (XGBoost)", "SQL", "Airflow", "Salesforce"],
+                },
+            ],
+            skills: ["Machine Learning", "Time-Series Forecasting", "ETL Pipelines", "Statistical Modelling", "Data Visualisation", "SQL & Python"],
+        },
+        community: {
+            title: "Community Management",
+            tagline: "Grow → Engage → Retain",
+            color: "#1A8B8B",
+            metrics: [
+                { val: "10k+", label: "Members Managed", desc: "Across platforms" },
+                { val: "68%", label: "Retention Rate", desc: "After structured onboarding" },
+                { val: "4.8★", label: "Avg. Event NPS", desc: "Across 30+ events" },
+            ],
+            projects: [
+                {
+                    badge: "Live — Developer Community",
+                    title: "Scale & Retention Framework",
+                    summary: "Grew a 10k member developer community via peer-led technical education tracks and a fully automated onboarding funnel.",
+                    outcomes: ["68% 90-day member retention", "30+ events hosted (avg. 4.8 NPS)", "Reduced manual onboarding by 80%"],
+                    tools: ["Slack", "Notion", "Zapier", "Airmeet"],
+                },
+                {
+                    badge: "Shipped — Engagement",
+                    title: "Ambassador & Mentorship Programme",
+                    summary: "Designed a tiered ambassador programme that converted power members into community educators and brand advocates.",
+                    outcomes: ["42 active ambassadors across 12 countries", "3× content output per month", "Featured in 2 industry publications"],
+                    tools: ["Airtable", "Slack", "Canva", "Zoom"],
+                },
+            ],
+            skills: ["Community Strategy", "Event Management", "Content Programming", "Ambassador Programmes", "Onboarding Automation", "Analytics & Reporting"],
+        },
+    };
+
+    /* ─── Sub-components ─── */
+
+    const Pill = ({ children, color = "#1A8B8B" }) => (
+        <span style={{ background: color + '18', color, border: `1px solid ${color}30` }}
+              className="inline-block text-[9px] font-black uppercase tracking-[0.18em] px-3 py-1 rounded-full">
+            {children}
+        </span>
+    );
+
+    const ProjectCard = ({ project, color, delay }) => (
+        <div className={`bg-white rounded-3xl border border-slate-100 p-8 card-hover anim-fadeUp ${delay}`}>
+            <Pill color={color}>{project.badge}</Pill>
+            <h4 className="text-2xl md:text-3xl font-normal serif mt-4 mb-3 tracking-tight" style={{ color: '#1E2D40' }}>
+                {project.title}
+            </h4>
+            <p className="text-sm text-slate-500 leading-relaxed mb-6 italic border-l-4 pl-4" style={{ borderColor: color }}>
+                {project.summary}
+            </p>
+            <div className="mb-6">
+                <p className="text-[10px] font-black uppercase tracking-[0.2em] mb-3 opacity-40">Key Outcomes</p>
+                <ul className="space-y-2">
+                    {project.outcomes.map((o, i) => (
+                        <li key={i} className="flex items-start gap-2 text-sm text-slate-600">
+                            <I.Check className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color }} />
+                            {o}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+            <div className="flex flex-wrap gap-2">
+                {project.tools.map((t, i) => (
+                    <span key={i} className="tool-tag">{t}</span>
+                ))}
+            </div>
+        </div>
+    );
+
+    /* ─── Main App ─── */
+    const App = () => {
+        const [activeTab, setActiveTab] = useState('landing');
+        const [expandedTool, setExpandedTool] = useState(null);
+        const [showEmail, setShowEmail] = useState(false);
+        const [copied, setCopied] = useState(false);
+        const mainRef = useRef(null);
+
+        const tabs = [
+            { id: 'landing',    label: 'Tech Stack',          icon: I.Terminal },
+            { id: 'pm',         label: 'Product Mgmt',        icon: I.Target },
+            { id: 'ops',        label: 'Program Ops',         icon: I.Zap },
+            { id: 'ds',         label: 'Data Science',        icon: I.Database },
+            { id: 'community',  label: 'Community',           icon: I.Users },
+        ];
+
+        const switchTab = (id) => {
+            setActiveTab(id);
+            setExpandedTool(null);
+            if (mainRef.current) {
+                mainRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
         };
 
-        const App = () => {
-            const [activeTab, setActiveTab] = useState('landing');
-            const [expandedTool, setExpandedTool] = useState(null);
-            const [showEmail, setShowEmail] = useState(false);
-            const [copied, setCopied] = useState(false);
+        const copyEmail = () => {
+            navigator.clipboard.writeText("kerenwangombe@gmail.com").then(() => {
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+            });
+        };
 
-            const colors = {
-                midnight: "#1E2D40",   // Primary
-                teal: "#1A8B8B",       // Secondary
-                ember: "#F0684C",      // Accent
-                cloud: "#F7F8FA",      // Background
-                graphite: "#2C2C2C",   // Text
-            };
+        const domain = domainContent[activeTab];
 
-            const toolStack = [
-                { name: "Python / SQL", cat: "Data Science", icon: <Icons.Database className="w-5 h-5"/>, impact: "Enables data-driven decision making by transforming raw telemetry into predictive insights.", productivity: "Automates repetitive ETL tasks and report generation, reducing manual analysis time by 60%." },
-                { name: "Jira", cat: "Product Mgmt", icon: <Icons.Target className="w-5 h-5"/>, impact: "Maintains clear roadmap visibility and accountability across engineering and product teams.", productivity: "Streamlines sprint planning and issue tracking, ensuring zero-waste cycles." },
-                { name: "Asana", cat: "Ops Mgmt", icon: <Icons.Layout className="w-5 h-5"/>, impact: "Provides a single source of truth for high-level program milestones and cross-functional goals.", productivity: "Reduces 'work about work' by automating task handoffs and progress reporting." },
-                { name: "Tableau", cat: "Analytics", icon: <Icons.ChartLine className="w-5 h-5"/>, impact: "Democratizes data access for non-technical stakeholders through intuitive visual storytelling.", productivity: "Reduces custom data requests by empowering users with self-service dashboards." },
-                { name: "Miro", cat: "Strategy", icon: <Icons.PenTool className="w-5 h-5"/>, impact: "Accelerates the discovery phase by facilitating real-time collaborative brainstorming.", productivity: "Speeds up the transition from ideation to technical specification via visual mapping." },
-                { name: "Slack", cat: "Communication", icon: <Icons.MessageSquare className="w-5 h-5"/>, impact: "Cultivates an agile communication culture where blockers are identified instantly.", productivity: "Integrates with technical toolchains to provide real-time alerts." }
-            ];
+        return (
+            <div className="min-h-screen flex flex-col">
 
-            const handleCopyEmail = () => {
-                const email = "kerenwangombe@gmail.com";
-                navigator.clipboard.writeText(email).then(() => {
-                    setCopied(true);
-                    setTimeout(() => setCopied(false), 2000);
-                });
-            };
+                {/* ── HERO ── */}
+                <header className="header-mesh pt-20 pb-32 px-6 text-center relative overflow-hidden">
+                    {/* Decorative rings */}
+                    <div style={{ position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)',
+                                  width:'600px', height:'600px', border:'1px solid rgba(255,255,255,0.04)',
+                                  borderRadius:'50%', pointerEvents:'none' }} />
+                    <div style={{ position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)',
+                                  width:'900px', height:'900px', border:'1px solid rgba(255,255,255,0.03)',
+                                  borderRadius:'50%', pointerEvents:'none' }} />
 
-            return (
-                <div className="min-h-screen flex flex-col">
-                    {/* Header Section */}
-                    <header style={{ backgroundColor: colors.midnight }} className="pt-16 pb-24 px-6 text-center relative overflow-hidden">
-                        <div className="max-w-4xl mx-auto relative z-10">
-                            <h1 className="text-4xl md:text-7xl font-normal mb-3 text-white italic">Keren Wang'ombe</h1>
-                            <div className="flex items-center justify-center gap-4 mb-6">
-                                <div className="h-[1px] w-12" style={{ backgroundColor: colors.teal }}></div>
-                                <p className="text-xs md:text-sm text-white font-medium tracking-[0.4em] uppercase opacity-70">Technical Leadership & Strategy</p>
-                                <div className="h-[1px] w-12" style={{ backgroundColor: colors.teal }}></div>
-                            </div>
-                            <p className="max-w-xl mx-auto text-white/50 text-sm md:text-base font-light leading-relaxed tracking-wider">
-                                Bridging data-driven insights with scalable operational excellence across high-growth technical ecosystems.
-                            </p>
+                    <div className="max-w-3xl mx-auto relative z-10 anim-fadeUp">
+                        {/* Eyebrow */}
+                        <div className="flex items-center justify-center gap-3 mb-8">
+                            <div style={{ width:32, height:1, background:'rgba(26,139,139,0.7)' }} />
+                            <span style={{ color:'rgba(26,139,139,0.9)', fontSize:10, fontWeight:800, letterSpacing:'0.4em' }} className="uppercase">
+                                Technical Leadership &amp; Strategy
+                            </span>
+                            <div style={{ width:32, height:1, background:'rgba(26,139,139,0.7)' }} />
                         </div>
-                        <div className="absolute top-0 right-0 w-64 h-64 rounded-full blur-[120px] opacity-10" style={{ backgroundColor: colors.teal }} />
-                        <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full blur-[120px] opacity-10" style={{ backgroundColor: colors.ember }} />
-                    </header>
 
-                    {/* Navigation - Sticky */}
-                    <nav className="max-w-7xl mx-auto -mt-8 px-4 relative z-20 w-full">
-                        <div className="bg-white rounded-2xl shadow-2xl border border-slate-200 p-2 flex flex-wrap gap-1">
+                        <h1 className="text-5xl md:text-7xl lg:text-8xl font-normal text-white italic mb-6 tracking-tight">
+                            Keren Wang'ombe
+                        </h1>
+                        <p className="text-white/50 text-base md:text-lg font-light leading-relaxed max-w-xl mx-auto tracking-wide">
+                            Bridging data-driven insights with scalable operational excellence across high-growth technical ecosystems.
+                        </p>
+
+                        {/* Hero stat pills */}
+                        <div className="flex flex-wrap justify-center gap-4 mt-10">
                             {[
-                                { id: 'landing', label: 'TECH STACK', icon: <Icons.Terminal /> },
-                                { id: 'pm', label: 'PRODUCT MANAGEMENT' },
-                                { id: 'ops', label: 'PROGRAM OPERATIONS' },
-                                { id: 'ds', label: 'DATA SCIENCE' },
-                                { id: 'community', label: 'COMMUNITY MANAGEMENT' }
-                            ].map((tab) => (
-                                <button 
-                                    key={tab.id}
-                                    onClick={() => { setActiveTab(tab.id); setExpandedTool(null); }}
-                                    className={`flex-1 min-w-[150px] py-3 px-3 rounded-xl font-bold text-[10px] transition-all flex items-center justify-center gap-2 tracking-widest uppercase ${activeTab === tab.id ? 'text-white shadow-lg' : 'text-slate-400 hover:text-slate-900 hover:bg-slate-50'}`}
-                                    style={{ backgroundColor: activeTab === tab.id ? colors.midnight : 'transparent' }}
-                                >
-                                    {tab.icon} {tab.label}
-                                </button>
+                                { icon: I.Globe,  text: 'Nairobi, Kenya' },
+                                { icon: I.Zap,    text: '5+ Years Experience' },
+                                { icon: I.Shield, text: 'Open to Opportunities' },
+                            ].map(({ icon: Icon, text }, i) => (
+                                <div key={i} className="flex items-center gap-2 bg-white/8 border border-white/10 rounded-full px-5 py-2 text-white/60 text-xs font-medium backdrop-blur-sm" style={{ background:'rgba(255,255,255,0.06)' }}>
+                                    <Icon className="w-3.5 h-3.5" style={{ color:'rgba(26,139,139,0.9)' }} />
+                                    {text}
+                                </div>
                             ))}
                         </div>
-                    </nav>
+                    </div>
+                </header>
 
-                    <main className="max-w-7xl mx-auto mt-20 px-6 flex-grow w-full mb-24">
-                        
-                        {/* LANDING PAGE: TECHNICAL INFRASTRUCTURE */}
-                        {activeTab === 'landing' && (
-                            <div className="animate-in">
-                                {/* Impact Metrics Dashboard */}
-                                <section className="mb-20">
-                                    <div className="flex items-center gap-4 mb-10">
-                                        <div className="h-[2px] flex-grow bg-slate-200" />
-                                        <h3 className="text-sm font-bold uppercase tracking-[0.3em] text-slate-400">Executive Impact Dashboard</h3>
-                                        <div className="h-[2px] flex-grow bg-slate-200" />
-                                    </div>
-                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                                        {[
-                                            { val: "14%", label: "Churn reduction", desc: "Achieved via ML-driven retention engine discovery and launch.", color: colors.teal },
-                                            { val: "40%", label: "Velocity Increase", desc: "Realized through automated Jira triage and workflow optimization.", color: colors.ember },
-                                            { val: "98%", label: "Model Accuracy", desc: "Statistical validation for high-stakes regional budget allocation.", color: colors.midnight }
-                                        ].map((m, i) => (
-                                            <div key={i} className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm text-center hover:shadow-md transition-shadow group">
-                                                <p className="text-5xl serif-font mb-2 group-hover:scale-110 transition-transform duration-500" style={{ color: colors.midnight }}>{m.val}</p>
-                                                <p className="text-[10px] font-black uppercase tracking-widest mb-3" style={{ color: m.color }}>{m.label}</p>
-                                                <p className="text-xs text-slate-500 italic leading-relaxed">{m.desc}</p>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </section>
+                {/* ── NAVIGATION ── */}
+                <div className="max-w-5xl mx-auto w-full px-4 -mt-7 relative z-20">
+                    <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-2">
+                        <div className="nav-scroll flex gap-1">
+                            {tabs.map((tab) => {
+                                const active = activeTab === tab.id;
+                                const Icon = tab.icon;
+                                return (
+                                    <button
+                                        key={tab.id}
+                                        onClick={() => switchTab(tab.id)}
+                                        className={`nav-pill relative flex-1 min-w-max flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-[10px] md:text-[11px] font-black uppercase tracking-[0.12em] ${active ? 'text-white' : 'text-slate-400 hover:text-slate-800 hover:bg-slate-50'}`}
+                                        style={{ background: active ? 'var(--midnight)' : 'transparent' }}
+                                    >
+                                        <Icon className="w-3.5 h-3.5 flex-shrink-0" />
+                                        <span className="hidden sm:inline">{tab.label}</span>
+                                        <span className="sm:hidden">{tab.label.split(' ')[0]}</span>
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </div>
 
-                                <div className="mb-14 text-center">
-                                    <h2 className="text-4xl md:text-5xl font-normal mb-3 tracking-tight" style={{ color: colors.midnight }}>Technical Infrastructure</h2>
-                                    <p className="text-[11px] uppercase tracking-[0.4em] font-bold" style={{ color: colors.teal }}>The specialized engines driving modern enterprise results</p>
+                {/* ── MAIN CONTENT ── */}
+                <main ref={mainRef} className="max-w-5xl mx-auto w-full px-4 py-16 flex-grow">
+
+                    {/* ─────────── TECH STACK ─────────── */}
+                    {activeTab === 'landing' && (
+                        <div>
+                            {/* Impact metrics */}
+                            <div className="mb-16">
+                                <p className="divider-label text-[10px] font-black uppercase tracking-[0.35em] text-slate-400 mb-10">Executive Impact Dashboard</p>
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                    {[
+                                        { val: "14%",  label: "Churn Reduction",  desc: "ML-driven retention engine discovery and launch.", accent: "#1A8B8B" },
+                                        { val: "40%",  label: "Velocity Increase", desc: "Automated Jira triage and workflow optimisation.", accent: "#F0684C" },
+                                        { val: "98%",  label: "Model Accuracy",    desc: "Statistical validation for regional budget allocation.", accent: "#1E2D40" },
+                                    ].map((m, i) => (
+                                        <div key={i} className={`metric-card bg-white rounded-3xl p-8 text-center border border-slate-100 anim-fadeUp delay-${i+1}`}>
+                                            <div className="text-6xl md:text-7xl serif font-normal mb-2 tracking-tight" style={{ color: m.accent }}>{m.val}</div>
+                                            <div className="text-[9px] font-black uppercase tracking-[0.25em] mb-3" style={{ color: m.accent }}>{m.label}</div>
+                                            <p className="text-xs text-slate-400 italic leading-relaxed">{m.desc}</p>
+                                        </div>
+                                    ))}
                                 </div>
-                                
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                                    {toolStack.map((tool, i) => (
-                                        <div key={i} className={`bg-white rounded-3xl border transition-all overflow-hidden ${expandedTool === tool.name ? 'shadow-2xl' : 'border-slate-200 shadow-sm'}`} style={{ borderColor: expandedTool === tool.name ? colors.teal : '' }}>
-                                            <button onClick={() => setExpandedTool(expandedTool === tool.name ? null : tool.name)} className="w-full p-8 flex items-center justify-between group">
-                                                <div className="flex items-center gap-6">
-                                                    <div className="transition-transform group-hover:scale-110" style={{ color: colors.teal }}>{tool.icon}</div>
-                                                    <div className="text-left">
-                                                        <p className="text-xl serif-font leading-none" style={{ color: colors.midnight }}>{tool.name}</p>
-                                                        <p className="text-[9px] uppercase font-bold tracking-widest mt-1 opacity-40">{tool.cat}</p>
+                            </div>
+
+                            {/* Tools */}
+                            <div className="mb-10 text-center">
+                                <h2 className="text-4xl md:text-5xl font-normal serif tracking-tight mb-2" style={{ color: '#1E2D40' }}>
+                                    Technical Infrastructure
+                                </h2>
+                                <p className="text-[11px] uppercase tracking-[0.35em] font-bold" style={{ color:'#1A8B8B' }}>
+                                    The specialist engines driving enterprise results
+                                </p>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                                {toolStack.map((tool, i) => {
+                                    const Icon = tool.icon;
+                                    const open = expandedTool === tool.name;
+                                    return (
+                                        <div key={i}
+                                             className={`bg-white rounded-2xl border overflow-hidden transition-all duration-300 anim-fadeUp delay-${i+1} ${open ? 'shadow-2xl' : 'border-slate-100 shadow-sm card-hover'}`}
+                                             style={{ borderColor: open ? '#1A8B8B' : '' }}>
+                                            <button onClick={() => setExpandedTool(open ? null : tool.name)}
+                                                    className="w-full p-6 flex items-center justify-between group text-left">
+                                                <div className="flex items-center gap-4">
+                                                    <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                                                         style={{ background: open ? '#1A8B8B18' : '#f3f4f6' }}>
+                                                        <Icon className="w-5 h-5" style={{ color: open ? '#1A8B8B' : '#94a3b8' }} />
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-base font-bold serif" style={{ color:'#1E2D40' }}>{tool.name}</p>
+                                                        <p className="text-[9px] uppercase tracking-widest font-bold opacity-40 mt-0.5">{tool.cat}</p>
                                                     </div>
                                                 </div>
-                                                {expandedTool === tool.name ? <Icons.ChevronUp className="text-teal-600" /> : <Icons.ChevronDown className="opacity-20 group-hover:opacity-100" />}
+                                                <div className={`w-6 h-6 flex items-center justify-center rounded-full transition-colors ${open ? 'bg-teal-50' : 'bg-slate-50 group-hover:bg-slate-100'}`}>
+                                                    {open
+                                                        ? <I.ChevronUp className="w-3.5 h-3.5" style={{ color:'#1A8B8B' }} />
+                                                        : <I.ChevronDown className="w-3.5 h-3.5 text-slate-300" />}
+                                                </div>
                                             </button>
-                                            {expandedTool === tool.name && (
-                                                <div className="px-8 pb-8 animate-in">
-                                                    <div className="pt-6 border-t border-slate-100 space-y-6">
+
+                                            {/* Skill bar */}
+                                            <div className="px-6 pb-4">
+                                                <div className="progress-track">
+                                                    <div className="progress-fill" style={{ width: open ? `${tool.skill}%` : '0%' }} />
+                                                </div>
+                                            </div>
+
+                                            {open && (
+                                                <div className="px-6 pb-6 anim-fadeIn">
+                                                    <div className="pt-4 border-t border-slate-100 space-y-4">
                                                         <div>
-                                                            <p className="text-[10px] font-black uppercase tracking-[0.2em] mb-2" style={{ color: colors.ember }}>[01] Strategic Impact</p>
-                                                            <p className="text-sm font-normal leading-relaxed text-slate-600 italic">{tool.impact}</p>
+                                                            <p className="text-[9px] font-black uppercase tracking-[0.2em] mb-1.5" style={{ color:'#F0684C' }}>Strategic Impact</p>
+                                                            <p className="text-sm text-slate-500 leading-relaxed">{tool.impact}</p>
                                                         </div>
                                                         <div>
-                                                            <p className="text-[10px] font-black uppercase tracking-[0.2em] mb-2" style={{ color: colors.ember }}>[02] Productivity Output</p>
-                                                            <p className="text-sm font-normal leading-relaxed text-slate-600 italic">{tool.productivity}</p>
+                                                            <p className="text-[9px] font-black uppercase tracking-[0.2em] mb-1.5" style={{ color:'#F0684C' }}>Productivity Output</p>
+                                                            <p className="text-sm text-slate-500 leading-relaxed">{tool.productivity}</p>
                                                         </div>
                                                     </div>
                                                 </div>
                                             )}
                                         </div>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-
-                        {/* DOMAIN PAGES */}
-                        {activeTab !== 'landing' && (
-                            <div className="animate-in">
-                                <div className="flex flex-col md:flex-row items-baseline gap-4 mb-16 border-b pb-8" style={{ borderColor: colors.midnight }}>
-                                    <h2 className="text-4xl md:text-5xl font-normal tracking-tight italic uppercase" style={{ color: colors.midnight }}>
-                                        {activeTab === 'pm' ? "Product Management" : 
-                                         activeTab === 'ops' ? "Program Operations" : 
-                                         activeTab === 'ds' ? "Data Science" : 
-                                         "Community Management"}
-                                    </h2>
-                                    <span className="text-white font-bold text-[10px] uppercase tracking-[0.3em] px-4 py-1.5 rounded-full" style={{ backgroundColor: colors.teal }}>Domain Vertical</span>
-                                </div>
-
-                                <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
-                                    <div className="lg:col-span-1">
-                                        <h3 className="text-[11px] font-bold uppercase mb-10 tracking-[0.4em]" style={{ color: colors.teal }}>Core Competencies</h3>
-                                        <div className="space-y-12">
-                                            <div className="group border-l-4 pl-6 transition-colors" style={{ borderColor: colors.midnight }}>
-                                                <p className="text-2xl font-normal mb-1 serif-font">Strategic Frameworks</p>
-                                                <p className="text-sm font-light leading-relaxed opacity-60">High-fidelity mapping and tactical execution for {activeTab} workflows.</p>
-                                            </div>
-                                            <div className="group border-l-4 pl-6 transition-colors" style={{ borderColor: colors.midnight }}>
-                                                <p className="text-2xl font-normal mb-1 serif-font">Technical Lifecycle</p>
-                                                <p className="text-sm font-light leading-relaxed opacity-60">End-to-end management of complex technical assets and organizational processes.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="lg:col-span-2 space-y-8">
-                                        <div className="bg-white p-12 rounded-[2.5rem] shadow-2xl border border-slate-100 relative overflow-hidden group">
-                                            <div className="relative z-10">
-                                                <span className="px-4 py-1 text-white text-[9px] font-bold uppercase tracking-widest rounded-full mb-10 inline-block" style={{ backgroundColor: colors.midnight }}>Project Brief</span>
-                                                <h4 className="text-3xl md:text-5xl font-normal mb-6 tracking-tight text-slate-800 italic uppercase">
-                                                    {activeTab === 'pm' && "Predictive Retention Engine"}
-                                                    {activeTab === 'ops' && "Global QA Lifecycle Revamp"}
-                                                    {activeTab === 'ds' && "Revenue Predictor Model"}
-                                                    {activeTab === 'community' && "Scale & Retention Framework"}
-                                                </h4>
-                                                <p className="text-lg mb-12 font-light leading-relaxed max-w-xl italic border-l-8 pl-8" style={{ color: colors.graphite, borderColor: colors.ember }}>
-                                                    {activeTab === 'pm' && "Discovery and launch of an ML-driven dashboard for CS teams to identify at-risk accounts."}
-                                                    {activeTab === 'ops' && "Replaced manual ticketing with a custom automated triage system powered by Jira and Slack APIs."}
-                                                    {activeTab === 'ds' && "Architected a time-series forecasting pipeline to optimize regional budget allocation."}
-                                                    {activeTab === 'community' && "Scaled a 10k member base via peer-led technical education and automated onboarding."}
-                                                </p>
-                                                <div className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-[#1A8B8B]">
-                                                    <Icons.Check className="w-4 h-4" /> Live Production
-                                                </div>
-                                            </div>
-                                            <Icons.Rocket style={{ color: colors.teal }} className="absolute -right-16 -bottom-16 opacity-[0.05] group-hover:rotate-12 transition-transform duration-1000" size={180} />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-                    </main>
-
-                    {/* Connect Footer */}
-                    <footer className="max-w-7xl mx-auto px-6 mb-24 w-full">
-                        <div style={{ backgroundColor: colors.midnight }} className="p-12 md:p-20 rounded-[3.5rem] text-white flex flex-col md:flex-row gap-16 items-center relative overflow-hidden group shadow-2xl">
-                            <div className="flex-1 relative z-10 text-center md:text-left">
-                                <h3 className="text-5xl md:text-7xl font-normal mb-8 tracking-tight italic">Connect.</h3>
-                                <p className="text-white/60 text-lg mb-12 font-light leading-relaxed max-w-sm tracking-wide">Strategic leadership at the intersection of product, data, and ecosystem growth.</p>
-                                <div className="flex flex-col md:items-start items-center gap-6">
-                                    <div className="flex flex-wrap justify-center md:justify-start gap-6">
-                                        <button onClick={() => setShowEmail(!showEmail)} style={{ backgroundColor: colors.ember }} className="text-white px-10 py-4 rounded-full font-bold uppercase text-[11px] tracking-widest hover:scale-105 transition-all shadow-xl flex items-center gap-2">
-                                            <Icons.Mail className="w-4 h-4" /> {showEmail ? 'Close Email' : 'Contact Me'}
-                                        </button>
-                                        <a href="assets/pdf" className="bg-transparent text-white border-2 border-white/20 px-10 py-4 rounded-full font-bold uppercase text-[11px] tracking-widest hover:bg-white/5 transition-all flex items-center gap-2">
-                                            <Icons.Download className="w-4 h-4" /> Download CV
-                                        </a>
-                                    </div>
-                                    {showEmail && (
-                                        <div className="p-6 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 flex flex-col sm:flex-row items-center gap-4 w-full max-w-md animate-in">
-                                            <div className="flex-grow text-center sm:text-left">
-                                                <p className="text-[10px] font-bold text-[#1A8B8B] uppercase tracking-widest mb-1">Direct Communication</p>
-                                                <a href="mailto:kerenwangombe@gmail.com" className="text-lg font-bold hover:text-[#1A8B8B] transition-colors underline decoration-dotted underline-offset-4">kerenwangombe@gmail.com</a>
-                                            </div>
-                                            <button onClick={handleCopyEmail} className="p-3 bg-white/10 hover:bg-white/20 rounded-xl transition-all group shadow-inner">
-                                                {copied ? <Icons.Check className="w-5 h-5 text-green-400" /> : <Icons.Copy className="w-5 h-5 opacity-60" />}
-                                            </button>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                            <div className="w-full md:w-1/3 flex flex-col items-center md:items-end justify-center relative z-10">
-                                <div className="flex gap-10 mb-12">
-                                    <a href="https://www.linkedin.com/in/keren-wangombe/" target="_blank" rel="noopener noreferrer" className="text-white/30 hover:text-white transition-colors" title="LinkedIn Profile"><Icons.Linkedin className="w-10 h-10" /></a>
-                                    <a href="#" className="text-white/30 hover:text-white transition-colors" title="GitHub Profile"><Icons.Github className="w-10 h-10" /></a>
-                                </div>
-                                <p className="text-[10px] font-bold text-white/30 uppercase tracking-[0.5em] text-center md:text-right">Architecture Driven Strategy</p>
-                                <p className="text-sm font-normal mt-2 serif-font italic opacity-60 text-[#1A8B8B]">Edition v2.6.0</p>
+                                    );
+                                })}
                             </div>
                         </div>
-                    </footer>
+                    )}
 
-                    {/* Ribbon */}
-                    <div className="bg-white border-t border-slate-100 py-14 px-8">
-                        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10">
-                            <div className="text-center md:text-left">
-                                <p className="text-[11px] font-bold uppercase tracking-[0.5em] mb-3 opacity-30">Technical Leadership & Precision</p>
-                                <p className="text-sm serif-font italic" style={{ color: colors.midnight }}>© 2026 Keren Wang'ombe — Built with Data & Logic</p>
+                    {/* ─────────── DOMAIN PAGES ─────────── */}
+                    {activeTab !== 'landing' && domain && (
+                        <div className="anim-fadeUp">
+                            {/* Domain header */}
+                            <div className="mb-12">
+                                <Pill color={domain.color}>{domain.tagline}</Pill>
+                                <h2 className="text-4xl md:text-6xl font-normal serif italic tracking-tight mt-3 mb-2" style={{ color:'#1E2D40' }}>
+                                    {domain.title}
+                                </h2>
                             </div>
-                            <button onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})} className="group flex flex-col items-center gap-3 transition-all opacity-40 hover:opacity-100">
-                                <p className="text-[10px] font-bold uppercase tracking-[0.5em] group-hover:tracking-[0.8em] transition-all">Back to Top</p>
-                                <div className="p-4 rounded-full border-2 border-slate-100 group-hover:border-slate-900 transition-colors">
-                                    <Icons.ArrowUp className="w-5 h-5" />
+
+                            {/* Domain metrics */}
+                            <div className="grid grid-cols-3 gap-4 mb-14">
+                                {domain.metrics.map((m, i) => (
+                                    <div key={i} className={`metric-card bg-white rounded-2xl p-5 md:p-7 text-center border border-slate-100 anim-fadeUp delay-${i+1}`}>
+                                        <div className="text-3xl md:text-4xl serif font-normal mb-1" style={{ color: domain.color }}>{m.val}</div>
+                                        <div className="text-[8px] md:text-[10px] font-black uppercase tracking-widest mb-1" style={{ color: domain.color }}>{m.label}</div>
+                                        <p className="text-[10px] text-slate-400 italic hidden md:block">{m.desc}</p>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* Projects */}
+                            <p className="divider-label text-[10px] font-black uppercase tracking-[0.35em] text-slate-400 mb-8">Featured Projects</p>
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-14">
+                                {domain.projects.map((proj, i) => (
+                                    <ProjectCard key={i} project={proj} color={domain.color} delay={`delay-${i+1}`} />
+                                ))}
+                            </div>
+
+                            {/* Skills */}
+                            <p className="divider-label text-[10px] font-black uppercase tracking-[0.35em] text-slate-400 mb-6">Core Competencies</p>
+                            <div className="flex flex-wrap gap-3">
+                                {domain.skills.map((s, i) => (
+                                    <div key={i} className={`bg-white border border-slate-100 rounded-2xl px-5 py-3 text-sm font-medium text-slate-700 card-hover anim-fadeUp delay-${(i % 6) + 1}`}>
+                                        {s}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </main>
+
+                {/* ── CONNECT FOOTER ── */}
+                <footer className="max-w-5xl mx-auto px-4 mb-16 w-full">
+                    <div className="footer-glow rounded-3xl text-white p-10 md:p-14 relative overflow-hidden">
+                        {/* Decorative circle */}
+                        <div style={{ position:'absolute', right:'-80px', top:'-80px', width:'300px', height:'300px',
+                                      borderRadius:'50%', border:'1px solid rgba(255,255,255,0.05)', pointerEvents:'none' }} />
+                        <div style={{ position:'absolute', right:'-40px', top:'-40px', width:'200px', height:'200px',
+                                      borderRadius:'50%', border:'1px solid rgba(255,255,255,0.05)', pointerEvents:'none' }} />
+
+                        <div className="relative z-10 flex flex-col md:flex-row gap-12 items-start md:items-center">
+                            {/* Left */}
+                            <div className="flex-1">
+                                <h3 className="text-4xl md:text-6xl font-normal serif italic mb-3">Let's Connect.</h3>
+                                <p className="text-white/50 text-sm leading-relaxed mb-8 max-w-sm">
+                                    Strategic leadership at the intersection of product, data, and ecosystem growth.
+                                </p>
+                                <div className="flex flex-wrap gap-3">
+                                    <button onClick={() => setShowEmail(!showEmail)}
+                                            style={{ background:'#F0684C' }}
+                                            className="flex items-center gap-2 text-white px-7 py-3.5 rounded-xl font-black text-[10px] uppercase tracking-widest hover:opacity-90 transition-all">
+                                        <I.Mail className="w-4 h-4" />
+                                        {showEmail ? 'Close' : 'Email Me'}
+                                    </button>
+                                    <a href="assets/cv.pdf"
+                                       className="flex items-center gap-2 border border-white/20 text-white/80 px-7 py-3.5 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-white/5 transition-all">
+                                        <I.Download className="w-4 h-4" />
+                                        Download CV
+                                    </a>
                                 </div>
-                            </button>
+
+                                {showEmail && (
+                                    <div className="mt-5 p-5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/15 flex items-center gap-4 max-w-sm anim-scaleIn">
+                                        <div>
+                                            <p className="text-[9px] font-black uppercase tracking-widest mb-1" style={{ color:'#1A8B8B' }}>Direct</p>
+                                            <a href="mailto:kerenwangombe@gmail.com" className="text-sm font-bold hover:text-teal-400 transition-colors underline decoration-dotted underline-offset-4">
+                                                kerenwangombe@gmail.com
+                                            </a>
+                                        </div>
+                                        <button onClick={copyEmail}
+                                                className="ml-auto p-2.5 bg-white/10 hover:bg-white/20 rounded-xl transition-all flex-shrink-0">
+                                            {copied ? <I.Check className="w-4 h-4 text-green-400" /> : <I.Copy className="w-4 h-4 opacity-60" />}
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Right */}
+                            <div className="flex flex-col items-start md:items-end gap-6">
+                                <div className="flex gap-5">
+                                    <a href="https://www.linkedin.com/in/keren-wangombe/" target="_blank" rel="noopener noreferrer"
+                                       className="w-12 h-12 rounded-2xl border border-white/15 flex items-center justify-center text-white/40 hover:text-white hover:border-white/40 transition-all">
+                                        <I.Linkedin className="w-5 h-5" />
+                                    </a>
+                                    <a href="#"
+                                       className="w-12 h-12 rounded-2xl border border-white/15 flex items-center justify-center text-white/40 hover:text-white hover:border-white/40 transition-all">
+                                        <I.Github className="w-5 h-5" />
+                                    </a>
+                                </div>
+                                <div className="text-right">
+                                    <p className="text-[9px] font-black uppercase tracking-[0.5em] text-white/25">Architecture-Driven Strategy</p>
+                                    <p className="serif italic text-sm mt-1" style={{ color:'rgba(26,139,139,0.6)' }}>v2.6.0</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            );
-        };
+                </footer>
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-    </script>
+                {/* ── BOTTOM STRIP ── */}
+                <div className="border-t border-slate-100 bg-white py-8 px-6">
+                    <div className="max-w-5xl mx-auto flex justify-between items-center gap-6">
+                        <p className="serif italic text-sm" style={{ color:'#1E2D40' }}>
+                            © 2026 Keren Wang'ombe — Built with Data &amp; Logic
+                        </p>
+                        <button onClick={() => window.scrollTo({ top:0, behavior:'smooth' })}
+                                className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-800 transition-all group">
+                            <span>Top</span>
+                            <div className="w-8 h-8 rounded-full border-2 border-slate-200 group-hover:border-slate-800 flex items-center justify-center transition-colors">
+                                <I.ArrowUp className="w-3.5 h-3.5" />
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
 </body>
 </html>
-
-
