@@ -306,6 +306,7 @@
             tagline: "Data → Insight → Action",
             color: "#1E2D40",
             intro: "I turn operational data into decisions. Whether it's a cohort health tracker, a programme performance dashboard, or a data cleaning pipeline, I build the analytical layer that helps teams understand what's working and act on it.",
+            externalPortfolio: "https://www.datascienceportfol.io/kerenwangombe",
             metrics: [
                 { val: "98%", label: "Data Accuracy", desc: "Across large multi-cohort datasets" },
                 { val: "80%", label: "CSAT Score", desc: "Reflecting programme quality tracked via data" },
@@ -729,6 +730,27 @@
                                 ))}
                             </div>
 
+                            {domain.externalPortfolio && (
+                                <a href={domain.externalPortfolio} target="_blank" rel="noopener noreferrer"
+                                   className="flex items-center justify-between w-full mb-10 p-5 rounded-2xl border group transition-all hover:shadow-lg anim-fadeUp"
+                                   style={{ borderColor: domain.color + '30', background: domain.color + '06' }}>
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: domain.color + '15' }}>
+                                            <I.Database className="w-5 h-5" style={{ color: domain.color }} />
+                                        </div>
+                                        <div>
+                                            <p className="text-[9px] font-black uppercase tracking-[0.2em] mb-0.5" style={{ color: domain.color }}>Full Data Portfolio</p>
+                                            <p className="text-sm font-bold" style={{ color: '#1E2D40' }}>View all data projects on datascienceportfol.io</p>
+                                            <p className="text-xs text-slate-400 mt-0.5">datascienceportfol.io/kerenwangombe</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center gap-2 flex-shrink-0 text-[10px] font-black uppercase tracking-widest transition-opacity group-hover:opacity-70"
+                                         style={{ color: domain.color }}>
+                                        <I.ExternalLink className="w-4 h-4" />
+                                        <span className="hidden sm:inline">Open Portfolio</span>
+                                    </div>
+                                </a>
+                            )}
                             <p className="divider-label text-[10px] font-black uppercase tracking-[0.35em] text-slate-400 mb-8">Featured Projects</p>
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
                                 {domain.projects.map((proj, i) => (
