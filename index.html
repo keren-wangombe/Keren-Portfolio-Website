@@ -306,7 +306,6 @@
             tagline: "Data → Insight → Action",
             color: "#1E2D40",
             intro: "I turn operational data into decisions. Whether it's a cohort health tracker, a programme performance dashboard, or a data cleaning pipeline, I build the analytical layer that helps teams understand what's working and act on it.",
-            externalPortfolio: "https://www.datascienceportfol.io/kerenwangombe",
             metrics: [
                 { val: "98%", label: "Data Accuracy", desc: "Across large multi-cohort datasets" },
                 { val: "80%", label: "CSAT Score", desc: "Reflecting programme quality tracked via data" },
@@ -314,20 +313,67 @@
             ],
             projects: [
                 {
-                    badge: "Coming Soon",
-                    title: "Learner Cohort Health Tracker",
-                    summary: "A data model and live dashboard built in Google Sheets and Looker Studio to track learner engagement, completion rates, and at-risk signals across a multi-country programme cohort of 3,000+ learners.",
-                    outcomes: ["Placeholder — project case study coming soon", "Full case study with dataset and walkthrough coming", "Built with Google Sheets, Apps Script, and Looker Studio"],
-                    tools: ["Google Sheets", "Looker Studio", "Apps Script", "BigQuery"],
-                    placeholder: true,
+                    badge: "Excel · Dashboard",
+                    title: "E-Commerce Sales & Customer Analytics",
+                    summary: "Analysed sales data to identify customer segments, product gaps, and revenue trends. Built a framework that revealed the top 5% of loyal customers generating $1,118+ in lifetime value, and made strategic recommendations for Electronics category growth and regional optimisation.",
+                    outcomes: [
+                        "Identified top 5% loyal customers with $1,118+ lifetime value using segmentation framework",
+                        "Revealed Electronics at 6% of sales — flagged as high-potential underdeveloped category",
+                        "Delivered regional optimisation recommendations backed by sales pattern analysis",
+                        "Published full case study on Medium documenting methodology and findings",
+                    ],
+                    tools: ["Microsoft Excel", "Dashboard Design", "KPI Tracking", "Customer Segmentation"],
+                    placeholder: false,
+                    links: [{ label: "Read on Medium", url: "https://medium.com/@nyamburawangombe/how-i-built-a-sales-customer-insights-dashboard-for-a-small-e-commerce-business-using-excel-1d95ecfa71b1" }],
+                    imageUrl: "https://www.datascienceportfol.io/static/profile_pics/pr2_4CAD07FCDC8D3520A7A9.jpg",
                 },
                 {
-                    badge: "Coming Soon",
-                    title: "Programme Performance Dashboard",
-                    summary: "A multi-metric Power BI dashboard surfacing weekly operational KPIs — satisfaction scores, event attendance, completion rates, and facilitator feedback — enabling real-time decisions for senior leadership.",
-                    outcomes: ["Placeholder — project case study coming soon", "Dashboard design and data model walkthrough coming", "Built with Power BI and Excel"],
-                    tools: ["Power BI", "Excel", "SQL", "Google Forms"],
-                    placeholder: true,
+                    badge: "SQL · Power BI",
+                    title: "Customer Support Operations Analytics",
+                    summary: "Conducted end-to-end analysis of support ticket data using advanced SQL queries and Power BI dashboards. Identified key operational bottlenecks including 25% of tickets exceeding 14-day SLA, uneven agent workload distribution, and 2–3x longer resolution times for multi-agent tickets.",
+                    outcomes: [
+                        "Found 25% of tickets exceeding 14-day SLA — pinpointed root cause in multi-agent handoffs",
+                        "Identified uneven agent workload distribution causing resolution time variance of 2–3x",
+                        "Built interactive executive Power BI dashboard for leadership decision-making",
+                        "Full case study documented on Notion with GitHub repository",
+                    ],
+                    tools: ["SQL", "Power BI", "SLA Analysis", "Operational Analytics"],
+                    placeholder: false,
+                    links: [
+                        { label: "View on Notion", url: "https://paper-belt-9a3.notion.site/Operational-Bottlenecks-1fb1bb37c5e180ccb632f6e3451ab511?pvs=143" },
+                        { label: "GitHub", url: "https://github.com/Kerenyambura/operationalbottlenecks" },
+                    ],
+                    imageUrl: "https://www.datascienceportfol.io/static/profile_pics/pr7_7210F562E361D77B095F.jpg",
+                },
+                {
+                    badge: "SQL · MySQL",
+                    title: "Retail Sales Analysis",
+                    summary: "Analysed retail sales data using MySQL with advanced SQL queries — CTEs, subqueries, and aggregations — to identify customer demographics, sales patterns, and product performance across categories and seasons.",
+                    outcomes: [
+                        "Identified Electronics as the top-performing category by revenue",
+                        "Revealed 18–29 age group as primary customer segment — key for targeting strategy",
+                        "Surfaced seasonal sales trends informing inventory and procurement decisions",
+                        "Full write-up published on Medium with methodology walkthrough",
+                    ],
+                    tools: ["MySQL", "CTEs", "Subqueries", "Sales Analytics"],
+                    placeholder: false,
+                    links: [{ label: "Read on Medium", url: "https://medium.com/@nyamburawangombe/retail-sales-analysis-54a805993053" }],
+                    imageUrl: "https://www.datascienceportfol.io/static/profile_pics/pr8_54CE588F23ABA633255D.jpg",
+                },
+                {
+                    badge: "SQL · Data Cleaning",
+                    title: "Maji Ndogo Water Crisis Analysis",
+                    summary: "Used SQL — from basic to advanced — to inspect, clean, and analyse data for a hypothetical country facing a water crisis. The project demonstrates systematic data quality investigation and insight generation to inform infrastructure and policy decisions.",
+                    outcomes: [
+                        "Applied basic to advanced SQL — JOINs, CTEs, window functions — across the full analysis",
+                        "Inspected and cleaned raw dataset to ensure analysis-ready data quality",
+                        "Generated actionable insights on water access patterns to guide resource allocation",
+                        "Full SQL code published on GitHub",
+                    ],
+                    tools: ["SQL", "Data Cleaning", "Data Inspection", "Problem Solving"],
+                    placeholder: false,
+                    links: [{ label: "View on GitHub", url: "https://github.com/Kerenyambura/SQL/blob/main/project_part_3.sql" }],
+                    imageUrl: null,
                 },
             ],
             skillGroups: [
@@ -436,37 +482,60 @@
     };
 
     const ProjectCard = ({ project, color, delay }) => (
-        <div className={`rounded-3xl border p-8 card-hover anim-fadeUp ${delay} ${project.placeholder ? 'placeholder-card' : 'bg-white border-slate-100'}`}>
-            {project.placeholder ? <PlaceholderBadge /> : <Pill color={color}>{project.badge}</Pill>}
-            <h4 className={`text-2xl md:text-3xl font-normal serif mt-4 mb-3 tracking-tight ${project.placeholder ? 'text-slate-400' : ''}`}
-                style={{ color: project.placeholder ? undefined : '#1E2D40' }}>
-                {project.title}
-            </h4>
-            <p className={`text-sm leading-relaxed mb-6 italic border-l-4 pl-4 ${project.placeholder ? 'text-slate-400 border-slate-300' : 'text-slate-500'}`}
-               style={{ borderColor: project.placeholder ? undefined : color }}>
-                {project.summary}
-            </p>
-            <div className="mb-6">
-                <p className="text-[10px] font-black uppercase tracking-[0.2em] mb-3 opacity-40">
-                    {project.placeholder ? 'Anticipated Outcomes' : 'Key Outcomes'}
-                </p>
-                <ul className="space-y-2">
-                    {project.outcomes.map((o, i) => (
-                        <li key={i} className="flex items-start gap-2 text-sm text-slate-400">
-                            <I.Check className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: project.placeholder ? '#9ca3af' : color }} />
-                            {o}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-            <div className="flex flex-wrap gap-2">
-                {project.tools.map((t, i) => (
-                    <span key={i} className={project.placeholder ? 'tool-tag opacity-50' : 'tool-tag'}>{t}</span>
-                ))}
-            </div>
-            {project.youtubeId && (
-                <YouTubeEmbed youtubeId={project.youtubeId} color={color} />
+        <div className={`rounded-3xl border overflow-hidden card-hover anim-fadeUp ${delay} ${project.placeholder ? 'placeholder-card' : 'bg-white border-slate-100'}`}>
+            {project.imageUrl && (
+                <div style={{ height: '180px', overflow: 'hidden', background: '#f1f3f5' }}>
+                    <img src={project.imageUrl} alt={project.title}
+                         style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.4s' }}
+                         onMouseOver={e => e.target.style.transform='scale(1.04)'}
+                         onMouseOut={e => e.target.style.transform='scale(1)'}
+                         onError={e => e.target.parentElement.style.display='none'} />
+                </div>
             )}
+            <div className="p-8">
+                {project.placeholder ? <PlaceholderBadge /> : <Pill color={color}>{project.badge}</Pill>}
+                <h4 className={`text-2xl md:text-3xl font-normal serif mt-4 mb-3 tracking-tight ${project.placeholder ? 'text-slate-400' : ''}`}
+                    style={{ color: project.placeholder ? undefined : '#1E2D40' }}>
+                    {project.title}
+                </h4>
+                <p className={`text-sm leading-relaxed mb-6 italic border-l-4 pl-4 ${project.placeholder ? 'text-slate-400 border-slate-300' : 'text-slate-500'}`}
+                   style={{ borderColor: project.placeholder ? undefined : color }}>
+                    {project.summary}
+                </p>
+                <div className="mb-6">
+                    <p className="text-[10px] font-black uppercase tracking-[0.2em] mb-3 opacity-40">
+                        {project.placeholder ? 'Anticipated Outcomes' : 'Key Outcomes'}
+                    </p>
+                    <ul className="space-y-2">
+                        {project.outcomes.map((o, i) => (
+                            <li key={i} className="flex items-start gap-2 text-sm text-slate-400">
+                                <I.Check className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: project.placeholder ? '#9ca3af' : color }} />
+                                {o}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <div className="flex flex-wrap gap-2 mb-5">
+                    {project.tools.map((t, i) => (
+                        <span key={i} className={project.placeholder ? 'tool-tag opacity-50' : 'tool-tag'}>{t}</span>
+                    ))}
+                </div>
+                {project.links && project.links.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mt-4">
+                        {project.links.map((link, i) => (
+                            <a key={i} href={link.url} target="_blank" rel="noopener noreferrer"
+                               className="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-xl border transition-all hover:opacity-70"
+                               style={{ color, borderColor: color + '40', background: color + '08' }}>
+                                <I.ExternalLink className="w-3 h-3" />
+                                {link.label}
+                            </a>
+                        ))}
+                    </div>
+                )}
+                {project.youtubeId && (
+                    <YouTubeEmbed youtubeId={project.youtubeId} color={color} />
+                )}
+            </div>
         </div>
     );
 
@@ -752,7 +821,7 @@
                                 </a>
                             )}
                             <p className="divider-label text-[10px] font-black uppercase tracking-[0.35em] text-slate-400 mb-8">Featured Projects</p>
-                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
+                            <div className={`grid grid-cols-1 ${domain.projects.length > 2 ? 'lg:grid-cols-2' : 'lg:grid-cols-2'} gap-6 mb-12`}>
                                 {domain.projects.map((proj, i) => (
                                     <ProjectCard key={i} project={proj} color={domain.color} delay={`delay-${i+1}`} />
                                 ))}
