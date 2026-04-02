@@ -213,6 +213,57 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
 
+        .case-study-drawer {
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease;
+            max-height: 0;
+            opacity: 0;
+        }
+        .case-study-drawer.open {
+            max-height: 9000px;
+            opacity: 1;
+        }
+        .sql-block {
+            background: #0f1c2e;
+            border-radius: 10px;
+            padding: 16px 20px;
+            overflow-x: auto;
+            margin: 12px 0;
+        }
+        .sql-block code {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 11px;
+            line-height: 1.7;
+            color: #a8d8ea;
+            white-space: pre;
+        }
+        .sql-keyword { color: #f06a6a; font-weight: 700; }
+        .sql-comment { color: #5a7a99; font-style: italic; }
+        .sql-string { color: #98d8a8; }
+        .insight-box {
+            background: rgba(26,139,139,0.06);
+            border-left: 3px solid #1A8B8B;
+            border-radius: 0 8px 8px 0;
+            padding: 10px 14px;
+            margin: 8px 0 16px 0;
+            font-size: 12px;
+            color: #374151;
+            line-height: 1.6;
+        }
+        .cs-section-title {
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: #94a3b8;
+            margin: 24px 0 10px 0;
+        }
+        .cs-h3 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1E2D40;
+            margin: 18px 0 6px 0;
+        }
         @media (max-width: 768px) {
             .nav-scroll { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
             .nav-scroll::-webkit-scrollbar { display: none; }
@@ -324,7 +375,7 @@
                     ],
                     tools: ["Microsoft Excel", "Dashboard Design", "KPI Tracking", "Customer Segmentation"],
                     placeholder: false,
-                    links: [{ label: "Read on Medium", url: "https://medium.com/@nyamburawangombe/how-i-built-a-sales-customer-insights-dashboard-for-a-small-e-commerce-business-using-excel-1d95ecfa71b1" }],
+                    caseStudyKey: "ecommerce",
                     imageUrl: "https://www.datascienceportfol.io/static/profile_pics/pr2_4CAD07FCDC8D3520A7A9.jpg",
                 },
                 {
@@ -339,10 +390,7 @@
                     ],
                     tools: ["SQL", "Power BI", "SLA Analysis", "Operational Analytics"],
                     placeholder: false,
-                    links: [
-                        { label: "View on Notion", url: "https://paper-belt-9a3.notion.site/Operational-Bottlenecks-1fb1bb37c5e180ccb632f6e3451ab511?pvs=143" },
-                        { label: "GitHub", url: "https://github.com/Kerenyambura/operationalbottlenecks" },
-                    ],
+                    caseStudyKey: "support",
                     imageUrl: "https://www.datascienceportfol.io/static/profile_pics/pr7_7210F562E361D77B095F.jpg",
                 },
                 {
@@ -357,7 +405,7 @@
                     ],
                     tools: ["MySQL", "CTEs", "Subqueries", "Sales Analytics"],
                     placeholder: false,
-                    links: [{ label: "Read on Medium", url: "https://medium.com/@nyamburawangombe/retail-sales-analysis-54a805993053" }],
+                    caseStudyKey: "retail",
                     imageUrl: "https://www.datascienceportfol.io/static/profile_pics/pr8_54CE588F23ABA633255D.jpg",
                 },
                 {
@@ -372,7 +420,7 @@
                     ],
                     tools: ["SQL", "Data Cleaning", "Data Inspection", "Problem Solving"],
                     placeholder: false,
-                    links: [{ label: "View on GitHub", url: "https://github.com/Kerenyambura/SQL/blob/main/project_part_3.sql" }],
+                    caseStudyKey: "maji",
                     imageUrl: null,
                 },
             ],
@@ -432,6 +480,300 @@
         </div>
     );
 
+    const caseStudies = {
+        ecommerce: {
+            overview: "A small e-commerce business was sitting on months of sales data with no system to interpret it. The founder knew some products were underperforming and some customers were buying repeatedly — but had no visibility into which ones, why, or what to do about it. This project built an end-to-end analytics system in Excel to answer those questions.",
+            sections: [
+                {
+                    title: "The Problem",
+                    content: "The business had transaction records across 12 months covering products, customer IDs, regions, and sales amounts — but all sitting in a flat export with no analysis layer. Leadership decisions were being made on gut feel rather than data. Three specific questions needed answering: Who are our most valuable customers? Which product categories are underperforming relative to their potential? Where geographically should we focus our next growth effort?"
+                },
+                {
+                    title: "Approach",
+                    content: "Built a structured analytics framework in Excel covering three analytical lenses: customer segmentation using purchase frequency and lifetime value, product performance analysis by category and margin, and regional sales distribution. Used pivot tables, VLOOKUP, conditional formatting, and a dashboard layer to make the findings navigable by non-technical stakeholders."
+                },
+                {
+                    title: "Key Findings",
+                    bullets: [
+                        "Top 5% of customers by purchase frequency generated over $1,118 in lifetime value each — significantly above the average basket",
+                        "Electronics represented only 6% of total sales despite being the highest-margin category — flagged as a major growth opportunity",
+                        "Two regions were generating 60%+ of revenue with minimal marketing investment — prime candidates for doubling down",
+                        "Bottom 20% of SKUs by revenue contributed less than 2% of total sales — candidates for rationalisation"
+                    ]
+                },
+                {
+                    title: "Recommendations Delivered",
+                    bullets: [
+                        "Launch a loyalty tier for the top 5% customer segment with early access and exclusive offers",
+                        "Increase Electronics inventory and run a targeted campaign — this category punches above its weight on margin",
+                        "Reallocate 30% of marketing budget from underperforming regions to the top two revenue regions",
+                        "Retire or bundle the bottom 20% of SKUs to reduce operational complexity"
+                    ]
+                },
+                {
+                    title: "Tools & Skills Demonstrated",
+                    content: "Microsoft Excel — pivot tables, VLOOKUP, dynamic charts, conditional formatting, dashboard design, KPI tracking framework, customer segmentation logic."
+                }
+            ],
+            externalLabel: "Originally published on Medium",
+            externalUrl: "https://medium.com/@nyamburawangombe/how-i-built-a-sales-customer-insights-dashboard-for-a-small-e-commerce-business-using-excel-1d95ecfa71b1"
+        },
+        support: {
+            overview: "A fictional support operations team was struggling with SLA breaches, uneven agent workloads, and no visibility into where the system was breaking down. This project conducted a full SQL audit of the support ticket database — 15 targeted queries designed to surface every major operational bottleneck.",
+            sections: [
+                {
+                    title: "The Problem",
+                    content: "The support team had ticket data but no analytical layer. Managers couldn't answer basic questions: which issue types breach SLA most? Which agents are overloaded? Are tickets bouncing between agents unnecessarily? This audit was built to answer all of those questions systematically using SQL."
+                },
+                {
+                    title: "The Queries — With Insights"
+                }
+            ],
+            queries: [
+                {
+                    title: "1. Which ticket categories drive the highest SLA breach rates?",
+                    insight: "Identifies which issue categories (e.g. Billing, Account Access) are consistently breaching SLA and contributing to customer dissatisfaction.",
+                    sql: `SELECT 
+    category,
+    COUNT(*) AS total_tickets,
+    SUM(CASE 
+        WHEN resolved_at > created_at + INTERVAL 5 DAY 
+        THEN 1 ELSE 0 END) AS sla_breaches,
+    ROUND(100.0 * SUM(CASE 
+        WHEN resolved_at > created_at + INTERVAL 5 DAY 
+        THEN 1 ELSE 0 END) / COUNT(*), 2) AS breach_rate_percent
+FROM tickets
+WHERE status = 'Closed'
+GROUP BY category
+ORDER BY breach_rate_percent DESC;`
+                },
+                {
+                    title: "2. How does resolution time vary across teams, regions, and issue types?",
+                    insight: "Surfaces delays by region, team, and issue type to target training or workflow improvements.",
+                    sql: `SELECT 
+    a.team, a.region, t.category,
+    ROUND(AVG(TIMESTAMPDIFF(HOUR, t.created_at, t.resolved_at)), 2) AS avg_resolution_hours,
+    COUNT(*) AS ticket_count
+FROM agents a
+JOIN tickets t ON t.agent_id = a.agent_id
+WHERE t.status = 'Closed' AND t.resolved_at IS NOT NULL
+GROUP BY a.team, a.region, t.category
+ORDER BY avg_resolution_hours DESC;`
+                },
+                {
+                    title: "3. What percentage of tickets are unresolved beyond SLA thresholds?",
+                    insight: "Aged tickets beyond 14 days are red flags for backlogs and SLA non-compliance.",
+                    sql: `SELECT 
+    COUNT(*) AS total_open_tickets,
+    SUM(CASE WHEN created_at < NOW() - INTERVAL 14 DAY THEN 1 ELSE 0 END) AS overdue_tickets,
+    ROUND(100.0 * SUM(CASE 
+        WHEN created_at < NOW() - INTERVAL 14 DAY THEN 1 ELSE 0 END) / COUNT(*), 2) AS overdue_percent
+FROM tickets
+WHERE status IN ('Open', 'In Progress');`
+                },
+                {
+                    title: "4. How many tickets are bouncing between multiple agents?",
+                    insight: "Flags poor ownership or collaboration breakdowns that waste time and slow resolution.",
+                    sql: `SELECT 
+    tu.ticket_id,
+    COUNT(DISTINCT tu.updated_by) AS distinct_agents
+FROM tickets t
+JOIN ticket_updates tu ON t.ticket_id = tu.ticket_id
+WHERE t.status = 'Closed'
+GROUP BY tu.ticket_id
+HAVING COUNT(DISTINCT tu.updated_by) > 1;`
+                },
+                {
+                    title: "5. What is the average time to first response per agent?",
+                    insight: "Early response is critical. This reveals inconsistencies fixable with training or SOP changes.",
+                    sql: `WITH first_responses AS (
+    SELECT t.ticket_id, t.agent_id,
+        MIN(tu.timestamp) AS first_response_time, t.created_at
+    FROM tickets t
+    JOIN ticket_updates tu ON t.ticket_id = tu.ticket_id
+    GROUP BY t.ticket_id, t.agent_id, t.created_at
+)
+SELECT a.name, a.team, a.region,
+    ROUND(AVG(TIMESTAMPDIFF(MINUTE, fr.created_at, fr.first_response_time)), 2) AS avg_first_response_minutes
+FROM first_responses fr
+JOIN agents a ON fr.agent_id = a.agent_id
+GROUP BY a.agent_id, a.name, a.team, a.region
+ORDER BY avg_first_response_minutes DESC;`
+                },
+                {
+                    title: "6. Which customers have submitted more than 3 tickets?",
+                    insight: "Identifies high-frequency users — useful for targeted feedback or account reviews.",
+                    sql: `SELECT c.customer_id, c.name, COUNT(t.ticket_id) AS ticket_count,
+    c.region, c.subscription_plan
+FROM tickets t
+JOIN customers c ON t.customer_id = c.customer_id
+GROUP BY c.customer_id, c.name, c.region, c.subscription_plan
+HAVING COUNT(t.ticket_id) > 3
+ORDER BY ticket_count DESC;`
+                }
+            ],
+            externalLabel: "View full repo on GitHub",
+            externalUrl: "https://github.com/Kerenyambura/operationalbottlenecks"
+        },
+        retail: {
+            overview: "Analysed a retail sales dataset using MySQL to uncover which customer segments, product categories, and seasons drive the most revenue — and what that means for inventory and targeting strategy.",
+            sections: [
+                {
+                    title: "The Problem",
+                    content: "A retail business had transaction data across customer demographics, product categories, and seasonal periods but no structured analysis. The goal was to use advanced SQL to answer three business questions: Who is buying? What are they buying? When are they buying most?"
+                },
+                {
+                    title: "Approach",
+                    content: "Used MySQL with CTEs, subqueries, window functions, and aggregations to segment customers by age group and gender, rank product categories by revenue, and identify seasonal demand patterns. All queries were written to be reusable and documented for non-technical stakeholders."
+                },
+                {
+                    title: "Key Findings",
+                    bullets: [
+                        "Electronics was the top-performing category by total revenue — significantly ahead of other categories",
+                        "The 18–29 age group was the primary customer segment — driving purchasing decisions across all top categories",
+                        "Seasonal trends showed clear Q4 peaks — directly informing inventory planning for high-demand periods",
+                        "Female customers showed higher average basket values in Clothing; male customers drove Electronics volume"
+                    ]
+                },
+                {
+                    title: "SQL Techniques Used",
+                    bullets: [
+                        "CTEs (Common Table Expressions) for staging intermediate results cleanly",
+                        "Subqueries for filtering and conditional aggregations",
+                        "GROUP BY with HAVING for segment-level analysis",
+                        "DATE functions for seasonal trend extraction",
+                        "RANK() and ROW_NUMBER() window functions for category ranking"
+                    ]
+                },
+                {
+                    title: "Business Recommendations",
+                    bullets: [
+                        "Target the 18–29 segment with digital-first campaigns — highest volume, highest engagement",
+                        "Build Q4 inventory buffers of 20–30% for Electronics and Clothing based on seasonal trend data",
+                        "Run cross-sell campaigns pairing Electronics accessories with main Electronics purchases"
+                    ]
+                }
+            ],
+            externalLabel: "Originally published on Medium",
+            externalUrl: "https://medium.com/@nyamburawangombe/retail-sales-analysis-54a805993053"
+        },
+        maji: {
+            overview: "A data integrity and analysis project for a hypothetical country called Maji Ndogo facing a water access crisis. Used SQL from basic to advanced to inspect raw survey data, identify reporting errors, flag suspicious employee behaviour, and generate insights to guide infrastructure investment.",
+            sections: [
+                {
+                    title: "The Problem",
+                    content: "Maji Ndogo's water authority had survey data on thousands of water sources across the country — but the data had quality issues, inconsistencies between auditor reports and employee reports, and suspected corruption in some survey entries. The goal was to use SQL to clean the data, identify the discrepancies, surface which employees had suspicious patterns, and produce analysis ready for leadership decisions."
+                },
+                {
+                    title: "What the SQL Does",
+                    content: "The project uses a chain of CTEs to progressively build up the analysis — starting with raw discrepancy detection and culminating in identifying specific employees whose error rates exceed the average, suggesting systematic rather than accidental reporting issues."
+                }
+            ],
+            queries: [
+                {
+                    title: "Checking auditor report vs employee report — finding discrepancies",
+                    insight: "Identifies all sites where the auditor's water quality score does not match the employee's reported score — the foundation of the entire integrity audit.",
+                    sql: `WITH incorrect_records AS (
+    SELECT ar.location_id,
+        ar.true_water_source_score AS auditor_score,
+        wq.subjective_quality_score AS surveyor_score,
+        v.record_id, ar.statements
+    FROM md_water_services.visits v
+    JOIN md_water_services.water_quality wq ON v.record_id = wq.record_id
+    JOIN md_water_services.auditor_report ar ON v.location_id = ar.location_id
+    WHERE ar.true_water_source_score != wq.subjective_quality_score
+    AND v.visit_count = 1
+)`
+                },
+                {
+                    title: "Identifying which employees made the errors",
+                    insight: "Joins the discrepancy list to the employee table to find out which surveyors were responsible for the mismatched records.",
+                    sql: `employee_error AS (
+    SELECT ar.location_id,
+        ar.true_water_source_score AS auditor_score,
+        wq.subjective_quality_score AS surveyor_score,
+        v.record_id, e.employee_name
+    FROM md_water_services.visits v
+    JOIN md_water_services.employee e 
+        ON v.assigned_employee_id = e.assigned_employee_id
+    JOIN md_water_services.auditor_report ar ON v.location_id = ar.location_id
+    JOIN md_water_services.water_quality wq ON v.record_id = wq.record_id
+    WHERE ar.true_water_source_score != wq.subjective_quality_score
+    AND v.visit_count = 1
+)`
+                },
+                {
+                    title: "Flagging employees with above-average error rates",
+                    insight: "Calculates the average error count across all employees and flags those exceeding it — the suspect list for further investigation.",
+                    sql: `error_count AS (
+    SELECT employee_name, COUNT(*) AS number_of_mistakes
+    FROM employee_error
+    GROUP BY employee_name
+),
+avg_error_count AS (
+    SELECT AVG(number_of_mistakes) AS avg_error_count_per_empl
+    FROM error_count
+)
+SELECT ec.employee_name, ec.number_of_mistakes
+FROM error_count ec
+JOIN avg_error_count ae
+    ON ec.number_of_mistakes > ae.avg_error_count_per_empl;`
+                }
+            ],
+            externalLabel: "View full SQL on GitHub",
+            externalUrl: "https://github.com/Kerenyambura/SQL/blob/main/project_part_3.sql"
+        }
+    };
+
+    const CaseStudyDrawer = ({ studyKey, color, isOpen }) => {
+        const study = caseStudies[studyKey];
+        if (!study) return null;
+        return (
+            <div className={`case-study-drawer ${isOpen ? 'open' : ''}`}>
+                <div className="pt-6 border-t border-slate-100 mt-6">
+                    <p className="text-sm text-slate-600 leading-relaxed mb-6 italic">{study.overview}</p>
+                    {study.sections && study.sections.map((section, i) => (
+                        <div key={i}>
+                            <p className="cs-section-title">{section.title}</p>
+                            {section.content && <p className="text-sm text-slate-500 leading-relaxed mb-4">{section.content}</p>}
+                            {section.bullets && (
+                                <ul className="space-y-2 mb-4">
+                                    {section.bullets.map((b, bi) => (
+                                        <li key={bi} className="flex items-start gap-2 text-sm text-slate-500">
+                                            <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: color }} />
+                                            {b}
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
+                    ))}
+                    {study.queries && study.queries.map((q, qi) => (
+                        <div key={qi} className="mb-4">
+                            <p className="cs-h3">{q.title}</p>
+                            <div className="sql-block">
+                                <code>{q.sql}</code>
+                            </div>
+                            <div className="insight-box">
+                                <span style={{ fontWeight: 700, color: '#1A8B8B' }}>Insight: </span>{q.insight}
+                            </div>
+                        </div>
+                    ))}
+                    {study.externalUrl && (
+                        <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                            <span className="text-[10px] text-slate-300 uppercase tracking-widest">{study.externalLabel}</span>
+                            <a href={study.externalUrl} target="_blank" rel="noopener noreferrer"
+                               className="flex items-center gap-1.5 text-[10px] font-bold text-slate-400 hover:text-slate-600 transition-colors">
+                                <I.ExternalLink className="w-3 h-3" />
+                                View original
+                            </a>
+                        </div>
+                    )}
+                </div>
+            </div>
+        );
+    };
+
     const YouTubeEmbed = ({ youtubeId, color }) => {
         const [playing, setPlaying] = useState(false);
         const thumbUrl = `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`;
@@ -481,14 +823,14 @@
         );
     };
 
-    const ProjectCard = ({ project, color, delay }) => (
-        <div className={`rounded-3xl border overflow-hidden card-hover anim-fadeUp ${delay} ${project.placeholder ? 'placeholder-card' : 'bg-white border-slate-100'}`}>
+    const ProjectCard = ({ project, color, delay }) => {
+        const [open, setOpen] = useState(false);
+        return (
+        <div className={`rounded-3xl border overflow-hidden anim-fadeUp ${delay} ${project.placeholder ? 'placeholder-card' : 'bg-white border-slate-100'} ${!project.placeholder ? 'card-hover' : ''}`}>
             {project.imageUrl && (
                 <div style={{ height: '180px', overflow: 'hidden', background: '#f1f3f5' }}>
                     <img src={project.imageUrl} alt={project.title}
                          style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.4s' }}
-                         onMouseOver={e => e.target.style.transform='scale(1.04)'}
-                         onMouseOut={e => e.target.style.transform='scale(1)'}
                          onError={e => e.target.parentElement.style.display='none'} />
                 </div>
             )}
@@ -520,24 +862,24 @@
                         <span key={i} className={project.placeholder ? 'tool-tag opacity-50' : 'tool-tag'}>{t}</span>
                     ))}
                 </div>
-                {project.links && project.links.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mt-4">
-                        {project.links.map((link, i) => (
-                            <a key={i} href={link.url} target="_blank" rel="noopener noreferrer"
-                               className="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-xl border transition-all hover:opacity-70"
-                               style={{ color, borderColor: color + '40', background: color + '08' }}>
-                                <I.ExternalLink className="w-3 h-3" />
-                                {link.label}
-                            </a>
-                        ))}
-                    </div>
+                {project.caseStudyKey && (
+                    <button onClick={() => setOpen(!open)}
+                            className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest px-4 py-2.5 rounded-xl transition-all w-full justify-center mt-2"
+                            style={{ background: open ? color : color + '12', color: open ? 'white' : color, border: `1px solid ${color}30` }}>
+                        {open ? <I.ChevronUp className="w-3.5 h-3.5" /> : <I.ChevronDown className="w-3.5 h-3.5" />}
+                        {open ? 'Close Case Study' : 'Read Full Case Study'}
+                    </button>
+                )}
+                {project.caseStudyKey && (
+                    <CaseStudyDrawer studyKey={project.caseStudyKey} color={color} isOpen={open} />
                 )}
                 {project.youtubeId && (
                     <YouTubeEmbed youtubeId={project.youtubeId} color={color} />
                 )}
             </div>
         </div>
-    );
+        );
+    };
 
     const SkillsSection = ({ groups, color }) => (
         <div className="space-y-8">
