@@ -367,12 +367,19 @@
                     youtubeId: "8v5r37T_dDo",
                 },
                 {
-                    badge: "Coming Soon",
-                    title: "Workflow Automation Playbook",
-                    summary: "End-to-end documentation and implementation of automation flows that eliminated repetitive manual tasks across programme coordination — including onboarding triggers, report scheduling, and escalation routing.",
-                    outcomes: ["Placeholder — project case study coming soon", "Real metrics and outcomes will be added here", "Built with Make, Airtable, and Slack"],
-                    tools: ["Make (Integromat)", "Airtable", "Slack", "Typeform"],
-                    placeholder: true,
+                    badge: "Systems Design · CRM",
+                    title: "The Shift Collective — CRM & Operations Hub",
+                    summary: "A career coaching practice with 3 coaches and 25 active clients had no shared operational infrastructure — client records scattered, onboarding inconsistent, and zero team visibility. Built a complete Notion Operations Hub covering eight interconnected components: Client CRM, Session Notes with pre-built template, Resource Library, Coach SOPs, Content Pipeline, Metrics & Reporting, Team Wiki, and a live Home Dashboard with Q2 OKRs.",
+                    outcomes: [
+                        "Client CRM with 3 filtered views — by coach, by status, and by upcoming session date — giving the practice lead live visibility without a status meeting",
+                        "Pre-built session note template ensuring every coach captures the same information in the same structure after every session",
+                        "3 fully documented SOPs covering onboarding, no-show handling, and offboarding — any process runs consistently regardless of who does it",
+                        "Live Programme Calendar pulling upcoming sessions automatically — no manual updates needed",
+                    ],
+                    tools: ["Notion", "CRM Design", "SOP Documentation", "OKR Framework", "Systems Design", "Content Pipeline"],
+                    placeholder: false,
+                    notionEmbed: "https://paper-belt-9a3.notion.site/ebd/3361bb37c5e180f68291d8917dbc2eed",
+                    notionUrl: "https://paper-belt-9a3.notion.site/The-Shift-Collective-Operations-Hub-3361bb37c5e180f68291d8917dbc2eed?pvs=143",
                 },
             ],
             skillGroups: [
@@ -852,7 +859,42 @@ JOIN avg_error_count ae
         );
     };
 
-    const ProjectCard = ({ project, color, delay }) => {
+    const NotionEmbed = ({ embedUrl, notionUrl, color }) => {
+        const [open, setOpen] = useState(false);
+        return (
+            <div className="mt-6 rounded-2xl overflow-hidden border" style={{ borderColor: color + '30' }}>
+                <div className="px-4 py-2.5 flex items-center justify-between" style={{ background: color + '10', borderBottom: `1px solid ${color}20` }}>
+                    <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 rounded-full" style={{ background: color }} />
+                        <span className="text-[10px] font-black uppercase tracking-[0.18em]" style={{ color }}>Live Notion Hub</span>
+                    </div>
+                    <button onClick={() => setOpen(!open)}
+                            className="text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-lg transition-all"
+                            style={{ background: open ? color : color + '15', color: open ? 'white' : color }}>
+                        {open ? 'Close preview' : 'Preview hub'}
+                    </button>
+                </div>
+                {open && (
+                    <div style={{ background: '#191919' }}>
+                        <iframe
+                            src={embedUrl}
+                            style={{ width:'100%', height:'500px', border:'none', display:'block' }}
+                            allowFullScreen
+                        />
+                    </div>
+                )}
+                <div className="px-4 py-3 flex items-center justify-between" style={{ background: color + '06' }}>
+                    <span className="text-[10px] text-slate-400">The Shift Collective · Notion · CRM & Operations Hub</span>
+                    <a href={notionUrl} target="_blank" rel="noopener noreferrer"
+                       className="flex items-center gap-1 text-[10px] font-bold transition-opacity hover:opacity-70"
+                       style={{ color }}>
+                        <I.ExternalLink className="w-3 h-3" />
+                        Open in Notion
+                    </a>
+                </div>
+            </div>
+        );
+    };
         const [open, setOpen] = useState(false);
         return (
         <div className={`rounded-3xl border overflow-hidden anim-fadeUp ${delay} ${project.placeholder ? 'placeholder-card' : 'bg-white border-slate-100'} ${!project.placeholder ? 'card-hover' : ''}`}>
@@ -904,6 +946,9 @@ JOIN avg_error_count ae
                 )}
                 {project.youtubeId && (
                     <YouTubeEmbed youtubeId={project.youtubeId} color={color} />
+                )}
+                {project.notionEmbed && (
+                    <NotionEmbed embedUrl={project.notionEmbed} notionUrl={project.notionUrl} color={color} />
                 )}
             </div>
         </div>
