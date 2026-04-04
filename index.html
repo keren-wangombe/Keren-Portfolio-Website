@@ -907,7 +907,7 @@ JOIN avg_error_count ae
         const mainRef = useRef(null);
 
         const tabs = [
-            { id: 'landing',   label: 'About & Tools',  icon: I.Terminal },
+            { id: 'landing',   label: 'About',          icon: I.Terminal },
             { id: 'ops',       label: 'Program Ops',    icon: I.Settings },
             { id: 'ds',        label: 'Data Analytics', icon: I.Database },
             { id: 'community', label: 'Community',      icon: I.Users },
@@ -945,7 +945,7 @@ JOIN avg_error_count ae
                         <div className="flex items-center justify-center gap-3 mb-8">
                             <div style={{ width:32, height:1, background:'rgba(26,139,139,0.7)' }} />
                             <span style={{ color:'rgba(26,139,139,0.9)', fontSize:10, fontWeight:800, letterSpacing:'0.4em' }} className="uppercase">
-                                Program Operations &amp; Systems Design
+                                Program Operations Specialist
                             </span>
                             <div style={{ width:32, height:1, background:'rgba(26,139,139,0.7)' }} />
                         </div>
@@ -955,25 +955,11 @@ JOIN avg_error_count ae
                         </h1>
 
                         <p className="text-white/60 text-base md:text-lg font-light leading-relaxed max-w-2xl mx-auto tracking-wide mb-3">
-                            I build the systems, structures, and communities that help organisations run complex programmes with clarity and confidence.
+                            Systems-driven operations specialist with 3+ years of experience in programme delivery, data analytics, and community management — with a proven ability to build infrastructure that reduces manual work, improves measurable outcomes, and scales across distributed teams.
                         </p>
                         <p className="text-white/35 text-sm leading-relaxed max-w-xl mx-auto">
-                            Specialising in program operations, data analytics, and community management — across digital skills, workforce development, and mission-driven ecosystems.
+                            Experienced across workforce development, social impact, and mission-driven organisations. Available for full-time roles and freelance contracts.
                         </p>
-
-                        <div className="flex flex-wrap justify-center gap-4 mt-10">
-                            {[
-                                { icon: I.Globe,  text: 'Nairobi, Kenya' },
-                                { icon: I.Users,  text: '3,000+ Learners Managed' },
-                                { icon: I.Shield, text: 'Open to Opportunities' },
-                            ].map(({ icon: Icon, text }, i) => (
-                                <div key={i} className="flex items-center gap-2 border border-white/10 rounded-full px-5 py-2 text-white/60 text-xs font-medium backdrop-blur-sm"
-                                     style={{ background:'rgba(255,255,255,0.06)' }}>
-                                    <Icon className="w-3.5 h-3.5" style={{ color:'rgba(26,139,139,0.9)' }} />
-                                    {text}
-                                </div>
-                            ))}
-                        </div>
                     </div>
                 </header>
 
@@ -1001,52 +987,54 @@ JOIN avg_error_count ae
 
                     {activeTab === 'landing' && (
                         <div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16 anim-fadeUp">
-                                <div className="bg-white rounded-3xl border border-slate-100 p-8 flex flex-col justify-between">
+                            {/* About */}
+                            <div className="bg-white rounded-3xl border border-slate-100 p-8 md:p-10 mb-8 anim-fadeUp">
+                                <p className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-400 mb-5">About</p>
+                                <div className="about-quote mb-6">
+                                    <p className="text-xl md:text-2xl serif italic" style={{ color:'#1E2D40', lineHeight:1.5 }}>
+                                        "I'm an operations specialist who builds the infrastructure that helps organisations deliver programmes that work — reliably, at scale, and with clear evidence of impact."
+                                    </p>
+                                </div>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
-                                        <p className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-400 mb-4">Who I Am</p>
-                                        <div className="about-quote mb-5">
-                                            <p className="text-lg md:text-xl serif italic" style={{ color:'#1E2D40', lineHeight:1.5 }}>
-                                                "I'm a Program Operations Specialist who builds the infrastructure behind high-performing programmes."
-                                            </p>
-                                        </div>
+                                        <p className="text-sm text-slate-500 leading-relaxed mb-4">
+                                            With over 3 years of hands-on experience, I specialise in designing the systems, processes, and communities that turn operational complexity into measurable results. My work sits at the intersection of programme delivery, data, and people — and I bring a builder's mindset to every organisation I work with.
+                                        </p>
                                         <p className="text-sm text-slate-500 leading-relaxed">
-                                            I specialise in designing the systems, processes, and communities that allow organisations to deliver at scale — without the chaos. My work sits at the intersection of operations, data, and people, and I bring a builder's mindset to every programme I touch.
+                                            I've managed cohorts of up to 3,000 participants across 8+ countries, automated workflows that cut manual work by 50%, and consistently delivered programme satisfaction scores above 80% CSAT and 77 NPS. Whether I'm designing an SOP, building a dashboard, or coordinating a community event, the goal is always the same — make the complex simple and the invisible visible.
                                         </p>
                                     </div>
-                                    <div className="mt-6 flex flex-wrap gap-2">
-                                        {['Digital Skills Programmes', 'Workforce Development', 'EdTech', 'Freelance & Contract'].map((tag, i) => (
-                                            <span key={i} className="tool-tag">{tag}</span>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                <div className="grid grid-cols-2 gap-4">
-                                    {[
-                                        { val: "50%",  label: "Manual Tasks Eliminated",  accent: "#F0684C" },
-                                        { val: "80%",  label: "CSAT Score",               accent: "#1A8B8B" },
-                                        { val: "99%",  label: "Event Satisfaction",        accent: "#1E2D40" },
-                                        { val: "77",   label: "Net Promoter Score",        accent: "#F0684C" },
-                                    ].map((m, i) => (
-                                        <div key={i} className={`metric-card bg-white rounded-2xl p-5 text-center border border-slate-100 anim-fadeUp delay-${i+1}`}>
-                                            <div className="text-4xl serif font-normal mb-1 tracking-tight" style={{ color: m.accent }}>{m.val}</div>
-                                            <div className="text-[9px] font-black uppercase tracking-[0.2em] leading-snug" style={{ color: m.accent }}>{m.label}</div>
+                                    <div>
+                                        <p className="text-sm text-slate-500 leading-relaxed mb-4">
+                                            My background spans workforce development, social impact, NGO coordination, and digital skills programmes — which means I've built operational systems for organisations that can't afford to get it wrong. I understand how to work with distributed teams, limited resources, and high stakeholder expectations.
+                                        </p>
+                                        <p className="text-sm text-slate-500 leading-relaxed">
+                                            I'm currently open to senior programme operations roles, learning operations positions, and freelance contracts — particularly with organisations focused on impact, education, and community.
+                                        </p>
+                                        <div className="mt-5 flex flex-wrap gap-2">
+                                            {['Programme Operations', 'Workforce Development', 'Social Impact', 'Community Building', 'Freelance & Contract'].map((tag, i) => (
+                                                <span key={i} className="tool-tag">{tag}</span>
+                                            ))}
                                         </div>
-                                    ))}
+                                    </div>
                                 </div>
                             </div>
 
-                            <div className="mb-12">
+                            {/* What I Bring */}
+                            <div className="mb-10">
                                 <p className="divider-label text-[10px] font-black uppercase tracking-[0.35em] text-slate-400 mb-8">What I Bring to Your Organisation</p>
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                                     {[
-                                        { icon: I.Settings, title: "Operational Systems", desc: "I design the processes, SOPs, and tooling that allow teams to deliver reliably at scale — reducing manual work and making complexity manageable.", color: "#F0684C" },
-                                        { icon: I.ChartLine, title: "Data-Driven Insight", desc: "I build dashboards and reporting pipelines that give leadership real-time visibility into what's working, what's not, and where to act.", color: "#1A8B8B" },
-                                        { icon: I.Users, title: "Community & Engagement", desc: "I create the structures that turn cohorts and communities into engaged, high-retention groups — from onboarding through long-term participation.", color: "#1E2D40" },
+                                        { icon: I.Settings, title: "Operational Systems", desc: "I design the processes, SOPs, and tooling that allow teams to deliver reliably at scale — reducing manual work and making complexity manageable for everyone involved.", color: "#F0684C" },
+                                        { icon: I.ChartLine, title: "Data-Driven Reporting", desc: "I build dashboards and reporting pipelines that give leadership real-time visibility into what's working, what's not, and exactly where to act.", color: "#1A8B8B" },
+                                        { icon: I.Users, title: "Community & Engagement", desc: "I create the structures that turn cohorts and communities into engaged, high-retention groups — from onboarding design through long-term participation systems.", color: "#1E2D40" },
+                                        { icon: I.Zap, title: "Workflow Automation", desc: "I connect tools and eliminate manual handoffs — from intake forms to notifications to database updates — without needing engineering support.", color: "#F0684C" },
+                                        { icon: I.Target, title: "Stakeholder Coordination", desc: "I manage cross-functional relationships across teams, leadership, and external partners — translating operational complexity into clear, timely communication.", color: "#1A8B8B" },
+                                        { icon: I.Database, title: "Systems Design Thinking", desc: "I don't just set up tools — I think through the full operational architecture before building, so what I deliver is coherent, scalable, and easy to hand over.", color: "#1E2D40" },
                                     ].map((item, i) => {
                                         const Icon = item.icon;
                                         return (
-                                            <div key={i} className={`bg-white rounded-2xl border border-slate-100 p-6 card-hover anim-fadeUp delay-${i+1}`}>
+                                            <div key={i} className={`bg-white rounded-2xl border border-slate-100 p-6 card-hover anim-fadeUp delay-${(i%6)+1}`}>
                                                 <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ background: item.color + '15' }}>
                                                     <Icon className="w-5 h-5" style={{ color: item.color }} />
                                                 </div>
@@ -1058,60 +1046,79 @@ JOIN avg_error_count ae
                                 </div>
                             </div>
 
+                            {/* Core Skills */}
                             <div className="mb-10 text-center">
                                 <h2 className="text-4xl md:text-5xl font-normal serif tracking-tight mb-2" style={{ color: '#1E2D40' }}>
-                                    Tool Stack
+                                    Core Skills
                                 </h2>
                                 <p className="text-[11px] uppercase tracking-[0.35em] font-bold" style={{ color:'#1A8B8B' }}>
-                                    The platforms I work with every day
+                                    How I work and what I work with
                                 </p>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                                {toolStack.map((tool, i) => {
-                                    const Icon = tool.icon;
-                                    const open = expandedTool === tool.name;
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                {[
+                                    {
+                                        cat: "Programme Operations",
+                                        icon: I.Settings,
+                                        color: "#F0684C",
+                                        line: "I design the systems and processes that keep complex programmes running reliably at scale.",
+                                        skills: ["Cohort Management", "SOP Design", "Milestone Planning", "Risk Mitigation", "System Design", "Process Mapping", "Programme Evaluation"]
+                                    },
+                                    {
+                                        cat: "Stakeholder Management",
+                                        icon: I.Users,
+                                        color: "#1A8B8B",
+                                        line: "I coordinate across teams and levels — translating operational complexity into clear communication.",
+                                        skills: ["Executive Reporting", "Cross-functional Coordination", "OKR & KPI Tracking", "Stakeholder Communication", "Facilitation", "Partner Management"]
+                                    },
+                                    {
+                                        cat: "Data & Reporting",
+                                        icon: I.ChartLine,
+                                        color: "#1E2D40",
+                                        line: "I turn operational data into dashboards and decisions for teams and leadership.",
+                                        skills: ["Google Sheets", "Excel", "Power BI", "Looker Studio", "SQL", "Data Storytelling", "KPI Framework Design"]
+                                    },
+                                    {
+                                        cat: "Workflow Automation & Tools",
+                                        icon: I.Zap,
+                                        color: "#F0684C",
+                                        line: "I connect tools and eliminate manual handoffs so teams focus on higher-value work.",
+                                        skills: ["Zapier", "Make", "Google Apps Script", "Airtable", "Notion", "Asana", "ClickUp", "Monday.com"]
+                                    },
+                                    {
+                                        cat: "Community Management",
+                                        icon: I.Globe,
+                                        color: "#1A8B8B",
+                                        line: "I build the structures that turn cohorts and communities into engaged, high-retention groups.",
+                                        skills: ["Community Strategy", "Onboarding Design", "Event Management", "Engagement Programming", "Member Retention", "Ambassador Programmes"]
+                                    },
+                                    {
+                                        cat: "Communication & Design",
+                                        icon: I.MessageSquare,
+                                        color: "#1E2D40",
+                                        line: "I produce the materials and content that make programmes feel professional and consistent.",
+                                        skills: ["Canva", "Google Workspace", "Content Planning", "Newsletter Management", "Facilitation Guides", "Programme Communications"]
+                                    },
+                                ].map((group, gi) => {
+                                    const Icon = group.icon;
                                     return (
-                                        <div key={i}
-                                             className={`bg-white rounded-2xl border overflow-hidden transition-all duration-300 anim-fadeUp delay-${(i%6)+1} ${open ? 'shadow-2xl' : 'border-slate-100 shadow-sm card-hover'}`}
-                                             style={{ borderColor: open ? '#1A8B8B' : '' }}>
-                                            <button onClick={() => setExpandedTool(open ? null : tool.name)}
-                                                    className="w-full p-6 flex items-center justify-between group text-left">
-                                                <div className="flex items-center gap-4">
-                                                    <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                                                         style={{ background: open ? '#1A8B8B18' : '#f3f4f6' }}>
-                                                        <Icon className="w-5 h-5" style={{ color: open ? '#1A8B8B' : '#94a3b8' }} />
-                                                    </div>
-                                                    <div>
-                                                        <p className="text-sm font-bold" style={{ color:'#1E2D40' }}>{tool.name}</p>
-                                                        <p className="text-[9px] uppercase tracking-widest font-bold opacity-40 mt-0.5">{tool.cat}</p>
-                                                    </div>
+                                        <div key={gi} className={`bg-white rounded-2xl border border-slate-100 p-6 card-hover anim-fadeUp delay-${(gi%6)+1}`}>
+                                            <div className="flex items-center gap-3 mb-3">
+                                                <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: group.color + '12' }}>
+                                                    <Icon className="w-4 h-4" style={{ color: group.color }} />
                                                 </div>
-                                                <div className={`w-6 h-6 flex items-center justify-center rounded-full transition-colors ${open ? 'bg-teal-50' : 'bg-slate-50 group-hover:bg-slate-100'}`}>
-                                                    {open
-                                                        ? <I.ChevronUp className="w-3.5 h-3.5" style={{ color:'#1A8B8B' }} />
-                                                        : <I.ChevronDown className="w-3.5 h-3.5 text-slate-300" />}
-                                                </div>
-                                            </button>
-                                            <div className="px-6 pb-4">
-                                                <div className="progress-track">
-                                                    <div className="progress-fill" style={{ width: open ? `${tool.skill}%` : '0%' }} />
-                                                </div>
+                                                <p className="text-[9px] font-black uppercase tracking-[0.18em]" style={{ color: group.color }}>{group.cat}</p>
                                             </div>
-                                            {open && (
-                                                <div className="px-6 pb-6 anim-fadeIn">
-                                                    <div className="pt-4 border-t border-slate-100 space-y-4">
-                                                        <div>
-                                                            <p className="text-[9px] font-black uppercase tracking-[0.2em] mb-1.5" style={{ color:'#F0684C' }}>How I Use It</p>
-                                                            <p className="text-sm text-slate-500 leading-relaxed">{tool.impact}</p>
-                                                        </div>
-                                                        <div>
-                                                            <p className="text-[9px] font-black uppercase tracking-[0.2em] mb-1.5" style={{ color:'#F0684C' }}>Impact on Output</p>
-                                                            <p className="text-sm text-slate-500 leading-relaxed">{tool.productivity}</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            )}
+                                            <p className="text-xs text-slate-400 italic mb-4 leading-relaxed">{group.line}</p>
+                                            <div className="flex flex-wrap gap-2">
+                                                {group.skills.map((skill, si) => (
+                                                    <span key={si} className="skill-chip" style={{ fontSize: '11px', padding: '5px 11px' }}>
+                                                        <span className="skill-chip-dot" style={{ background: group.color + '50' }} />
+                                                        {skill}
+                                                    </span>
+                                                ))}
+                                            </div>
                                         </div>
                                     );
                                 })}
