@@ -316,7 +316,7 @@
             title: "Program Operations",
             tagline: "Structure → Scale → Reliability",
             color: "#F0684C",
-            intro: "I build the operational backbone that keeps complex programmes running — the SOPs, dashboards, automation flows, and coordination frameworks that turn chaos into repeatable, measurable results.",
+            intro: "I build the operational backbone that keeps complex programmes running — the SOPs, dashboards, automation flows, and coordination frameworks that turn chaos into repeatable, measurable results. At scale, this has meant managing end-to-end delivery for cohorts of up to 3,000 learners across 8+ countries, cutting manual operational work by 50% through automation (saving 15+ hours a week), and achieving 80% CSAT across programme touchpoints. The projects in this section show how I've applied that same thinking across different industries and tools.",
             metrics: [
                 { val: "50%", label: "Manual Tasks Cut", desc: "Through automation and system design" },
                 { val: "15+", label: "Hours Saved / Week", desc: "Across the team via workflow redesign" },
@@ -356,7 +356,7 @@
             title: "Data Analytics",
             tagline: "Data → Insight → Action",
             color: "#1E2D40",
-            intro: "I turn operational data into decisions. Whether it's a cohort health tracker, a programme performance dashboard, or a data cleaning pipeline, I build the analytical layer that helps teams understand what's working and act on it.",
+            intro: "I turn operational data into decisions. Whether it's a cohort health tracker, a programme performance dashboard, or a data cleaning pipeline, I build the analytical layer that helps teams understand what's working and act on it. In practice, this has meant maintaining 98% data accuracy across large multi-cohort datasets, designing evaluation frameworks that surfaced a 77 NPS and 80% CSAT across programmes, and building dashboards that replaced weekly manual reports with always-on visibility for leadership. The projects below demonstrate that work across Excel, SQL, and Power BI.",
             metrics: [
                 { val: "98%", label: "Data Accuracy", desc: "Across large multi-cohort datasets" },
                 { val: "80%", label: "CSAT Score", desc: "Reflecting programme quality tracked via data" },
@@ -434,7 +434,7 @@
             title: "Community Management",
             tagline: "Grow → Engage → Retain",
             color: "#1A8B8B",
-            intro: "I design community experiences that make people feel like they belong — structured onboarding, thoughtful events, ambassador programmes, and engagement systems that turn early members into long-term contributors.",
+            intro: "I design community experiences that make people feel like they belong — structured onboarding, thoughtful events, ambassador programmes, and engagement systems that turn early members into long-term contributors. The results have been measurable: 99% satisfaction across live learner events, 80% CSAT across community-facing programmes, and a 77 NPS reflecting communities where people don't just participate — they stay and advocate. The projects below show how I've built that same infrastructure for different organisations and contexts.",
             metrics: [
                 { val: "80%", label: "CSAT Score", desc: "Community satisfaction across programmes" },
                 { val: "99%", label: "Event Satisfaction", desc: "Across live virtual learner events" },
@@ -955,10 +955,10 @@ JOIN avg_error_count ae
                         </h1>
 
                         <p className="text-white/60 text-base md:text-lg font-light leading-relaxed max-w-2xl mx-auto tracking-wide mb-3">
-                            Systems-driven operations specialist with 3+ years of experience in programme delivery, data analytics, and community management — with a proven ability to build infrastructure that reduces manual work, improves measurable outcomes, and scales across distributed teams.
+                            Programme Operations Specialist with 3+ years delivering complex programmes at scale — 3,000+ learners across 8+ countries, 80% CSAT, 50% reduction in manual work, and 99% satisfaction on learner events. I build the systems, data infrastructure, and communities that make programmes run.
                         </p>
                         <p className="text-white/35 text-sm leading-relaxed max-w-xl mx-auto">
-                            Experienced across workforce development, social impact, and mission-driven organisations. Available for full-time roles and freelance contracts.
+                            Open to Senior Programme Operations, Learning Operations, and Programme Success roles — full-time or freelance — across workforce development, social impact, and education.
                         </p>
                     </div>
                 </header>
@@ -992,27 +992,45 @@ JOIN avg_error_count ae
                                 <p className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-400 mb-5">About</p>
                                 <div className="about-quote mb-6">
                                     <p className="text-xl md:text-2xl serif italic" style={{ color:'#1E2D40', lineHeight:1.5 }}>
-                                        "I'm an operations specialist who builds the infrastructure that helps organisations deliver programmes that work — reliably, at scale, and with clear evidence of impact."
+                                        "I build the systems that keep programmes running, the data layer that proves they're working, and the communities that make people stay."
                                     </p>
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
                                         <p className="text-sm text-slate-500 leading-relaxed mb-4">
-                                            With over 3 years of hands-on experience, I specialise in designing the systems, processes, and communities that turn operational complexity into measurable results. My work sits at the intersection of programme delivery, data, and people — and I bring a builder's mindset to every organisation I work with.
+                                            I'm a Programme Operations Specialist with 3+ years of experience designing the operational infrastructure — systems, processes, data, and communities — that allows organisations to deliver at scale without losing quality or burning out their teams.
                                         </p>
-                                        <p className="text-sm text-slate-500 leading-relaxed">
-                                            I've managed cohorts of up to 3,000 participants across 8+ countries, automated workflows that cut manual work by 50%, and consistently delivered programme satisfaction scores above 80% CSAT and 77 NPS. Whether I'm designing an SOP, building a dashboard, or coordinating a community event, the goal is always the same — make the complex simple and the invisible visible.
+                                        <p className="text-sm text-slate-500 leading-relaxed mb-5">
+                                            My background spans workforce development, social impact, NGO coordination, and digital skills programmes. I've built operational systems for organisations working across Africa and beyond — meaning I understand how to deliver under resource constraints, across distributed teams, and with high stakeholder expectations.
                                         </p>
+                                        <div className="grid grid-cols-2 gap-3">
+                                            {[
+                                                { val: "3,000+", label: "Learners managed", accent: "#F0684C" },
+                                                { val: "8+",     label: "Countries covered", accent: "#1A8B8B" },
+                                                { val: "80%",    label: "CSAT score", accent: "#1E2D40" },
+                                                { val: "50%",    label: "Manual work cut", accent: "#F0684C" },
+                                                { val: "99%",    label: "Event satisfaction", accent: "#1A8B8B" },
+                                                { val: "15h+",   label: "Saved per week", accent: "#1E2D40" },
+                                            ].map((m, i) => (
+                                                <div key={i} className="rounded-xl p-3 border border-slate-100 bg-slate-50">
+                                                    <div className="text-2xl serif font-normal tracking-tight" style={{ color: m.accent }}>{m.val}</div>
+                                                    <div className="text-[9px] font-black uppercase tracking-[0.15em] mt-0.5 text-slate-400">{m.label}</div>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
                                     <div>
                                         <p className="text-sm text-slate-500 leading-relaxed mb-4">
-                                            My background spans workforce development, social impact, NGO coordination, and digital skills programmes — which means I've built operational systems for organisations that can't afford to get it wrong. I understand how to work with distributed teams, limited resources, and high stakeholder expectations.
+                                            I work at the intersection of three things most operations people treat separately — systems design, data, and people. That combination means I don't just build trackers and dashboards; I build the full operational picture: what gets measured, how it gets actioned, and who's responsible for what.
+                                        </p>
+                                        <p className="text-sm text-slate-500 leading-relaxed mb-5">
+                                            I've designed learner health frameworks from scratch, coordinated four-part mentorship series for professional communities, built automation pipelines that replaced hours of manual work, and produced data reports that shaped programme strategy at a senior leadership level.
                                         </p>
                                         <p className="text-sm text-slate-500 leading-relaxed">
-                                            I'm currently open to senior programme operations roles, learning operations positions, and freelance contracts — particularly with organisations focused on impact, education, and community.
+                                            I'm open to Senior Programme Operations, Learning Operations, and Programme Success roles — full-time or freelance — with organisations focused on education, workforce development, and community impact.
                                         </p>
                                         <div className="mt-5 flex flex-wrap gap-2">
-                                            {['Programme Operations', 'Workforce Development', 'Social Impact', 'Community Building', 'Freelance & Contract'].map((tag, i) => (
+                                            {['Programme Operations', 'Learning Operations', 'Workforce Development', 'Social Impact', 'Community Building', 'Freelance'].map((tag, i) => (
                                                 <span key={i} className="tool-tag">{tag}</span>
                                             ))}
                                         </div>
@@ -1063,42 +1081,42 @@ JOIN avg_error_count ae
                                         icon: I.Settings,
                                         color: "#F0684C",
                                         line: "I design the systems and processes that keep complex programmes running reliably at scale.",
-                                        skills: ["Cohort Management", "SOP Design", "Milestone Planning", "Risk Mitigation", "System Design", "Process Mapping", "Programme Evaluation"]
+                                        skills: ["Cohort Management", "SOP Design", "Milestone Planning", "Risk Mitigation", "System Design", "Process Mapping", "Programme Evaluation", "Learner Health Tracking", "Evaluation Frameworks", "LMS Administration", "Intern & Team Onboarding"]
                                     },
                                     {
                                         cat: "Stakeholder Management",
                                         icon: I.Users,
                                         color: "#1A8B8B",
                                         line: "I coordinate across teams and levels — translating operational complexity into clear communication.",
-                                        skills: ["Executive Reporting", "Cross-functional Coordination", "OKR & KPI Tracking", "Stakeholder Communication", "Facilitation", "Partner Management"]
+                                        skills: ["Executive Reporting", "Cross-functional Coordination", "OKR & KPI Tracking", "Stakeholder Communication", "Facilitation", "Partner Management", "Escalation Management", "Cross-border Coordination"]
                                     },
                                     {
                                         cat: "Data & Reporting",
                                         icon: I.ChartLine,
                                         color: "#1E2D40",
                                         line: "I turn operational data into dashboards and decisions for teams and leadership.",
-                                        skills: ["Google Sheets", "Excel", "Power BI", "Looker Studio", "SQL", "Data Storytelling", "KPI Framework Design"]
+                                        skills: ["Google Sheets", "Excel", "Power BI", "Looker Studio", "SQL", "Data Storytelling", "KPI Framework Design", "Survey Design & Analysis", "A/B Testing", "Cohort Analysis", "Dashboard Design"]
                                     },
                                     {
                                         cat: "Workflow Automation & Tools",
                                         icon: I.Zap,
                                         color: "#F0684C",
                                         line: "I connect tools and eliminate manual handoffs so teams focus on higher-value work.",
-                                        skills: ["Zapier", "Make", "Google Apps Script", "Airtable", "Notion", "Asana", "ClickUp", "Monday.com"]
+                                        skills: ["Zapier", "Make", "Google Apps Script", "Airtable", "Notion", "Asana", "ClickUp", "Monday.com", "Zoom", "Slack", "Google Workspace", "Lattice"]
                                     },
                                     {
                                         cat: "Community Management",
                                         icon: I.Globe,
                                         color: "#1A8B8B",
                                         line: "I build the structures that turn cohorts and communities into engaged, high-retention groups.",
-                                        skills: ["Community Strategy", "Onboarding Design", "Event Management", "Engagement Programming", "Member Retention", "Ambassador Programmes"]
+                                        skills: ["Community Strategy", "Onboarding Design", "Virtual Event Management", "Engagement Programming", "Member Retention", "Ambassador Programmes", "Mentorship Series Coordination", "Feedback Design"]
                                     },
                                     {
                                         cat: "Communication & Design",
                                         icon: I.MessageSquare,
                                         color: "#1E2D40",
                                         line: "I produce the materials and content that make programmes feel professional and consistent.",
-                                        skills: ["Canva", "Google Workspace", "Content Planning", "Newsletter Management", "Facilitation Guides", "Programme Communications"]
+                                        skills: ["Canva", "Google Workspace", "Content Planning", "Newsletter Management", "Facilitation Guides", "Programme Communications", "Report Writing", "Presentation Design"]
                                     },
                                 ].map((group, gi) => {
                                     const Icon = group.icon;
@@ -1136,16 +1154,6 @@ JOIN avg_error_count ae
                                 <p className="text-sm text-slate-500 leading-relaxed max-w-2xl about-quote">
                                     {domain.intro}
                                 </p>
-                            </div>
-
-                            <div className="grid grid-cols-3 gap-4 mb-12">
-                                {domain.metrics.map((m, i) => (
-                                    <div key={i} className={`metric-card bg-white rounded-2xl p-5 md:p-7 text-center border border-slate-100 anim-fadeUp delay-${i+1}`}>
-                                        <div className="text-3xl md:text-4xl serif font-normal mb-1" style={{ color: domain.color }}>{m.val}</div>
-                                        <div className="text-[8px] md:text-[10px] font-black uppercase tracking-widest mb-1" style={{ color: domain.color }}>{m.label}</div>
-                                        <p className="text-[10px] text-slate-400 italic hidden md:block">{m.desc}</p>
-                                    </div>
-                                ))}
                             </div>
 
                             {domain.externalPortfolio && (
