@@ -1067,6 +1067,250 @@ JOIN avg_error_count ae
         </div>
     );
 
+    const toolProjectData = {
+        'Asana': {
+            type: 'ops',
+            label: 'Programme Operations',
+            color: '#F0684C',
+            title: 'LaunchCode Academy — Cohort 7 Delivery Tracker',
+            summary: '12-week coding bootcamp delivery system — 24 students, 5 phases, dependency mapping, automated escalations, and a full project brief.',
+            tools: ['Asana', 'Dependencies', 'Automations', 'Timeline View'],
+            youtubeId: '8v5r37T_dDo',
+        },
+        'Notion': {
+            type: 'ops',
+            label: 'Programme Operations',
+            color: '#F0684C',
+            title: 'The Shift Collective — CRM &amp; Operations Hub',
+            summary: 'Complete Notion operations hub for a career coaching practice — Client CRM, Session Notes, SOPs, Content Pipeline, Metrics dashboard, and Team Wiki.',
+            tools: ['Notion', 'CRM Design', 'SOP Documentation', 'OKR Framework'],
+            notionUrl: 'https://paper-belt-9a3.notion.site/The-Shift-Collective-Operations-Hub-3361bb37c5e180f68291d8917dbc2eed?pvs=143',
+        },
+        'Google Sheets': {
+            type: 'ops',
+            label: 'Programme Operations',
+            color: '#F0684C',
+            title: 'Karibu Learning Initiative — Automated Health Tracker',
+            summary: 'Led the build of an automated programme health tracker across 3 concurrent programmes — cutting manual data work by 30% and moving the team from reactive to proactive.',
+            tools: ['Google Sheets', 'Apps Script', 'Systems Design', 'Stakeholder Management'],
+            isCaseStudy: true,
+        },
+        'Zapier': {
+            type: 'ops',
+            label: 'Programme Operations',
+            color: '#F0684C',
+            title: 'Nova Creatives — Automated Course Registration Pipeline',
+            summary: 'Google Form submission → Filter → Google Sheets record → personalised welcome email. Replaced 45 minutes of daily manual data entry with a 4-step automated pipeline.',
+            tools: ['Zapier', 'Google Forms', 'Google Sheets', 'Gmail'],
+        },
+        'SQL': {
+            type: 'data',
+            label: 'Data Analytics',
+            color: '#1E2D40',
+            projects: [
+                { title: 'Customer Support Operations Analytics', summary: 'End-to-end SQL audit of support ticket data — 6 queries surfacing SLA breaches, agent workload gaps, and resolution bottlenecks.', caseStudyKey: 'support' },
+                { title: 'Retail Sales Analysis', summary: 'MySQL analysis of retail sales data using CTEs and subqueries to identify customer demographics, top categories, and seasonal trends.', caseStudyKey: 'retail' },
+                { title: 'Maji Ndogo Water Crisis Analysis', summary: 'SQL data inspection and integrity audit for a hypothetical water authority — flagging corrupt survey entries and identifying suspect employees.', caseStudyKey: 'maji' },
+            ],
+        },
+        'Excel': {
+            type: 'data',
+            label: 'Data Analytics',
+            color: '#1E2D40',
+            projects: [
+                { title: 'E-Commerce Sales &amp; Customer Analytics', summary: 'Analysed 12 months of sales data to surface top customer segments, underperforming categories, and regional growth opportunities.', caseStudyKey: 'ecommerce' },
+            ],
+        },
+        'Power BI': {
+            type: 'data',
+            label: 'Data Analytics',
+            color: '#1E2D40',
+            projects: [
+                { title: 'Customer Support Operations Analytics', summary: 'Interactive Power BI executive dashboard for leadership — surfacing SLA performance, agent workload, and resolution time trends.', caseStudyKey: 'support' },
+            ],
+        },
+    };
+
+    const comingSoonTools = ['ClickUp', 'Monday.com', 'Airtable', 'Make', 'Google Apps Script', 'Canva'];
+    const staticTools = ['Zoom', 'Slack', 'Lattice', 'Google Workspace'];
+
+    const ToolSkillsSection = ({ switchTab }) => {
+        const [activeToolPanel, setActiveToolPanel] = useState(null);
+        const [activeCaseStudy, setActiveCaseStudy] = useState(null);
+
+        const handleToolClick = (tool) => {
+            if (activeToolPanel === tool) { setActiveToolPanel(null); setActiveCaseStudy(null); return; }
+            setActiveToolPanel(tool);
+            setActiveCaseStudy(null);
+        };
+
+        const skillGroups = [
+            { cat: "Programme Operations", icon: I.Settings, color: "#F0684C", line: "I design the systems and processes that keep complex programmes running reliably at scale.", skills: ["Cohort Management", "SOP Design", "Milestone Planning", "Risk Mitigation", "System Design", "Process Mapping", "Programme Evaluation", "Health Tracking Frameworks", "Evaluation Frameworks", "LMS Administration"] },
+            { cat: "Stakeholder Management", icon: I.Users, color: "#1A8B8B", line: "I coordinate across teams and levels — translating operational complexity into clear communication.", skills: ["Executive Reporting", "Cross-functional Coordination", "OKR &amp; KPI Tracking", "Stakeholder Communication", "Facilitation", "Partner Management", "Escalation Management", "Cross-border Coordination"] },
+            { cat: "Data &amp; Reporting", icon: I.ChartLine, color: "#1E2D40", line: "I turn operational data into dashboards and decisions for teams and leadership.", skills: ["Google Sheets", "Excel", "Power BI", "SQL", "Data Storytelling", "KPI Framework Design", "Survey Design &amp; Analysis", "A/B Testing", "Cohort Analysis", "Dashboard Design"] },
+            { cat: "Workflow Automation &amp; Tools", icon: I.Zap, color: "#F0684C", line: "I connect tools and eliminate manual handoffs so teams focus on higher-value work.", skills: ["Zapier", "Make", "Google Apps Script", "Airtable", "Notion", "Asana", "ClickUp", "Monday.com"] },
+            { cat: "Community Management", icon: I.Globe, color: "#1A8B8B", line: "I build the structures that turn groups into engaged, high-retention participants.", skills: ["Community Strategy", "Onboarding Design", "Virtual Event Management", "Engagement Programming", "Member Retention", "Ambassador Programmes"] },
+            { cat: "Communication &amp; Design", icon: I.MessageSquare, color: "#1E2D40", line: "I produce the materials that make programmes feel professional and consistent.", skills: ["Canva", "Content Planning", "Newsletter Management", "Facilitation Guides", "Report Writing", "Presentation Design"] },
+        ];
+
+        const renderChip = (skill, color) => {
+            const hasProject = toolProjectData[skill];
+            const isComingSoon = comingSoonTools.includes(skill);
+            const isStatic = staticTools.includes(skill);
+            const isActive = activeToolPanel === skill;
+
+            if (isStatic) {
+                return (
+                    <span key={skill} className="skill-chip" style={{ fontSize:'11px', padding:'5px 11px', opacity:0.6, cursor:'default' }}>
+                        <span className="skill-chip-dot" style={{ background: color + '40' }} />
+                        {skill}
+                    </span>
+                );
+            }
+
+            if (isComingSoon) {
+                return (
+                    <span key={skill} onClick={() => handleToolClick(skill)}
+                          className="skill-chip" style={{ fontSize:'11px', padding:'5px 11px', cursor:'pointer', borderColor: isActive ? color : '' }}>
+                        <span className="skill-chip-dot" style={{ background: color + '40' }} />
+                        {skill}
+                        <span style={{ fontSize:'8px', color:'#94a3b8', marginLeft:'4px' }}>soon</span>
+                    </span>
+                );
+            }
+
+            if (hasProject) {
+                return (
+                    <span key={skill} onClick={() => handleToolClick(skill)}
+                          className="skill-chip" style={{ fontSize:'11px', padding:'5px 11px', cursor:'pointer', borderColor: isActive ? color : '', background: isActive ? color + '10' : 'white', fontWeight: isActive ? 700 : 500 }}>
+                        <span className="skill-chip-dot" style={{ background: color }} />
+                        {skill}
+                        <span style={{ fontSize:'9px', marginLeft:'4px', color }}>↗</span>
+                    </span>
+                );
+            }
+
+            return (
+                <span key={skill} className="skill-chip" style={{ fontSize:'11px', padding:'5px 11px' }}>
+                    <span className="skill-chip-dot" style={{ background: color + '50' }} />
+                    {skill}
+                </span>
+            );
+        };
+
+        const renderPanel = () => {
+            if (!activeToolPanel) return null;
+
+            if (comingSoonTools.includes(activeToolPanel)) {
+                return (
+                    <div className="mt-4 p-5 rounded-2xl border border-slate-100 bg-slate-50 anim-fadeUp">
+                        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Project in progress</p>
+                        <p className="text-sm text-slate-500">A portfolio project demonstrating {activeToolPanel} is currently being built. Check back soon.</p>
+                    </div>
+                );
+            }
+
+            const proj = toolProjectData[activeToolPanel];
+            if (!proj) return null;
+
+            if (proj.type === 'ops') {
+                return (
+                    <div className="mt-4 rounded-2xl border overflow-hidden anim-fadeUp" style={{ borderColor: proj.color + '30' }}>
+                        <div className="px-5 py-3 flex items-center justify-between" style={{ background: proj.color + '08', borderBottom: `1px solid ${proj.color}20` }}>
+                            <div className="flex items-center gap-2">
+                                <span style={{ fontSize:'9px', fontWeight:800, letterSpacing:'0.2em', textTransform:'uppercase', color: proj.color }}>{proj.label}</span>
+                            </div>
+                            <button onClick={() => { switchTab('ops'); setActiveToolPanel(null); }}
+                                    className="flex items-center gap-1 text-[10px] font-black uppercase tracking-wider transition-opacity hover:opacity-70"
+                                    style={{ color: proj.color }}>
+                                View in Programme Ops ↗
+                            </button>
+                        </div>
+                        <div className="p-6 bg-white">
+                            <h4 className="text-lg font-normal serif mb-2" style={{ color:'#1E2D40' }} dangerouslySetInnerHTML={{ __html: proj.title }} />
+                            <p className="text-sm text-slate-500 leading-relaxed mb-4">{proj.summary}</p>
+                            <div className="flex flex-wrap gap-2">
+                                {proj.tools.map((t,i) => <span key={i} className="tool-tag">{t}</span>)}
+                            </div>
+                            {proj.youtubeId && (
+                                <a href={`https://youtu.be/${proj.youtubeId}`} target="_blank" rel="noopener noreferrer"
+                                   className="inline-flex items-center gap-1.5 mt-4 text-[10px] font-black uppercase tracking-wider"
+                                   style={{ color: proj.color }}>
+                                    <I.Play className="w-3 h-3" /> Watch walkthrough
+                                </a>
+                            )}
+                            {proj.notionUrl && (
+                                <a href={proj.notionUrl} target="_blank" rel="noopener noreferrer"
+                                   className="inline-flex items-center gap-1.5 mt-4 text-[10px] font-black uppercase tracking-wider"
+                                   style={{ color: proj.color }}>
+                                    <I.ExternalLink className="w-3 h-3" /> Open in Notion
+                                </a>
+                            )}
+                            {proj.isCaseStudy && (
+                                <button onClick={() => { switchTab('ops'); setActiveToolPanel(null); }}
+                                        className="inline-flex items-center gap-1.5 mt-4 text-[10px] font-black uppercase tracking-wider"
+                                        style={{ color: proj.color }}>
+                                    <I.ArrowUp className="w-3 h-3 rotate-45" /> Read full case study in Programme Ops
+                                </button>
+                            )}
+                        </div>
+                    </div>
+                );
+            }
+
+            if (proj.type === 'data') {
+                return (
+                    <div className="mt-4 rounded-2xl border overflow-hidden anim-fadeUp" style={{ borderColor: proj.color + '30' }}>
+                        <div className="px-5 py-3" style={{ background: proj.color + '08', borderBottom: `1px solid ${proj.color}20` }}>
+                            <span style={{ fontSize:'9px', fontWeight:800, letterSpacing:'0.2em', textTransform:'uppercase', color: proj.color }}>{proj.label} — {activeToolPanel} Projects</span>
+                        </div>
+                        {proj.projects.map((p, i) => (
+                            <div key={i} className="p-6 bg-white border-b border-slate-100 last:border-b-0">
+                                <h4 className="text-base font-bold mb-1" style={{ color:'#1E2D40' }} dangerouslySetInnerHTML={{ __html: p.title }} />
+                                <p className="text-sm text-slate-500 leading-relaxed mb-3">{p.summary}</p>
+                                <button onClick={() => setActiveCaseStudy(activeCaseStudy === p.caseStudyKey ? null : p.caseStudyKey)}
+                                        className="text-[10px] font-black uppercase tracking-wider flex items-center gap-1"
+                                        style={{ color: proj.color }}>
+                                    {activeCaseStudy === p.caseStudyKey ? <I.ChevronUp className="w-3 h-3" /> : <I.ChevronDown className="w-3 h-3" />}
+                                    {activeCaseStudy === p.caseStudyKey ? 'Close' : 'Read case study'}
+                                </button>
+                                {activeCaseStudy === p.caseStudyKey && (
+                                    <CaseStudyDrawer studyKey={p.caseStudyKey} color={proj.color} isOpen={true} />
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                );
+            }
+            return null;
+        };
+
+        return (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                {skillGroups.map((group, gi) => {
+                    const Icon = group.icon;
+                    const hasActiveInGroup = group.skills.some(s => s === activeToolPanel);
+                    return (
+                        <div key={gi} className={`bg-white rounded-2xl border p-6 anim-fadeUp delay-${(gi%6)+1} ${hasActiveInGroup ? 'border-slate-200' : 'border-slate-100'}`}
+                             style={{ borderColor: hasActiveInGroup ? group.color + '40' : '' }}>
+                            <div className="flex items-center gap-3 mb-3">
+                                <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: group.color + '12' }}>
+                                    <Icon className="w-4 h-4" style={{ color: group.color }} />
+                                </div>
+                                <p className="text-[9px] font-black uppercase tracking-[0.18em]" style={{ color: group.color }} dangerouslySetInnerHTML={{ __html: group.cat }} />
+                            </div>
+                            <p className="text-xs text-slate-400 italic mb-4 leading-relaxed">{group.line}</p>
+                            <div className="flex flex-wrap gap-2">
+                                {group.skills.map(skill => renderChip(skill, group.color))}
+                            </div>
+                            {hasActiveInGroup && renderPanel()}
+                        </div>
+                    );
+                })}
+            </div>
+        );
+    };
+
     const App = () => {
         const [activeTab, setActiveTab] = useState('landing');
         const [showEmail, setShowEmail] = useState(false);
@@ -1305,39 +1549,10 @@ JOIN avg_error_count ae
                             {/* Core Skills */}
                             <div className="mb-10 text-center">
                                 <h2 className="text-4xl md:text-5xl font-normal serif tracking-tight mb-2" style={{ color: '#1E2D40' }}>Core Skills</h2>
-                                <p className="text-[11px] uppercase tracking-[0.35em] font-bold" style={{ color:'#1A8B8B' }}>How I work and what I work with</p>
+                                <p className="text-[11px] uppercase tracking-[0.35em] font-bold" style={{ color:'#1A8B8B' }}>Click any tool to see the project behind it</p>
                             </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                {[
-                                    { cat: "Programme Operations",        icon: I.Settings,      color: "#F0684C", line: "I design the systems and processes that keep complex programmes running reliably at scale.", skills: ["Cohort Management", "SOP Design", "Milestone Planning", "Risk Mitigation", "System Design", "Process Mapping", "Programme Evaluation", "Health Tracking Frameworks", "Evaluation Frameworks", "LMS Administration", "Intern & Team Onboarding"] },
-                                    { cat: "Stakeholder Management",      icon: I.Users,         color: "#1A8B8B", line: "I coordinate across teams and levels — translating operational complexity into clear communication.", skills: ["Executive Reporting", "Cross-functional Coordination", "OKR & KPI Tracking", "Stakeholder Communication", "Facilitation", "Partner Management", "Escalation Management", "Cross-border Coordination"] },
-                                    { cat: "Data & Reporting",            icon: I.ChartLine,     color: "#1E2D40", line: "I turn operational data into dashboards and decisions for teams and leadership.", skills: ["Google Sheets", "Excel", "Power BI", "Looker Studio", "SQL", "Data Storytelling", "KPI Framework Design", "Survey Design & Analysis", "A/B Testing", "Cohort Analysis", "Dashboard Design"] },
-                                    { cat: "Workflow Automation & Tools", icon: I.Zap,           color: "#F0684C", line: "I connect tools and eliminate manual handoffs so teams focus on higher-value work.", skills: ["Zapier", "Make", "Google Apps Script", "Airtable", "Notion", "Asana", "ClickUp", "Monday.com", "Zoom", "Slack", "Google Workspace", "Lattice"] },
-                                    { cat: "Community Management",        icon: I.Globe,         color: "#1A8B8B", line: "I build the structures that turn groups into engaged, high-retention participants.", skills: ["Community Strategy", "Onboarding Design", "Virtual Event Management", "Engagement Programming", "Member Retention", "Ambassador Programmes", "Mentorship Series Coordination", "Feedback Design"] },
-                                    { cat: "Communication & Design",      icon: I.MessageSquare, color: "#1E2D40", line: "I produce the materials and content that make programmes feel professional and consistent.", skills: ["Canva", "Google Workspace", "Content Planning", "Newsletter Management", "Facilitation Guides", "Programme Communications", "Report Writing", "Presentation Design"] },
-                                ].map((group, gi) => {
-                                    const Icon = group.icon;
-                                    return (
-                                        <div key={gi} className={`bg-white rounded-2xl border border-slate-100 p-6 card-hover anim-fadeUp delay-${(gi%6)+1}`}>
-                                            <div className="flex items-center gap-3 mb-3">
-                                                <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: group.color + '12' }}>
-                                                    <Icon className="w-4 h-4" style={{ color: group.color }} />
-                                                </div>
-                                                <p className="text-[9px] font-black uppercase tracking-[0.18em]" style={{ color: group.color }}>{group.cat}</p>
-                                            </div>
-                                            <p className="text-xs text-slate-400 italic mb-4 leading-relaxed">{group.line}</p>
-                                            <div className="flex flex-wrap gap-2">
-                                                {group.skills.map((skill, si) => (
-                                                    <span key={si} className="skill-chip" style={{ fontSize:'11px', padding:'5px 11px' }}>
-                                                        <span className="skill-chip-dot" style={{ background: group.color + '50' }} />
-                                                        {skill}
-                                                    </span>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    );
-                                })}
-                            </div>
+
+                            <ToolSkillsSection switchTab={switchTab} />
                         </div>
                     )}
 
