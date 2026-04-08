@@ -949,9 +949,10 @@ JOIN avg_error_count ae
             </div>
         );
     };
+
+    const NotionEmbed = ({ embedUrl, notionUrl, color }) => {
         const [open, setOpen] = useState(false);
         return (
-            <div className="mt-6 rounded-2xl overflow-hidden border" style={{ borderColor: color + '30' }}>
                 <div className="px-4 py-2.5 flex items-center justify-between" style={{ background: color + '10', borderBottom: `1px solid ${color}20` }}>
                     <div className="flex items-center gap-2">
                         <div className="w-2 h-2 rounded-full" style={{ background: color }} />
