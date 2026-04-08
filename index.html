@@ -346,7 +346,22 @@
             tagline: "Structure → Scale → Reliability",
             color: "#F0684C",
             intro: "I build the operational backbone that keeps complex programmes running — the SOPs, dashboards, automation flows, and coordination frameworks that turn chaos into repeatable, measurable results. At scale, this has meant managing end-to-end delivery for cohorts of up to 3,000 learners across 8+ countries, cutting manual operational work by 50% through automation (saving 15+ hours a week), and achieving 80% CSAT across programme touchpoints. The projects in this section show how I've applied that same thinking across different industries and tools.",
-            metrics: [
+            caseStudy: {
+                org: "Karibu Learning Initiative",
+                context: "Pan-African workforce development · 3 concurrent programmes · 2,000+ participants per cohort · 6 countries",
+                headline: "How I led the build of an automated programme health tracker that cut manual data work by 30% — across three different programmes with three different operational needs.",
+                problem: "Programme delivery was generating large volumes of participant data every week — but none of it was being used in real time. Data lived in fragmented spreadsheets, manually updated at different times by different people, with no consistent structure across the three programmes. The team was always reactive: by the time a participant was flagged as disengaged, they had often already dropped out. Manual tracking was consuming 15+ hours per week across the team.",
+                decision: "I made three deliberate decisions. First — build in Google Sheets using Apps Script, because the team already used it and introducing a new tool would solve one problem while creating another. Second — involve the data technical mentors as co-builders, not just implementers, because I could describe what the tracker needed better than I could build it. Third — design three programme-specific views on a shared architecture, because each programme had different health signals that mattered.",
+                process: "I ran separate requirements sessions with each programme coordinator to document exactly what they tracked manually and what a healthy week looked like versus a concerning one. I translated those needs into a brief the technical mentors could build from. I tested outputs against real scenarios and fed discrepancies back. I wrote the user guide, ran the rollout sessions, and built the escalation protocol so the data actually drove action — not just existed.",
+                outcomes: [
+                    "30% reduction in manual data tracking work across the team",
+                    "Programme coordinators moved from reactive to proactive — at-risk participants flagged in real time",
+                    "Facilitators received weekly health summaries without anyone compiling them manually",
+                    "Leadership saw health across all three programmes in a single view",
+                    "Tracker adopted as the operational standard for subsequent cohorts",
+                ],
+                skills: ["Systems Thinking", "Stakeholder Management", "Operational Diagnosis", "Cross-functional Leadership", "Requirements Translation", "Change Management"],
+            },
                 { val: "50%", label: "Manual Tasks Cut", desc: "Through automation and system design" },
                 { val: "15+", label: "Hours Saved / Week", desc: "Across the team via workflow redesign" },
                 { val: "30%", label: "Efficiency Gain", desc: "Workflow optimisation and SOP rollout" },
@@ -859,7 +874,81 @@ JOIN avg_error_count ae
         );
     };
 
-    const NotionEmbed = ({ embedUrl, notionUrl, color }) => {
+    const CaseStudyFeature = ({ cs, color }) => {
+        const [open, setOpen] = useState(false);
+        return (
+            <div className="bg-white rounded-3xl border overflow-hidden mb-12" style={{ borderColor: color + '30' }}>
+                <div style={{ background: color, padding: '6px 24px' }}>
+                    <span style={{ fontSize:'9px', fontWeight:800, letterSpacing:'0.3em', textTransform:'uppercase', color:'white', opacity:0.8 }}>Featured Case Study</span>
+                </div>
+                <div className="p-8 md:p-10">
+                    <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
+                        <div>
+                            <p className="text-[9px] font-black uppercase tracking-[0.25em] mb-2" style={{ color }}>Karibu Learning Initiative</p>
+                            <h3 className="text-2xl md:text-3xl font-normal serif tracking-tight mb-2" style={{ color:'#1E2D40' }}>
+                                {cs.headline}
+                            </h3>
+                            <p className="text-xs text-slate-400">{cs.context}</p>
+                        </div>
+                        <div className="flex flex-wrap gap-2 flex-shrink-0">
+                            {[{ val:'30%', label:'Manual work cut'}, {val:'15h+', label:'Saved weekly'}, {val:'3', label:'Programmes served'}].map((m,i) => (
+                                <div key={i} className="rounded-xl p-3 text-center border border-slate-100 bg-slate-50" style={{ minWidth:'80px' }}>
+                                    <div className="text-xl serif font-normal" style={{ color }}>{m.val}</div>
+                                    <div className="text-[9px] font-black uppercase tracking-[0.12em] text-slate-400 mt-0.5">{m.label}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="about-quote mb-6">
+                        <p className="text-sm text-slate-500 leading-relaxed italic">{cs.problem}</p>
+                    </div>
+
+                    <button onClick={() => setOpen(!open)}
+                            className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest px-5 py-2.5 rounded-xl transition-all mb-2"
+                            style={{ background: open ? color : color + '12', color: open ? 'white' : color, border:`1px solid ${color}30` }}>
+                        {open ? <I.ChevronUp className="w-3.5 h-3.5" /> : <I.ChevronDown className="w-3.5 h-3.5" />}
+                        {open ? 'Close full case study' : 'Read full case study'}
+                    </button>
+
+                    <div className={`case-study-drawer ${open ? 'open' : ''}`}>
+                        <div className="pt-6 border-t border-slate-100 mt-4">
+                            <p className="cs-section-title">The Decision</p>
+                            <p className="text-sm text-slate-500 leading-relaxed mb-6">{cs.decision}</p>
+
+                            <p className="cs-section-title">How It Was Built</p>
+                            <p className="text-sm text-slate-500 leading-relaxed mb-6">{cs.process}</p>
+
+                            <p className="cs-section-title">Outcomes</p>
+                            <ul className="space-y-2 mb-6">
+                                {cs.outcomes.map((o,i) => (
+                                    <li key={i} className="flex items-start gap-2 text-sm text-slate-500">
+                                        <I.Check className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color }} />
+                                        {o}
+                                    </li>
+                                ))}
+                            </ul>
+
+                            <p className="cs-section-title">Skills Demonstrated</p>
+                            <div className="flex flex-wrap gap-2">
+                                {cs.skills.map((s,i) => (
+                                    <span key={i} className="skill-chip" style={{ fontSize:'11px', padding:'5px 11px' }}>
+                                        <span className="skill-chip-dot" style={{ background: color + '50' }} />
+                                        {s}
+                                    </span>
+                                ))}
+                            </div>
+
+                            <div className="mt-6 p-4 rounded-2xl border border-slate-100 bg-slate-50">
+                                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Transferable to</p>
+                                <p className="text-sm text-slate-500 leading-relaxed">This approach — diagnosing operational friction, designing within existing constraints, translating needs across technical and non-technical teams, and building for adoption — applies equally to corporate L&D departments, nonprofit programme teams, healthcare operations, and any organisation running complex programmes at scale. The tool was Google Sheets. The skill was everything else.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    };
         const [open, setOpen] = useState(false);
         return (
             <div className="mt-6 rounded-2xl overflow-hidden border" style={{ borderColor: color + '30' }}>
@@ -1276,6 +1365,9 @@ JOIN avg_error_count ae
                                         <span className="hidden sm:inline">Open Portfolio</span>
                                     </div>
                                 </a>
+                            )}
+                            {domain.caseStudy && (
+                                <CaseStudyFeature cs={domain.caseStudy} color={domain.color} />
                             )}
                             <p className="divider-label text-[10px] font-black uppercase tracking-[0.35em] text-slate-400 mb-8">Featured Projects</p>
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
