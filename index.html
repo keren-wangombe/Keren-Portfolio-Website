@@ -1,398 +1,109 @@
-<script type="text/babel">
-    const { useState, useEffect, useRef } = React;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keren Wang'ombe | Program Operations</title>
 
-    const I = {
-        Terminal:     (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>,
-        Database:      (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>,
-        Target:        (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>,
-        Layout:        (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>,
-        ChartLine:     (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3v18h18"/><path d="M19 9l-5 5-4-4-3 3"/></svg>,
-        MessageSquare:(p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>,
-        ChevronDown:  (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"/></svg>,
-        ChevronUp:    (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="18 15 12 9 6 15"/></svg>,
-        Mail:          (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>,
-        Download:      (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>,
-        Linkedin:      (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>,
-        Github:        (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>,
-        ArrowUp:       (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>,
-        Check:         (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>,
-        Copy:          (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>,
-        Users:         (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>,
-        Zap:           (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>,
-        Globe:         (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>,
-        Shield:        (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,
-        Plus:          (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>,
-        Settings:      (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>,
-        Play:          (p) => <svg {...p} viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>,
-        ExternalLink: (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>,
-    };
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 
-    const domainContent = {
-        ops: {
-            title: "Program Operations",
-            tagline: "Architecture · Automation · Compliance",
-            color: "#F0684C",
-            intro: "I design the operational infrastructure for high-scale EdTech and community programs. My work focuses on removing friction from learner journeys and building internal systems that reclaim time for program staff. By automating reporting and session management, I've consistently achieved a 50% reduction in manual tasks while maintaining 98% data integrity across 8+ countries.",
-            caseStudy: {
-                org: "Karibu Learning Initiative",
-                context: "Workforce Development · 2,000+ Participants · 6 Countries",
-                headline: "Scaling Program Visibility: An Automated Health Tracker for Multi-Country Cohorts.",
-                problem: "Fragmented data across three concurrent programs made real-time tracking impossible. The team was reactive, often identifying at-risk learners only after they had already disengaged. Manual reporting was consuming 15+ hours weekly per coordinator.",
-                decision: "I deployed a centralized architecture in Google Sheets utilizing Apps Script. I prioritized interoperability, ensuring data from separate programs fed into a single executive view without forcing coordinators to abandon their specific workflows.",
-                process: "I audited manual tracking habits across three teams to map common health signals. I translated these into a technical brief for mentor co-builders, then established an escalation protocol that transformed the sheet from a 'storage unit' into an 'active notification system.'",
-                outcomes: [
-                    "30% reduction in reporting overhead through automated data aggregation",
-                    "Shift from reactive to proactive learner intervention via real-time flags",
-                    "Executive-level visibility into program health across all regions",
-                    "Automated weekly facilitator summaries, eliminating manual prep time"
-                ],
-                skills: ["Systems Architecture", "Requirements Engineering", "Change Management", "Process Mapping"],
-            },
-            metrics: [
-                { val: "50%", label: "Manual Overhead Cut", desc: "Via system automation" },
-                { val: "15h+", label: "Reclaimed Weekly", desc: "Per team through workflow redesign" },
-                { val: "98%", label: "Data Accuracy", desc: "Across large multi-country cohorts" },
-            ],
-            projects: [
-                {
-                    badge: "Project Operations",
-                    title: "LaunchCode Academy — Boot Camp Delivery Tracker",
-                    summary: "A dependency-mapped Asana infrastructure designed for 12-week intensive delivery. It replaces fragmented email coordination with a system that auto-escalates blockers to the Program Director.",
-                    outcomes: [
-                        "Mapping 9 critical dependency pairs to ensure sequential integrity",
-                        "Automated rules for facilitator sign-offs and status escalations",
-                        "Real-time goal tracking connected to leadership dashboards"
-                    ],
-                    tools: ["Asana", "Automations", "Timeline", "Resource Management"],
-                    placeholder: false,
-                    youtubeId: "8v5r37T_dDo",
-                },
-                {
-                    badge: "Systems Design",
-                    title: "The Shift Collective — Operations Hub",
-                    summary: "Consolidated a coaching practice's fragmented client data into a single source of truth. Features include a Client CRM, standardized Session Notes, and a live team wiki.",
-                    outcomes: [
-                        "Centralized CRM with coach-specific filtered views",
-                        "Standardized SOPs for onboarding and offboarding",
-                        "Automated session calendars reducing scheduling errors"
-                    ],
-                    tools: ["Notion", "CRM Design", "Standard Operating Procedures"],
-                    placeholder: false,
-                    notionEmbed: "https://paper-belt-9a3.notion.site/ebd/3361bb37c5e180f68291d8917dbc2eed",
-                    notionUrl: "https://paper-belt-9a3.notion.site/The-Shift-Collective-Operations-Hub-3361bb37c5e180f68291d8917dbc2eed?pvs=143",
-                },
-            ],
-            skillGroups: [
-                { label: "Delivery Architecture", skills: ["Cohort Lifecycle Management", "SOP Documentation", "Risk Mitigation", "Dependency Mapping"] },
-                { label: "Systems & Logic", skills: ["Zapier/Make Workflows", "Notion/Airtable Engineering", "Google Apps Script", "Process Optimization"] },
-            ],
-        },
-        ds: {
-            title: "Data Analytics",
-            tagline: "Insight · Evidence · Decision",
-            color: "#1E2D40",
-            intro: "I convert raw operational noise into decision-making frameworks. From support SLA audits to e-commerce customer segmentation, I focus on identifying the 'bottleneck' data that prevents growth. My analytical work has surfaced critical insights like 77 NPS scores and 25% SLA breach causes, leading to immediate operational changes.",
-            metrics: [
-                { val: "77", label: "Program NPS", desc: "Across managed learner communities" },
-                { val: "80%", label: "CSAT Score", desc: "Measured through data-driven evaluation" },
-                { val: "25%", label: "SLA Gap Identified", desc: "Pinpointed via SQL audit" },
-            ],
-            projects: [
-                {
-                    badge: "SQL · Power BI",
-                    title: "Support Operations Performance Audit",
-                    summary: "An end-to-end SQL audit of ticket data to surface operational gaps. I identified that 25% of tickets exceeding 14-day SLAs were caused by multi-agent handoffs rather than agent speed.",
-                    outcomes: [
-                        "Identified root cause of resolution variances (2-3x)",
-                        "Built Power BI dashboard for real-time SLA monitoring",
-                        "Optimized workload distribution based on agent performance data"
-                    ],
-                    tools: ["SQL", "Power BI", "SLA Analysis", "Operational Audit"],
-                    placeholder: false,
-                    caseStudyKey: "support",
-                },
-                {
-                    badge: "Excel · Dashboards",
-                    title: "E-Commerce Customer Insights",
-                    summary: "Segmentation of 12 months of sales data to define high-value tiers. Surfaced the top 5% of customers generating $1,118+ in lifetime value to drive loyalty strategies.",
-                    outcomes: [
-                        "Defined LTV tiers for targeted marketing spend",
-                        "Identified high-margin category gaps (Electronics at 6%)",
-                        "Delivered regional optimization recommendations"
-                    ],
-                    tools: ["Microsoft Excel", "KPI Frameworks", "Customer Segmentation"],
-                    placeholder: false,
-                    caseStudyKey: "ecommerce",
-                },
-            ],
-            skillGroups: [
-                { label: "Analytical Tools", skills: ["Excel (Advanced)", "Power BI", "SQL (CTEs/Subqueries)", "Looker Studio"] },
-                { label: "Methods", skills: ["Cohort Analysis", "Data Cleaning", "KPI Framework Design", "SLA Auditing"] },
-            ],
-        },
-        community: {
-            title: "Community Management",
-            tagline: "Onboarding · Engagement · Retention",
-            color: "#1A8B8B",
-            intro: "I view community as a system for behavioral change. I design onboarding sequences and engagement cadences that move members from passive observers to active advocates. This structured approach has resulted in 99% satisfaction for live events and sustained retention across professional networks.",
-            metrics: [
-                { val: "99%", label: "Event Satisfaction", desc: "Across live virtual mentorship sessions" },
-                { val: "80%", label: "Community CSAT", desc: "Across 3,000+ managed learners" },
-                { val: "77", label: "NPS", desc: "Reflecting high member advocacy" },
-            ],
-            projects: [
-                {
-                    badge: "Experience Design",
-                    title: "Mentorship Series Coordination",
-                    summary: "End-to-end management of a 4-part live professional development series. Responsible for facilitator onboarding, run-of-show logistics, and NPS evaluation.",
-                    outcomes: [
-                        "99% satisfaction rating across 4 high-attendance sessions",
-                        "Standardized facilitator briefing packs reducing prep time",
-                        "Managed full logistics across Zoom/Notion/Google Forms"
-                    ],
-                    tools: ["Zoom", "Notion", "Project Coordination"],
-                    placeholder: true,
-                },
-            ],
-            skillGroups: [
-                { label: "Community Infrastructure", skills: ["Onboarding Design", "Retention Systems", "Event Lifecycle Management", "Member Analytics"] },
-            ],
-        },
-    };
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
 
-    const Pill = ({ children, color = "#1A8B8B" }) => (
-        <span style={{ background: color + '18', color, border: `1px solid ${color}30` }}
-              className="inline-block text-[9px] font-black uppercase tracking-[0.18em] px-3 py-1 rounded-full">
-            {children}
-        </span>
-    );
+    <style>
+        :root { --midnight: #1E2D40; --teal: #1A8B8B; --cloud: #F7F8FA; }
+        body { font-family: 'DM Sans', sans-serif; background-color: var(--cloud); }
+        h1, h2, h3, .serif { font-family: 'DM Serif Display', serif; }
+        .header-mesh { background: linear-gradient(135deg, var(--midnight) 0%, #162130 100%); }
+        .case-study-drawer { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; }
+        .case-study-drawer.open { max-height: 2000px; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
 
-    const PlaceholderBadge = () => (
-        <div className="inline-flex items-center gap-1.5 bg-slate-100 text-slate-400 rounded-full px-3 py-1 text-[9px] font-black uppercase tracking-[0.15em]">
-            <I.Plus className="w-3 h-3" />
-            Case Study in Progress
-        </div>
-    );
+    <script type="text/babel">
+        const { useState } = React;
 
-    const caseStudies = {
-        ecommerce: {
-            overview: "Built an end-to-end analytics system in Excel to transform raw transaction records into a customer segmentation framework.",
-            sections: [
-                {
-                    title: "Objective",
-                    content: "The goal was to move leadership decisions from 'gut feel' to data by answering three questions: Which segments are most valuable? Which categories are under-performing? Where should growth spend be allocated?"
-                },
-                {
-                    title: "Solution",
-                    content: "Developed a structured dashboard in Excel utilizing pivot tables, VLOOKUP, and conditional formatting to surface Lifetime Value (LTV) and SKU performance."
-                },
-                {
-                    title: "Findings",
-                    bullets: [
-                        "Top 5% of customers drive LTV of $1,118+, justifying a loyalty tier investment.",
-                        "Electronics (high-margin) only represented 6% of sales, indicating an inventory gap.",
-                        "Regional analysis showed 60% of revenue came from two areas, suggesting a budget reallocation."
-                    ]
-                }
-            ],
-            externalLabel: "Full Methodology on Medium",
-            externalUrl: "https://medium.com/@nyamburawangombe/how-i-built-a-sales-customer-insights-dashboard-for-a-small-e-commerce-business-using-excel-1d95ecfa71b1"
-        },
-        support: {
-            overview: "A SQL-driven performance audit identifying resolution bottlenecks and SLA breaches in support operations.",
-            sections: [
-                {
-                    title: "The Problem",
-                    content: "Lack of visibility into agent workload and ticket life cycles. Management needed to know why resolution times were varying significantly between teams."
-                }
-            ],
-            queries: [
-                {
-                    title: "SLA Breach Root Cause",
-                    insight: "This query pinpoints categories with the highest breach rates, revealing that complexity often lies in 'Billing' handoffs.",
-                    sql: `SELECT category, COUNT(*) AS total, SUM(CASE WHEN resolved_at > created_at + INTERVAL 5 DAY THEN 1 ELSE 0 END) AS breaches FROM tickets GROUP BY category ORDER BY 3 DESC;`
-                }
-            ],
-            externalLabel: "GitHub Repository",
-            externalUrl: "https://github.com/Kerenyambura/operationalbottlenecks"
-        }
-    };
+        const App = () => {
+            const [activeTab, setActiveTab] = useState('landing');
 
-    const CaseStudyDrawer = ({ studyKey, color, isOpen }) => {
-        const study = caseStudies[studyKey];
-        if (!study) return null;
-        return (
-            <div className={`case-study-drawer ${isOpen ? 'open' : ''}`}>
-                <div className="pt-6 border-t border-slate-100 mt-6">
-                    <p className="text-sm text-slate-600 leading-relaxed mb-6 italic">{study.overview}</p>
-                    {study.sections && study.sections.map((section, i) => (
-                        <div key={i}>
-                            <p className="cs-section-title">{section.title}</p>
-                            {section.content && <p className="text-sm text-slate-500 leading-relaxed mb-4">{section.content}</p>}
-                            {section.bullets && (
-                                <ul className="space-y-2 mb-4">
-                                    {section.bullets.map((b, bi) => (
-                                        <li key={bi} className="flex items-start gap-2 text-sm text-slate-500">
-                                            <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: color }} />
-                                            {b}
-                                        </li>
-                                    ))}
-                                </ul>
-                            )}
+            return (
+                <div className="min-h-screen flex flex-col">
+                    {/* Header */}
+                    <header className="header-mesh pt-16 pb-24 px-6 text-center text-white">
+                        <div className="max-w-3xl mx-auto">
+                            <span className="uppercase tracking-[0.3em] text-[10px] text-teal-400 font-bold">Program Operations & Systems Design</span>
+                            <h1 className="text-5xl md:text-7xl italic mt-4 mb-6">Keren Wang'ombe</h1>
+                            <p className="text-white/70 text-lg font-light max-w-2xl mx-auto">
+                                Engineering the operational infrastructure that enables programs to scale. Specialist in automation and data integrity for multi-country cohorts.
+                            </p>
                         </div>
-                    ))}
-                    {study.queries && study.queries.map((q, qi) => (
-                        <div key={qi} className="mb-4">
-                            <p className="cs-h3">{q.title}</p>
-                            <div className="sql-block">
-                                <code>{q.sql}</code>
-                            </div>
-                            <div className="insight-box">
-                                <span style={{ fontWeight: 700, color: '#1A8B8B' }}>Insight: </span>{q.insight}
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        );
-    };
+                    </header>
 
-    const YouTubeEmbed = ({ youtubeId, color }) => {
-        const [playing, setPlaying] = useState(false);
-        const thumbUrl = `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`;
-        return (
-            <div className="mt-6 rounded-2xl overflow-hidden border" style={{ borderColor: color + '30' }}>
-                 {!playing ? (
-                    <div className="video-thumbnail" onClick={() => setPlaying(true)}>
-                        <img src={thumbUrl} alt="Walkthrough" />
-                        <div className="video-play-btn"><div className="play-circle"><I.Play className="w-5 h-5 ml-1" style={{ color }} /></div></div>
-                    </div>
-                ) : (
-                    <div style={{ position:'relative', paddingBottom:'56.25%', height:0 }}><iframe src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1`} style={{ position:'absolute', top:0, left:0, width:'100%', height:'100%' }} frameBorder="0" allowFullScreen /></div>
-                )}
-            </div>
-        );
-    };
-
-    const ProjectCard = ({ project, color, delay }) => {
-        const [open, setOpen] = useState(false);
-        return (
-            <div className={`rounded-3xl border overflow-hidden anim-fadeUp ${delay} ${project.placeholder ? 'placeholder-card' : 'bg-white border-slate-100 card-hover'}`}>
-                <div className="p-8">
-                    {project.placeholder ? <PlaceholderBadge /> : <Pill color={color}>{project.badge}</Pill>}
-                    <h4 className="text-2xl font-normal serif mt-4 mb-3 tracking-tight">{project.title}</h4>
-                    <p className="text-sm text-slate-500 leading-relaxed mb-6 italic">{project.summary}</p>
-                    <div className="mb-6">
-                        <ul className="space-y-2">
-                            {project.outcomes.map((o, i) => (
-                                <li key={i} className="flex items-start gap-2 text-sm text-slate-400">
-                                    <I.Check className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color }} />
-                                    {o}
-                                </li>
+                    {/* Nav */}
+                    <nav className="max-w-5xl mx-auto w-full px-4 -mt-8 relative z-20">
+                        <div className="bg-white rounded-2xl shadow-xl p-2 flex gap-1">
+                            {['landing', 'ops', 'ds'].map(id => (
+                                <button 
+                                    key={id} 
+                                    onClick={() => setActiveTab(id)} 
+                                    className={`flex-1 py-4 rounded-xl text-[11px] font-bold uppercase tracking-widest transition-all ${activeTab === id ? 'bg-[#1E2D40] text-white' : 'text-slate-400 hover:bg-slate-50'}`}
+                                >
+                                    {id === 'landing' ? 'About' : id === 'ops' ? 'Program Ops' : 'Data Analytics'}
+                                </button>
                             ))}
-                        </ul>
-                    </div>
-                    {project.caseStudyKey && (
-                        <button onClick={() => setOpen(!open)} className="text-[10px] font-black uppercase tracking-widest px-4 py-2.5 rounded-xl transition-all w-full border" style={{ color }}>{open ? 'Close' : 'Full Case Study'}</button>
-                    )}
-                    {project.caseStudyKey && <CaseStudyDrawer studyKey={project.caseStudyKey} color={color} isOpen={open} />}
-                    {project.youtubeId && <YouTubeEmbed youtubeId={project.youtubeId} color={color} />}
-                </div>
-            </div>
-        );
-    };
-
-    const ToolSkillsSection = ({ switchTab }) => {
-        const skillGroups = [
-            { cat: "Program Operations", icon: I.Settings, color: "#F0684C", line: "Engineering the internal systems and SOPs that allow programs to scale without friction.", skills: ["Cohort Management", "SOP Design", "Milestone Planning", "Risk Mitigation", "System Design", "Process Mapping"] },
-            { cat: "Stakeholder Management", icon: I.Users, color: "#1A8B8B", line: "Facilitating communication across distributed teams and leadership levels.", skills: ["Executive Reporting", "Cross-functional Coordination", "KPI Tracking", "Partner Management"] },
-            { cat: "Analytics", icon: I.ChartLine, color: "#1E2D40", line: "Converting operational data into dashboards and automated reporting loops.", skills: ["Google Sheets", "Power BI", "SQL", "Data Storytelling", "NPS/CSAT Analysis"] },
-        ];
-        return (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                {skillGroups.map((group, gi) => {
-                    const Icon = group.icon;
-                    return (
-                        <div key={gi} className="bg-white rounded-2xl border border-slate-100 p-6 card-hover">
-                            <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ background: group.color + '15' }}>
-                                <Icon className="w-5 h-5" style={{ color: group.color }} />
-                            </div>
-                            <p className="text-[10px] font-black uppercase tracking-[0.18em] mb-2" style={{ color: group.color }}>{group.cat}</p>
-                            <p className="text-xs text-slate-400 italic mb-4">{group.line}</p>
-                            <div className="flex flex-wrap gap-2">
-                                {group.skills.map(s => <span key={s} className="skill-chip">{s}</span>)}
-                            </div>
                         </div>
-                    );
-                })}
-            </div>
-        );
-    };
+                    </nav>
 
-    const App = () => {
-        const [activeTab, setActiveTab] = useState('landing');
-        const [showEmail, setShowEmail] = useState(false);
-        const mainRef = useRef(null);
-
-        const switchTab = (id) => { setActiveTab(id); if (mainRef.current) mainRef.current.scrollIntoView({ behavior: 'smooth' }); };
-
-        return (
-            <div className="min-h-screen flex flex-col">
-                <header className="header-mesh pt-16 pb-28 px-6 text-center relative overflow-hidden">
-                    <div className="max-w-3xl mx-auto relative z-10 anim-fadeUp">
-                        <span style={{ color:'rgba(26,139,139,0.9)', fontSize:10, fontBlack:800, letterSpacing:'0.4em' }} className="uppercase">Program Operations & Systems Design</span>
-                        <h1 className="text-6xl md:text-8xl font-normal text-white italic mt-4 mb-6 tracking-tight">Keren Wang'ombe</h1>
-                        <p className="text-white/70 text-lg font-light leading-relaxed max-w-2xl mx-auto mb-8">
-                            I build the operational infrastructure that enables programs to scale. Specialist in systems automation, data integrity, and learner success frameworks for multi-country cohorts.
-                        </p>
-                    </div>
-                </header>
-
-                <nav className="max-w-5xl mx-auto w-full px-4 -mt-7 relative z-20">
-                    <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-2 flex gap-1 overflow-x-auto">
-                        {['landing', 'ops', 'ds', 'community'].map(id => (
-                            <button key={id} onClick={() => switchTab(id)} className={`flex-1 py-3 rounded-xl text-[11px] font-black uppercase tracking-widest ${activeTab === id ? 'bg-[#1E2D40] text-white' : 'text-slate-400 hover:bg-slate-50'}`}>
-                                {id === 'landing' ? 'About' : id === 'ops' ? 'Program Ops' : id === 'ds' ? 'Data' : 'Community'}
-                            </button>
-                        ))}
-                    </div>
-                </nav>
-
-                <main ref={mainRef} className="max-w-5xl mx-auto w-full px-4 py-14 flex-grow">
-                    {activeTab === 'landing' ? (
-                        <div className="anim-fadeUp">
-                            <div className="bg-white rounded-3xl border border-slate-100 p-10 mb-12">
-                                <div className="about-quote mb-8"><p className="text-2xl md:text-3xl serif italic leading-snug">"I don't just set up tools; I design the architecture that turns operational chaos into repeatable results."</p></div>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                                    <p className="text-sm text-slate-500 leading-relaxed">I am an operations professional specializing in the "Unknown to Known" transition. My experience managing 3,000+ learners across Africa has taught me that scale isn't about more people—it's about better systems. I bridge the gap between high-level program goals and day-to-day execution.</p>
-                                    <p className="text-sm text-slate-500 leading-relaxed">Whether it's building automated health trackers in Google Sheets or architecting complex CRM flows in Notion, my focus is always on reclamation: reclaiming time for staff and clarity for learners. I am currently open to senior roles in Program and Learning Operations.</p>
+                    {/* Main Content */}
+                    <main className="max-w-5xl mx-auto w-full px-4 py-16 flex-grow">
+                        {activeTab === 'landing' ? (
+                            <div className="bg-white rounded-3xl border border-slate-100 p-10 shadow-sm">
+                                <h2 className="text-3xl serif italic mb-6">"Architecture over tools."</h2>
+                                <p className="text-slate-600 leading-relaxed mb-6">
+                                    I design the systems that allow 3,000+ learners across 8 countries to move from "Unknown to Known" seamlessly. 
+                                    By bridging the gap between high-level goals and technical execution, I reclaim up to 15 hours a week for program teams through strategic automation.
+                                </p>
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                    <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                                        <div className="text-2xl font-bold text-[#1A8B8B]">50%</div>
+                                        <div className="text-[10px] uppercase font-bold text-slate-400">Manual Tasks Cut</div>
+                                    </div>
+                                    <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                                        <div className="text-2xl font-bold text-[#F0684C]">80%</div>
+                                        <div className="text-[10px] uppercase font-bold text-slate-400">CSAT Score</div>
+                                    </div>
+                                    <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                                        <div className="text-2xl font-bold text-[#1E2D40]">98%</div>
+                                        <div className="text-[10px] uppercase font-bold text-slate-400">Data Accuracy</div>
+                                    </div>
+                                    <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                                        <div className="text-2xl font-bold text-[#1A8B8B]">77</div>
+                                        <div className="text-[10px] uppercase font-bold text-slate-400">Program NPS</div>
+                                    </div>
                                 </div>
                             </div>
-                            <ToolSkillsSection switchTab={switchTab} />
-                        </div>
-                    ) : (
-                        <div className="anim-fadeUp">
-                             <div className="mb-10">
-                                <h2 className="text-5xl font-normal serif italic mb-4">{domainContent[activeTab].title}</h2>
-                                <p className="text-sm text-slate-500 leading-relaxed max-w-2xl about-quote">{domainContent[activeTab].intro}</p>
+                        ) : (
+                            <div className="text-center py-20">
+                                <h2 className="text-2xl serif">Section details loading...</h2>
+                                <p className="text-slate-400 mt-2">Click 'About' to see the updated metrics-first profile.</p>
                             </div>
-                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                                {domainContent[activeTab].projects.map((p, i) => <ProjectCard key={i} project={p} color={domainContent[activeTab].color} />)}
-                            </div>
-                        </div>
-                    )}
-                </main>
+                        )}
+                    </main>
 
-                <footer className="max-w-5xl mx-auto px-4 mb-12 w-full">
-                    <div className="footer-glow rounded-2xl text-white px-8 py-10 text-center">
-                        <h3 className="text-3xl font-normal serif italic mb-2">Build a better system.</h3>
-                        <p className="text-white/50 text-xs mb-6">Open to Senior Roles and Strategic Freelance Contracts.</p>
-                        <a href="mailto:kerenwangombe@gmail.com" className="inline-block bg-[#F0684C] px-8 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest hover:opacity-90 transition-all">Get in Touch</a>
-                    </div>
-                </footer>
-            </div>
-        );
-    };
+                    <footer className="bg-[#1E2D40] text-white py-12 px-6 text-center">
+                        <p className="serif italic text-xl mb-4">Let's build a better system.</p>
+                        <a href="mailto:kerenwangombe@gmail.com" className="bg-[#F0684C] px-8 py-3 rounded-xl uppercase text-[10px] font-bold tracking-widest">Email Me</a>
+                    </footer>
+                </div>
+            );
+        };
 
-    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
-</script>
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
