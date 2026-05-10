@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Keren Wang'ombe | Programme Operations, Product Operations & Operational Analytics</title>
+    <title>Keren Wang'ombe | Operations & Analytics</title>
 
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -334,7 +334,7 @@
     const toolStack = [
         { name: "Notion & Airtable", cat: "Program Management", icon: I.Layout, impact: "Creates a single source of truth for program tracking, team wikis, and cross-functional OKRs — keeping distributed teams aligned without extra meetings.", productivity: "Replaces fragmented email threads and docs with structured, searchable systems that cut 'where is that info?' time by over 50%.", skill: 90 },
         { name: "Asana & ClickUp", cat: "Project Operations", icon: I.Target, impact: "Manages end-to-end programme delivery across large teams, from task assignment through milestone reporting.", productivity: "Automates recurring workflows and status updates, saving an estimated 15+ hours per week in manual coordination overhead.", skill: 88 },
-        { name: "Google Sheets & Excel", cat: "Data & Reporting", icon: I.ChartLine, impact: "Builds live programme dashboards, participant health trackers, and operational scorecards that surface insights at a glance for leadership.", productivity: "Automates data pulls via Apps Script and formulas, achieving 98% data accuracy across large multi-programme datasets.", skill: 92 },
+        { name: "Google Sheets & Excel", cat: "Data & Reporting", icon: I.ChartLine, impact: "Builds live programme dashboards, participant health trackers, and operational scorecards that surface insights at a glance for leadership.", productivity: "Automates data pulls via formulas and automation tools, achieving 98% data accuracy across large multi-programme datasets.", skill: 92 },
         { name: "Zapier & Make", cat: "Workflow Automation", icon: I.Zap, impact: "Connects platforms to eliminate manual handoffs — from form submissions to notifications to database updates — without engineering support.", productivity: "Responsible for a 50% reduction in manual operational tasks, freeing the team to focus on higher-value programme work.", skill: 85 },
         { name: "Power BI & Looker Studio", cat: "Analytics & Dashboards", icon: I.Database, impact: "Transforms raw operational data into visual dashboards that enable data-driven decisions by non-technical stakeholders.", productivity: "Reduces ad-hoc reporting requests by delivering always-on self-service dashboards for programme and leadership teams.", skill: 80 },
         { name: "Canva & Google Workspace", cat: "Communication Design", icon: I.MessageSquare, impact: "Produces crisp programme materials, facilitator guides, stakeholder reports, and community content that reflect strong operational presence.", productivity: "Cuts production time for recurring comms by templating everything — consistent quality at scale with minimal rework.", skill: 87 },
@@ -342,16 +342,16 @@
 
     const domainContent = {
         ops: {
-            title: "Programme Operations",
+            title: "Operations",
             tagline: "Systems · Execution · Scale",
             color: "#F0684C",
-            intro: "I design and build the operational infrastructure that enables organisations to deliver at scale — SOPs, workflow automation, coordination systems, and reporting frameworks that turn operational complexity into repeatable, measurable execution. This is not programme support. It is programme architecture. The projects here demonstrate how I have diagnosed operational problems, designed systems that fit real constraints, and implemented changes that reduced manual work, improved visibility, and kept delivery on track across large, distributed programmes.",
+            intro: "I design and build the operational infrastructure that enables organisations to deliver at scale — SOPs, workflow automation, coordination systems, and reporting frameworks that turn operational complexity into repeatable, measurable execution. The projects here demonstrate how I have diagnosed operational problems, designed systems that fit real constraints, and implemented changes that reduced manual work, improved visibility, and kept delivery on track.",
             caseStudy: {
                 org: "Karibu Learning Initiative",
                 context: "Pan-African workforce development · 3 concurrent programmes · 2,000+ participants · 6 countries",
                 headline: "How I led the build of an automated programme health tracker that cut manual data work by 30% — across three different programmes with three different operational needs.",
                 problem: "Programme delivery was generating large volumes of participant data every week — but none of it was being used in real time. Data lived in fragmented spreadsheets, manually updated at different times by different people, with no consistent structure across the three programmes. The team was always reactive: by the time a participant was flagged as disengaged, they had often already dropped out. Manual tracking was consuming 15+ hours per week across the team.",
-                decision: "I made three deliberate decisions. First — build in Google Sheets using Apps Script, because the team already used it and introducing a new tool would solve one problem while creating another. Second — involve the data technical mentors as co-builders, not just implementers, because I could describe what the tracker needed better than I could build it. Third — design three programme-specific views on a shared architecture, because each programme had different health signals that mattered.",
+                decision: "I made three deliberate decisions. First — build in Google Sheets with automation, because the team already used it and introducing a new tool would solve one problem while creating another. Second — involve the data technical mentors as co-builders, not just implementers, because I could describe what the tracker needed better than I could build it. Third — design three programme-specific views on a shared architecture, because each programme had different health signals that mattered.",
                 process: "I ran separate requirements sessions with each programme coordinator to document exactly what they tracked manually and what a healthy week looked like versus a concerning one. I translated those needs into a brief the technical mentors could build from. I tested outputs against real scenarios and fed discrepancies back. I wrote the user guide, ran the rollout sessions, and built the escalation protocol so the data actually drove action — not just existed.",
                 outcomes: [
                     "30% reduction in manual data tracking work across the team",
@@ -415,8 +415,8 @@
                 },
             ],
             skillGroups: [
-                { label: "Delivery & Planning", skills: ["Cohort & Programme Management", "SOP Design & Documentation", "Milestone Planning", "Risk Identification & Mitigation"] },
-                { label: "Systems & Automation", skills: ["Workflow Automation (Zapier / Make)", "Notion & Airtable Systems Design", "Google Apps Script", "Process Mapping"] },
+                { label: "Delivery & Planning", skills: ["Programme Management", "SOP Design & Documentation", "Milestone Planning", "Risk Identification & Mitigation"] },
+                { label: "Systems & Automation", skills: ["Workflow Automation (Zapier / Make)", "Notion & Airtable Systems Design", "Process Mapping", "Systems Design"] },
                 { label: "Reporting & Stakeholders", skills: ["Executive Reporting", "Cross-functional Coordination", "OKR & KPI Tracking", "Stakeholder Communication"] },
             ],
         },
@@ -514,7 +514,7 @@
     const PlaceholderBadge = () => (
         <div className="inline-flex items-center gap-1.5 bg-slate-100 text-slate-400 rounded-full px-3 py-1 text-[9px] font-black uppercase tracking-[0.15em]">
             <I.Plus className="w-3 h-3" />
-            Case Study Coming Soon
+            Case Study in Progress
         </div>
     );
 
@@ -977,60 +977,61 @@ JOIN avg_error_count ae
     const ProjectCard = ({ project, color, delay }) => {
         const [open, setOpen] = useState(false);
         return (
-        <div className={`rounded-3xl border overflow-hidden anim-fadeUp ${delay} ${project.placeholder ? 'placeholder-card' : 'bg-white border-slate-100'} ${!project.placeholder ? 'card-hover' : ''}`}>
-            {project.imageUrl && (
-                <div style={{ height: '180px', overflow: 'hidden', background: '#f1f3f5' }}>
-                    <img src={project.imageUrl} alt={project.title}
-                         style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.4s' }}
-                         onError={e => e.target.parentElement.style.display='none'} />
+        <div className={`rounded-2xl border overflow-hidden anim-fadeUp ${delay} ${project.placeholder ? 'placeholder-card border-slate-200' : 'bg-white border-slate-100'}`}>
+            <button
+                onClick={() => !project.placeholder && setOpen(!open)}
+                className="w-full text-left"
+                style={{ cursor: project.placeholder ? 'default' : 'pointer' }}>
+                <div className="px-6 py-5 flex items-center justify-between gap-4">
+                    <div className="flex items-center gap-4 min-w-0">
+                        <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: project.placeholder ? '#d1d5db' : color }} />
+                        <div className="min-w-0">
+                            <p className="text-[9px] font-black uppercase tracking-[0.2em] mb-1" style={{ color: project.placeholder ? '#9ca3af' : color }}>
+                                {project.badge}
+                            </p>
+                            <h4 className="text-base font-bold truncate" style={{ color: project.placeholder ? '#9ca3af' : '#1E2D40' }}>
+                                {project.title}
+                            </h4>
+                        </div>
+                    </div>
+                    {!project.placeholder && (
+                        <div className="flex-shrink-0 w-7 h-7 rounded-full border flex items-center justify-center transition-all"
+                             style={{ borderColor: open ? color : '#e2e8f0', background: open ? color : 'transparent' }}>
+                            {open
+                                ? <I.ChevronUp className="w-3.5 h-3.5 text-white" />
+                                : <I.ChevronDown className="w-3.5 h-3.5 text-slate-400" />}
+                        </div>
+                    )}
                 </div>
-            )}
-            <div className="p-8">
-                {project.placeholder ? <PlaceholderBadge /> : <Pill color={color}>{project.badge}</Pill>}
-                <h4 className={`text-2xl md:text-3xl font-normal serif mt-4 mb-3 tracking-tight ${project.placeholder ? 'text-slate-400' : ''}`}
-                    style={{ color: project.placeholder ? undefined : '#1E2D40' }}>
-                    {project.title}
-                </h4>
-                <p className={`text-sm leading-relaxed mb-6 italic border-l-4 pl-4 ${project.placeholder ? 'text-slate-400 border-slate-300' : 'text-slate-500'}`}
-                   style={{ borderColor: project.placeholder ? undefined : color }}>
-                    {project.summary}
-                </p>
-                <div className="mb-6">
-                    <p className="text-[10px] font-black uppercase tracking-[0.2em] mb-3 opacity-40">
-                        {project.placeholder ? 'Anticipated Outcomes' : 'Key Outcomes'}
-                    </p>
-                    <ul className="space-y-2">
+            </button>
+
+            {open && !project.placeholder && (
+                <div className="px-6 pb-7 border-t border-slate-100 pt-5 anim-fadeUp">
+                    <p className="text-sm text-slate-500 leading-relaxed mb-6 about-quote">{project.summary}</p>
+
+                    <p className="text-[9px] font-black uppercase tracking-[0.2em] mb-3" style={{ color }}>Key Outcomes</p>
+                    <ul className="space-y-2 mb-6">
                         {project.outcomes.map((o, i) => (
-                            <li key={i} className="flex items-start gap-2 text-sm text-slate-400">
-                                <I.Check className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: project.placeholder ? '#9ca3af' : color }} />
+                            <li key={i} className="flex items-start gap-2 text-sm text-slate-500">
+                                <I.Check className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" style={{ color }} />
                                 {o}
                             </li>
                         ))}
                     </ul>
+
+                    <div className="flex flex-wrap gap-2 mb-5">
+                        {project.tools.map((t, i) => (
+                            <span key={i} className="tool-tag">{t}</span>
+                        ))}
+                    </div>
+
+                    {project.caseStudyKey && (
+                        <CaseStudyDrawer studyKey={project.caseStudyKey} color={color} isOpen={true} />
+                    )}
+                    {project.youtubeId && <YouTubeEmbed youtubeId={project.youtubeId} color={color} />}
+                    {project.notionEmbed && <NotionEmbed embedUrl={project.notionEmbed} notionUrl={project.notionUrl} color={color} />}
                 </div>
-                <div className="flex flex-wrap gap-2 mb-5">
-                    {project.tools.map((t, i) => (
-                        <span key={i} className={project.placeholder ? 'tool-tag opacity-50' : 'tool-tag'}>{t}</span>
-                    ))}
-                </div>
-                {project.caseStudyKey && (
-                    <button onClick={() => setOpen(!open)}
-                            className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest px-4 py-2.5 rounded-xl transition-all w-full justify-center mt-2"
-                            style={{ background: open ? color : color + '12', color: open ? 'white' : color, border: `1px solid ${color}30` }}>
-                        {open ? <I.ChevronUp className="w-3.5 h-3.5" /> : <I.ChevronDown className="w-3.5 h-3.5" />}
-                        {open ? 'Close Case Study' : 'Read Full Case Study'}
-                    </button>
-                )}
-                {project.caseStudyKey && (
-                    <CaseStudyDrawer studyKey={project.caseStudyKey} color={color} isOpen={open} />
-                )}
-                {project.youtubeId && (
-                    <YouTubeEmbed youtubeId={project.youtubeId} color={color} />
-                )}
-                {project.notionEmbed && (
-                    <NotionEmbed embedUrl={project.notionEmbed} notionUrl={project.notionUrl} color={color} />
-                )}
-            </div>
+            )}
         </div>
         );
     };
@@ -1056,7 +1057,7 @@ JOIN avg_error_count ae
     const toolProjectData = {
         'Asana': {
             type: 'ops',
-            label: 'Programme Operations',
+            label: 'Operations',
             color: '#F0684C',
             title: 'Programme Delivery Operations System',
             summary: '12-week programme delivery system — 24 participants, 5 phases, dependency mapping, automated escalations, and a full project brief.',
@@ -1065,7 +1066,7 @@ JOIN avg_error_count ae
         },
         'Notion': {
             type: 'ops',
-            label: 'Programme Operations',
+            label: 'Operations',
             color: '#F0684C',
             title: 'The Shift Collective — CRM &amp; Operations Hub',
             summary: 'Complete Notion operations hub for a career coaching practice — Client CRM, Session Notes, SOPs, Content Pipeline, Metrics dashboard, and Team Wiki.',
@@ -1074,16 +1075,16 @@ JOIN avg_error_count ae
         },
         'Google Sheets': {
             type: 'ops',
-            label: 'Programme Operations',
+            label: 'Operations',
             color: '#F0684C',
             title: 'Karibu Learning Initiative — Automated Health Tracker',
             summary: 'Led the build of an automated programme health tracker across 3 concurrent programmes — cutting manual data work by 30% and moving the team from reactive to proactive.',
-            tools: ['Google Sheets', 'Apps Script', 'Systems Design', 'Stakeholder Management'],
+            tools: ['Google Sheets', 'Workflow Automation', 'Systems Design', 'Stakeholder Management'],
             isCaseStudy: true,
         },
         'Zapier': {
             type: 'ops',
-            label: 'Programme Operations',
+            label: 'Operations',
             color: '#F0684C',
             title: 'Nova Creatives — Automated Course Registration Pipeline',
             summary: 'Google Form submission → Filter → Google Sheets record → personalised welcome email. Replaced 45 minutes of daily manual data entry with a 4-step automated pipeline.',
@@ -1117,7 +1118,7 @@ JOIN avg_error_count ae
         },
     };
 
-    const comingSoonTools = ['ClickUp', 'Monday.com', 'Airtable', 'Make', 'Google Apps Script', 'Canva'];
+    const comingSoonTools = ['ClickUp', 'Monday.com', 'Airtable', 'Make', 'Canva'];
     const staticTools = ['Zoom', 'Slack', 'Lattice', 'Google Workspace'];
 
     const ToolSkillsSection = ({ switchTab }) => {
@@ -1131,10 +1132,10 @@ JOIN avg_error_count ae
         };
 
         const skillGroups = [
-            { cat: "Programme Operations", icon: I.Settings, color: "#F0684C", line: "I design the systems and processes that keep complex programmes running reliably at scale.", skills: ["Cohort Management", "SOP Design", "Milestone Planning", "Risk Mitigation", "System Design", "Process Mapping", "Programme Evaluation", "Health Tracking Frameworks", "Evaluation Frameworks", "LMS Administration"] },
+            { cat: "Operations", icon: I.Settings, color: "#F0684C", line: "I design the systems and processes that keep complex operations running reliably at scale.", skills: ["Programme Management", "SOP Design", "Milestone Planning", "Risk Mitigation", "System Design", "Process Mapping", "Programme Evaluation", "Health Tracking Frameworks", "Evaluation Frameworks", "Onboarding Design"] },
             { cat: "Stakeholder Management", icon: I.Users, color: "#1A8B8B", line: "I coordinate across teams and levels — translating operational complexity into clear communication.", skills: ["Executive Reporting", "Cross-functional Coordination", "OKR & KPI Tracking", "Stakeholder Communication", "Facilitation", "Partner Management", "Escalation Management", "Cross-border Coordination"] },
-            { cat: "Data &amp; Reporting", icon: I.ChartLine, color: "#1E2D40", line: "I turn operational data into dashboards and decisions for teams and leadership.", skills: ["Google Sheets", "Excel", "Power BI", "SQL", "Data Storytelling", "KPI Framework Design", "Survey Design &amp; Analysis", "A/B Testing", "Cohort Analysis", "Dashboard Design"] },
-            { cat: "Workflow Automation &amp; Tools", icon: I.Zap, color: "#F0684C", line: "I connect tools and eliminate manual handoffs so teams focus on higher-value work.", skills: ["Zapier", "Make", "Google Apps Script", "Airtable", "Notion", "Asana", "ClickUp", "Monday.com"] },
+            { cat: "Data &amp; Reporting", icon: I.ChartLine, color: "#1E2D40", line: "I turn operational data into dashboards and decisions for teams and leadership.", skills: ["Google Sheets", "Excel", "Power BI", "SQL", "Data Storytelling", "KPI Framework Design", "Survey Design &amp; Analysis", "A/B Testing", "Segmentation Analysis", "Dashboard Design"] },
+            { cat: "Workflow Automation &amp; Tools", icon: I.Zap, color: "#F0684C", line: "I connect tools and eliminate manual handoffs so teams focus on higher-value work.", skills: ["Zapier", "Make", "Airtable", "Notion", "Asana", "ClickUp", "Monday.com", "Jira"] },
             { cat: "Community Management", icon: I.Globe, color: "#1A8B8B", line: "I build the structures that turn groups into engaged, high-retention participants.", skills: ["Community Strategy", "Onboarding Design", "Virtual Event Management", "Engagement Programming", "Member Retention", "Ambassador Programmes"] },
             { cat: "Communication &amp; Design", icon: I.MessageSquare, color: "#1E2D40", line: "I produce the materials that make programmes feel professional and consistent.", skills: ["Canva", "Content Planning", "Newsletter Management", "Facilitation Guides", "Report Writing", "Presentation Design"] },
         ];
@@ -1156,11 +1157,9 @@ JOIN avg_error_count ae
 
             if (isComingSoon) {
                 return (
-                    <span key={skill} onClick={() => handleToolClick(skill)}
-                          className="skill-chip" style={{ fontSize:'11px', padding:'5px 11px', cursor:'pointer', borderColor: isActive ? color : '' }}>
+                    <span key={skill} className="skill-chip" style={{ fontSize:'11px', padding:'5px 11px', opacity:0.55, cursor:'default' }}>
                         <span className="skill-chip-dot" style={{ background: color + '40' }} />
                         {skill}
-                        <span style={{ fontSize:'8px', color:'#94a3b8', marginLeft:'4px' }}>soon</span>
                     </span>
                 );
             }
@@ -1186,15 +1185,6 @@ JOIN avg_error_count ae
 
         const renderPanel = () => {
             if (!activeToolPanel) return null;
-
-            if (comingSoonTools.includes(activeToolPanel)) {
-                return (
-                    <div className="mt-4 p-5 rounded-2xl border border-slate-100 bg-slate-50 anim-fadeUp">
-                        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Project in progress</p>
-                        <p className="text-sm text-slate-500">A portfolio project demonstrating {activeToolPanel} is currently being built. Check back soon.</p>
-                    </div>
-                );
-            }
 
             const proj = toolProjectData[activeToolPanel];
             if (!proj) return null;
@@ -1304,9 +1294,9 @@ JOIN avg_error_count ae
         const mainRef = useRef(null);
 
         const tabs = [
-            { id: 'landing',   label: 'About',                  icon: I.Users },
-            { id: 'ops',       label: 'Programme Operations',   icon: I.Settings },
-            { id: 'ds',        label: 'Operational Analytics',  icon: I.Database },
+            { id: 'landing',   label: 'About',       icon: I.Users },
+            { id: 'ops',       label: 'Operations',  icon: I.Settings },
+            { id: 'ds',        label: 'Analytics',   icon: I.Database },
         ];
 
         const switchTab = (id) => {
@@ -1329,7 +1319,7 @@ JOIN avg_error_count ae
             {
                 tab: 'ops',
                 color: '#F0684C',
-                label: 'Programme Operations',
+                label: 'Operations',
                 title: 'Programme Delivery Operations System',
                 desc: '12-week programme delivery system in Asana — 24 participants, 5 phases, dependency mapping, automated escalations, and a full project brief.',
                 tools: ['Asana', 'Dependencies', 'Automations', 'Timeline'],
@@ -1344,15 +1334,6 @@ JOIN avg_error_count ae
                 tools: ['SQL', 'Power BI', 'SLA Analysis'],
                 image: 'https://www.datascienceportfol.io/static/profile_pics/pr7_7210F562E361D77B095F.jpg',
             },
-            {
-                tab: 'community',
-                color: '#1A8B8B',
-                label: 'Community Management',
-                title: 'Mentorship Programme Series',
-                desc: 'Designed and coordinated a four-part live virtual mentorship series — facilitator onboarding, logistics, post-event reporting, and a 99% satisfaction score.',
-                tools: ['Zoom', 'Notion', 'Canva', 'Google Forms'],
-                placeholder: true,
-            },
         ];
 
         return (
@@ -1363,7 +1344,7 @@ JOIN avg_error_count ae
                     <div style={{ position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)', width:'600px', height:'600px', border:'1px solid rgba(255,255,255,0.04)', borderRadius:'50%', pointerEvents:'none' }} />
                     <div style={{ position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)', width:'900px', height:'900px', border:'1px solid rgba(255,255,255,0.03)', borderRadius:'50%', pointerEvents:'none' }} />
                     <div className="max-w-3xl mx-auto relative z-10 anim-fadeUp">
-                        <span className="uppercase text-[10px] font-black tracking-[0.4em]" style={{ color:'rgba(26,139,139,0.9)' }}>Programme & Product Operations</span>
+                        <span className="uppercase text-[10px] font-black tracking-[0.4em]" style={{ color:'rgba(26,139,139,0.9)' }}>Operations & Analytics</span>
                         <h1 className="text-5xl md:text-7xl lg:text-8xl font-normal text-white italic mt-4 mb-6 tracking-tight">Keren Wang'ombe</h1>
                         <p className="text-white/80 text-lg md:text-xl font-light italic leading-snug max-w-2xl mx-auto">
                             "I design operational systems that help teams streamline workflows, improve execution visibility, and make better decisions using data."
@@ -1401,34 +1382,27 @@ JOIN avg_error_count ae
                             {/* Brief summary card */}
                             <div className="bg-white rounded-3xl border border-slate-100 p-8 md:p-10 mb-10">
                                 <p className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-400 mb-5">Professional Summary</p>
-                                <p className="text-sm text-slate-500 leading-relaxed">I design operational systems that help teams execute at scale — streamlining workflows, improving delivery visibility, and using data to drive better operational decisions. With 3+ years building infrastructure across large-scale programmes, I have a track record of diagnosing execution friction and implementing solutions that stick. My work spans programme operations, product operations, and operational analytics — three disciplines that share the same core question: how do we make this organisation run better?</p>
+                                <p className="text-sm text-slate-500 leading-relaxed">I design operational systems that help teams execute at scale — streamlining workflows, improving delivery visibility, and using data to drive better operational decisions. With 3+ years building infrastructure across large-scale programmes, I have a track record of diagnosing execution friction and implementing solutions that stick. My work sits at the intersection of operations and analytics — two disciplines that share the same core question: how do we make this organisation run better?</p>
                             </div>
 
                             {/* What I Do */}
                             <div className="mb-10">
                                 <p className="divider-label text-[10px] font-black uppercase tracking-[0.35em] text-slate-400 mb-8">What I Do</p>
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                     {[
                                         {
                                             icon: I.Settings,
                                             color: "#F0684C",
-                                            lane: "Programme Operations",
-                                            desc: "I design and build the operational systems, workflows, and governance frameworks that allow programmes to run at scale — consistently, reliably, and without burning out the team.",
-                                            tags: ["Operational Workflows", "SOP Design", "KPI Reporting", "Execution Tracking", "Onboarding Systems"],
-                                        },
-                                        {
-                                            icon: I.Target,
-                                            color: "#1E2D40",
-                                            lane: "Product Operations",
-                                            desc: "I improve how product teams execute — sprint coordination, release readiness, workflow visibility, and cross-functional communication — so delivery runs with less friction and more predictability.",
-                                            tags: ["Sprint Coordination", "Release Workflows", "Workflow Optimisation", "Process Improvement", "Jira"],
+                                            lane: "Operations",
+                                            desc: "I design and build the operational systems, workflows, and governance frameworks that allow organisations to deliver at scale — consistently, reliably, and without burning out the team. From client onboarding infrastructure to delivery tracking systems and workflow automation, I build the operational backbone that makes execution repeatable.",
+                                            tags: ["Operational Workflows", "SOP Design", "KPI Reporting", "Execution Tracking", "Onboarding Systems", "Workflow Automation"],
                                         },
                                         {
                                             icon: I.ChartLine,
                                             color: "#1A8B8B",
-                                            lane: "Operational Analytics",
-                                            desc: "I use data to surface where operations are breaking down and give leadership the visibility to act — dashboards, SQL analysis, and KPI frameworks built around operational decisions, not vanity metrics.",
-                                            tags: ["SQL", "Power BI", "Dashboard Design", "KPI Frameworks", "Operational Reporting"],
+                                            lane: "Analytics",
+                                            desc: "I use data to surface where operations are breaking down and give leadership the visibility to act — dashboards, SQL analysis, and KPI frameworks built around operational decisions, not vanity metrics. I turn raw operational data into reporting that actually changes what teams do next.",
+                                            tags: ["SQL", "Power BI", "Dashboard Design", "KPI Frameworks", "Operational Reporting", "Excel"],
                                         },
                                     ].map((item, i) => {
                                         const Icon = item.icon;
@@ -1451,9 +1425,8 @@ JOIN avg_error_count ae
                             </div>
 
                             {/* Tools */}
-                            <div className="mb-10 text-center">
-                                <h2 className="text-4xl md:text-5xl font-normal serif tracking-tight mb-2" style={{ color: '#1E2D40' }}>Tools & Proof</h2>
-                                <p className="text-[11px] uppercase tracking-[0.35em] font-bold" style={{ color:'#1A8B8B' }}>Click any tool to see the project behind it</p>
+                            <div className="mb-8">
+                                <p className="divider-label text-[10px] font-black uppercase tracking-[0.35em] text-slate-400 mb-8">Skills</p>
                             </div>
                             <ToolSkillsSection switchTab={switchTab} />
                         </div>
@@ -1488,7 +1461,7 @@ JOIN avg_error_count ae
                                 </a>
                             )}
                             <p className="divider-label text-[10px] font-black uppercase tracking-[0.35em] text-slate-400 mb-8">Featured Projects</p>
-                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-12">
                                 {domain.projects.map((proj, i) => (
                                     <ProjectCard key={i} project={proj} color={domain.color} delay={`delay-${i+1}`} />
                                 ))}
