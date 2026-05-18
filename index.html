@@ -346,40 +346,37 @@
             tagline: "Systems · Execution · Scale",
             color: "#F0684C",
             intro: "I design and build the operational infrastructure that enables organisations to deliver at scale — SOPs, workflow automation, coordination systems, and reporting frameworks that turn operational complexity into repeatable, measurable execution. The projects here demonstrate how I have diagnosed operational problems, designed systems that fit real constraints, and implemented changes that reduced manual work, improved visibility, and kept delivery on track.",
-            caseStudy: {
-                org: "Karibu Learning Initiative",
-                context: "Pan-African workforce development · 3 concurrent programmes · 2,000+ participants · 6 countries",
-                headline: "How I led the build of an automated programme health tracker that cut manual data work by 30% — across three different programmes with three different operational needs.",
-                problem: "Programme delivery was generating large volumes of participant data every week — but none of it was being used in real time. Data lived in fragmented spreadsheets, manually updated at different times by different people, with no consistent structure across the three programmes. The team was always reactive: by the time a participant was flagged as disengaged, they had often already dropped out. Manual tracking was consuming 15+ hours per week across the team.",
-                decision: "I made three deliberate decisions. First — build in Google Sheets with automation, because the team already used it and introducing a new tool would solve one problem while creating another. Second — involve the data technical mentors as co-builders, not just implementers, because I could describe what the tracker needed better than I could build it. Third — design three programme-specific views on a shared architecture, because each programme had different health signals that mattered.",
-                process: "I ran separate requirements sessions with each programme coordinator to document exactly what they tracked manually and what a healthy week looked like versus a concerning one. I translated those needs into a brief the technical mentors could build from. I tested outputs against real scenarios and fed discrepancies back. I wrote the user guide, ran the rollout sessions, and built the escalation protocol so the data actually drove action — not just existed.",
-                outcomes: [
-                    "30% reduction in manual data tracking work across the team",
-                    "Programme coordinators moved from reactive to proactive — at-risk participants flagged in real time",
-                    "Facilitators received weekly health summaries without anyone compiling them manually",
-                    "Leadership saw health across all three programmes in a single view",
-                    "Tracker adopted as the operational standard for subsequent programme cycles",
-                ],
-                skills: ["Systems Thinking", "Stakeholder Management", "Operational Diagnosis", "Cross-functional Leadership", "Requirements Translation", "Change Management"],
-            },
-            metrics: [
-                { val: "50%", label: "Manual Tasks Cut", desc: "Through automation and system design" },
-                { val: "15+", label: "Hours Saved / Week", desc: "Across the team via workflow redesign" },
-                { val: "30%", label: "Efficiency Gain", desc: "Workflow optimisation and SOP rollout" },
-            ],
             projects: [
+                {
+                    badge: "Systems Design · Workflow Automation · Operational Analytics",
+                    title: "Cross-Functional Onboarding Operations System",
+                    summary: "Implemented a cross-functional onboarding operations system designed to standardise onboarding workflows, reduce manual coordination, and improve operational visibility across HR, IT, Operations, and Hiring Managers. The project addressed fragmented onboarding processes, delayed provisioning, inconsistent milestone tracking, and limited escalation visibility by centralising onboarding intake, workflow management, automation, reporting, and governance into one connected operational system. Built an integrated workflow using Google Forms, Google Sheets, Make, ClickUp, Power BI, and Notion to automate onboarding intake, onboarding workflow creation, stakeholder notifications, escalation handling, milestone tracking, and operational reporting. The system introduced structured onboarding lifecycle management through workflow statuses, dependencies, escalation workflows, SLA tracking, and centralised operational dashboards, improving onboarding accountability and cross-functional coordination. During implementation, the operational architecture was redesigned after identifying Excel workbook locking and OneDrive sync conflicts within the live automation pipeline. The workflow was restructured to use Google Sheets as the operational intake database and ClickUp as the workflow management layer, while Microsoft Excel and Power BI were reserved for reporting and analytics to improve workflow reliability and operational scalability.",
+                    outcomes: [
+                        "88% onboarding completion rate across departments",
+                        "91% SLA compliance across all onboarding milestones",
+                        "24% reduction in onboarding delays through automated milestone tracking and provisioning coordination",
+                        "38% reduction in manual HR coordination effort through Make.com automation scenarios",
+                        "15+ hours of weekly administrative time saved through workflow automation",
+                        "Centralised tracking and reporting for 250+ onboarding workflows across Client Services, Operations, and Analytics",
+                    ],
+                    tools: ["Google Forms", "Google Sheets", "Make.com", "ClickUp", "Power BI", "Notion", "Excel", "Workflow Automation", "SOP Design", "Operational Reporting", "Systems Design"],
+                    placeholder: false,
+                    driveId: "1BdwGkAENe13RBxbTmclQdkVu7CKWe-QY",
+                    driveUrl: "https://drive.google.com/file/d/1BdwGkAENe13RBxbTmclQdkVu7CKWe-QY/view?usp=drive_link",
+                    notionCaseStudy: "https://www.notion.so/Cross-Functional-Onboarding-Operations-System-3641bb37c5e18072a112eccfd94b92cd",
+                },
                 {
                     badge: "Systems Design · CRM",
                     title: "Operational Command Center",
-                    summary: "A growing coaching organisation with 3 coaches and 25 active clients lacked centralised operational infrastructure — fragmented client records, inconsistent onboarding workflows, limited execution visibility, and manual coordination across teams. Designed and implemented a Notion-based Operations Command Center that unified client management, onboarding workflows, operational documentation, reporting systems, content coordination, and programme delivery operations into a single scalable system.",
+                    summary: "A growing coaching organisation with 3 coaches and 25 active clients had no shared operational infrastructure — client records scattered, onboarding inconsistent between coaches, and zero visibility for leadership. My role was to design and implement a centralised Notion-based Operations Command Center that unified client management, onboarding workflows, operational documentation, reporting systems, and content coordination into one connected system that any coach could use without being briefed.",
                     outcomes: [
-                        "Centralised CRM with filtered visibility by coach assignment, onboarding stage, and upcoming sessions — improving real-time operational oversight without manual status updates",
-                        "Standardised session documentation workflows using structured templates, ensuring consistent client tracking and operational reporting across all coaches",
-                        "3 operational SOPs covering onboarding, no-show management, and offboarding — improving process consistency and eliminating operational ambiguity",
-                        "Live programme operations calendar automatically tracking upcoming sessions, reducing manual coordination and improving scheduling visibility",
-                        "Unified content management, client operations, resource coordination, and workflow tracking into one infrastructure system supporting scalable programme delivery",
+                        "Centralised CRM with filtered visibility by coach assignment, onboarding stage, and upcoming sessions — real-time oversight without manual status updates",
+                        "Standardised session documentation using structured templates, ensuring consistent client tracking across all coaches regardless of individual working style",
+                        "3 operational SOPs covering onboarding, no-show management, and offboarding — process consistency no longer depended on institutional memory",
+                        "Live operations calendar automatically tracking upcoming sessions, reducing manual scheduling coordination",
+                        "Unified content management, resource coordination, and workflow tracking into one system supporting scalable delivery",
                     ],
-                    tools: ["Notion", "CRM Design", "SOP Documentation", "Workflow Design", "Operational Reporting", "Systems Design", "Content Operations"],
+                    tools: ["Notion", "CRM Design", "SOP Documentation", "Workflow Design", "Operational Reporting", "Systems Design"],
                     placeholder: false,
                     notionEmbed: "https://paper-belt-9a3.notion.site/ebd/3361bb37c5e180f68291d8917dbc2eed",
                     notionUrl: "https://paper-belt-9a3.notion.site/The-Shift-Collective-Operations-Hub-3361bb37c5e180f68291d8917dbc2eed?pvs=143",
@@ -387,30 +384,30 @@
                 {
                     badge: "Project Operations",
                     title: "Programme Delivery Operations System",
-                    summary: "A 12-week programme was being managed through fragmented email threads and shared documents — limited operational visibility, unclear task ownership, inconsistent dependency tracking, and no centralised delivery reporting for leadership. Designed and implemented a structured Asana-based Programme Delivery Operations System covering the full programme lifecycle from pre-launch planning through execution, showcase coordination, and closeout. The system centralised task management, dependency tracking, escalation workflows, facilitator coordination, milestone monitoring, and leadership reporting into one operational delivery infrastructure.",
+                    summary: "A 12-week programme was being coordinated through email threads and shared documents — no dependency tracking, no escalation logic, and no delivery visibility for leadership. My role was to design and implement a structured Asana-based delivery system that covered the full programme lifecycle, mapped every task dependency, and connected delivery status to leadership reporting so nothing could be missed and nothing could move forward out of sequence.",
                     outcomes: [
-                        "Structured delivery workflow with 24 operational tasks across 5 programme phases, including 9 mapped task dependencies improving execution sequencing and delivery coordination",
-                        "4 custom operational fields enabling real-time visibility into delivery status, facilitator approval, task category, and programme group tracking",
-                        "Automated escalation workflows routing blocked tasks directly to programme leadership while automatically updating facilitator confirmations upon completion",
-                        "Connected programme goals, milestones, and delivery tracking into one centralised reporting system improving leadership oversight and operational visibility",
-                        "Improved coordination between facilitators, operational staff, and programme leadership through standardised workflows and centralised task governance",
+                        "24 operational tasks across 5 programme phases with 9 mapped dependencies — execution sequencing enforced by the system, not by memory",
+                        "4 custom fields enabling real-time visibility into delivery status, facilitator approval, task category, and group tracking",
+                        "Automated escalation routing blocked tasks directly to programme leadership while auto-confirming facilitator completions",
+                        "Programme goals, milestones, and delivery tracking connected into one centralised reporting view for leadership",
+                        "Coordination between facilitators, operational staff, and leadership improved through standardised workflows and centralised task governance",
                     ],
-                    tools: ["Asana", "Workflow Design", "Dependency Mapping", "Process Automation", "Delivery Operations", "KPI Tracking", "Timeline Management", "Operational Reporting"],
+                    tools: ["Asana", "Workflow Design", "Dependency Mapping", "Process Automation", "Delivery Operations", "KPI Tracking", "Timeline Management"],
                     placeholder: false,
                     youtubeId: "8v5r37T_dDo",
                 },
                 {
                     badge: "Workflow Automation",
                     title: "Operational Workflow Automation Pipeline",
-                    summary: "Nova Creatives was manually processing every course registration through spreadsheets and email follow-ups — creating repetitive operational work, delayed onboarding communication, and inconsistent registration tracking across the team. Designed and implemented a multi-step Zapier automation pipeline that centralised registration intake, automated onboarding communication, reduced manual processing work, and improved operational efficiency without requiring engineering support.",
+                    summary: "A course provider was manually processing every registration through spreadsheets and individual emails — 45 minutes of repetitive daily work, delayed onboarding communication, and inconsistent intake tracking. My role was to design and implement a Zapier automation pipeline that replaced the manual process end-to-end without requiring engineering support, and built in a filtering step so only qualified registrations entered the operational database.",
                     outcomes: [
-                        "4-step operational automation workflow connecting Google Forms, filtering logic, Google Sheets, and Gmail into one automated onboarding pipeline",
-                        "Eliminated approximately 45 minutes of repetitive daily manual processing through workflow automation and centralised registration tracking",
-                        "Automated personalised onboarding communication — participants receive confirmation and welcome information within seconds of submission",
-                        "Automated filtering logic ensuring only qualified registrations enter the operational database, reducing manual review and improving data quality",
-                        "Improved onboarding consistency, operational efficiency, and participant intake visibility through connected workflow systems",
+                        "4-step automation pipeline connecting Google Forms, filtering logic, Google Sheets, and Gmail into one automated intake workflow",
+                        "45 minutes of daily manual processing eliminated — intake, filtering, database entry, and welcome communication all automated",
+                        "Personalised onboarding communication sent within seconds of registration — no manual trigger required",
+                        "Filtering logic preventing unqualified entries from reaching the database, reducing manual review and improving data quality",
+                        "Intake consistency improved — every registration handled identically regardless of volume or time of day",
                     ],
-                    tools: ["Zapier", "Workflow Automation", "Google Forms", "Google Sheets", "Gmail", "Process Optimisation", "Operational Systems", "Intake Automation"],
+                    tools: ["Zapier", "Google Forms", "Google Sheets", "Gmail", "Workflow Automation", "Process Optimisation"],
                     placeholder: false,
                 },
             ],
@@ -424,7 +421,7 @@
             title: "Operational Analytics",
             tagline: "Data · Decisions · Action",
             color: "#1E2D40",
-            intro: "I use data to improve how operations run — not to describe what happened, but to identify what needs to change and give leadership the visibility to act. The distinction matters: operational analytics is not reporting for its own sake. It is building the data layer that surfaces where delivery is breaking down, where participants are falling off, where team capacity is being wasted, and what the operation should do differently next week. The projects here demonstrate that thinking applied across SQL, Excel, and Power BI.",
+            intro: "I use data to improve how operations run — not to describe what happened, but to identify what needs to change and give leadership the visibility to act. The distinction matters: operational analytics is not reporting for its own sake. It is building the data layer that surfaces where delivery is breaking down, where team capacity is being wasted, where SLA compliance is slipping, and what the operation should do differently next week. The projects here demonstrate that thinking applied across SQL, Excel, and Power BI.",
             metrics: [
                 { val: "98%", label: "Data Accuracy", desc: "Across large multi-programme datasets" },
                 { val: "80%", label: "CSAT Score", desc: "Reflecting programme quality tracked via data" },
@@ -861,82 +858,49 @@ JOIN avg_error_count ae
         );
     };
 
-    const CaseStudyFeature = ({ cs, color }) => {
-        const [open, setOpen] = useState(false);
+
+    const GoogleDriveEmbed = ({ driveId, driveUrl, color }) => {
+        const [playing, setPlaying] = useState(false);
+        const embedUrl = `https://drive.google.com/file/d/${driveId}/preview`;
         return (
-            <div className="bg-white rounded-3xl border overflow-hidden mb-12" style={{ borderColor: color + '30' }}>
-                <div style={{ background: color, padding: '6px 24px' }}>
-                    <span style={{ fontSize:'9px', fontWeight:800, letterSpacing:'0.3em', textTransform:'uppercase', color:'white', opacity:0.8 }}>Featured Case Study</span>
+            <div className="mt-6 rounded-2xl overflow-hidden border" style={{ borderColor: color + '30' }}>
+                <div className="px-4 py-2.5 flex items-center gap-2" style={{ background: color + '10', borderBottom: `1px solid ${color}20` }}>
+                    <div className="w-2 h-2 rounded-full" style={{ background: color }} />
+                    <span className="text-[10px] font-black uppercase tracking-[0.18em]" style={{ color }}>Project Walkthrough</span>
                 </div>
-                <div className="p-8 md:p-10">
-                    <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
-                        <div>
-                            <p className="text-[9px] font-black uppercase tracking-[0.25em] mb-2" style={{ color }}>Karibu Learning Initiative</p>
-                            <h3 className="text-2xl md:text-3xl font-normal serif tracking-tight mb-2" style={{ color:'#1E2D40' }}>
-                                {cs.headline}
-                            </h3>
-                            <p className="text-xs text-slate-400">{cs.context}</p>
-                        </div>
-                        <div className="flex flex-wrap gap-2 flex-shrink-0">
-                            {[{ val:'30%', label:'Manual work cut'}, {val:'15h+', label:'Saved weekly'}, {val:'3', label:'Programmes served'}].map((m,i) => (
-                                <div key={i} className="rounded-xl p-3 text-center border border-slate-100 bg-slate-50" style={{ minWidth:'80px' }}>
-                                    <div className="text-xl serif font-normal" style={{ color }}>{m.val}</div>
-                                    <div className="text-[9px] font-black uppercase tracking-[0.12em] text-slate-400 mt-0.5">{m.label}</div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
-                    <div className="about-quote mb-6">
-                        <p className="text-sm text-slate-500 leading-relaxed italic">{cs.problem}</p>
-                    </div>
-
-                    <button onClick={() => setOpen(!open)}
-                            className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest px-5 py-2.5 rounded-xl transition-all mb-2"
-                            style={{ background: open ? color : color + '12', color: open ? 'white' : color, border:`1px solid ${color}30` }}>
-                        {open ? <I.ChevronUp className="w-3.5 h-3.5" /> : <I.ChevronDown className="w-3.5 h-3.5" />}
-                        {open ? 'Close full case study' : 'Read full case study'}
-                    </button>
-
-                    <div className={`case-study-drawer ${open ? 'open' : ''}`}>
-                        <div className="pt-6 border-t border-slate-100 mt-4">
-                            <p className="cs-section-title">The Decision</p>
-                            <p className="text-sm text-slate-500 leading-relaxed mb-6">{cs.decision}</p>
-
-                            <p className="cs-section-title">How It Was Built</p>
-                            <p className="text-sm text-slate-500 leading-relaxed mb-6">{cs.process}</p>
-
-                            <p className="cs-section-title">Outcomes</p>
-                            <ul className="space-y-2 mb-6">
-                                {cs.outcomes.map((o,i) => (
-                                    <li key={i} className="flex items-start gap-2 text-sm text-slate-500">
-                                        <I.Check className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color }} />
-                                        {o}
-                                    </li>
-                                ))}
-                            </ul>
-
-                            <p className="cs-section-title">Skills Demonstrated</p>
-                            <div className="flex flex-wrap gap-2">
-                                {cs.skills.map((s,i) => (
-                                    <span key={i} className="skill-chip" style={{ fontSize:'11px', padding:'5px 11px' }}>
-                                        <span className="skill-chip-dot" style={{ background: color + '50' }} />
-                                        {s}
-                                    </span>
-                                ))}
+                {!playing ? (
+                    <div className="video-thumbnail cursor-pointer" onClick={() => setPlaying(true)}
+                         style={{ position:'relative', background:'#1a2a3a', minHeight:'200px', display:'flex', alignItems:'center', justifyContent:'center' }}>
+                        <div className="flex flex-col items-center gap-3">
+                            <div className="play-circle" style={{ background: color + '20', border: `2px solid ${color}`, borderRadius:'50%', width:'56px', height:'56px', display:'flex', alignItems:'center', justifyContent:'center' }}>
+                                <I.Play className="w-5 h-5 ml-1" style={{ color }} />
                             </div>
-
-                            <div className="mt-6 p-4 rounded-2xl border border-slate-100 bg-slate-50">
-                                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Transferable to</p>
-                                <p className="text-sm text-slate-500 leading-relaxed">This approach — diagnosing operational friction, designing within existing constraints, translating needs across technical and non-technical teams, and building for adoption — applies equally to corporate L&amp;D departments, nonprofit programme teams, healthcare operations, and any organisation running complex programmes at scale. The tool was Google Sheets. The skill was everything else.</p>
-                            </div>
+                            <span className="text-white text-xs font-bold bg-black/50 px-3 py-1 rounded-full">Watch walkthrough</span>
                         </div>
                     </div>
+                ) : (
+                    <div style={{ position:'relative', paddingBottom:'56.25%', height:0, background:'#000' }}>
+                        <iframe
+                            src={embedUrl}
+                            style={{ position:'absolute', top:0, left:0, width:'100%', height:'100%' }}
+                            frameBorder="0"
+                            allow="autoplay"
+                            allowFullScreen
+                        />
+                    </div>
+                )}
+                <div className="px-4 py-3 flex items-center justify-between" style={{ background: color + '06' }}>
+                    <span className="text-[10px] text-slate-400">Cross-Functional Onboarding Operations System</span>
+                    <a href={driveUrl} target="_blank" rel="noopener noreferrer"
+                       className="flex items-center gap-1 text-[10px] font-bold transition-opacity hover:opacity-70"
+                       style={{ color }}>
+                        <I.ExternalLink className="w-3 h-3" />
+                        Open in Drive
+                    </a>
                 </div>
             </div>
         );
     };
-
     const NotionEmbed = ({ embedUrl, notionUrl, color }) => {
         const [open, setOpen] = useState(false);
         return (
@@ -1028,8 +992,17 @@ JOIN avg_error_count ae
                     {project.caseStudyKey && (
                         <CaseStudyDrawer studyKey={project.caseStudyKey} color={color} isOpen={true} />
                     )}
+                    {project.driveId && <GoogleDriveEmbed driveId={project.driveId} driveUrl={project.driveUrl} color={color} />}
                     {project.youtubeId && <YouTubeEmbed youtubeId={project.youtubeId} color={color} />}
                     {project.notionEmbed && <NotionEmbed embedUrl={project.notionEmbed} notionUrl={project.notionUrl} color={color} />}
+                    {project.notionCaseStudy && (
+                        <a href={project.notionCaseStudy} target="_blank" rel="noopener noreferrer"
+                           className="mt-4 flex items-center gap-2 text-[10px] font-black uppercase tracking-widest px-4 py-2.5 rounded-xl transition-all w-full justify-center"
+                           style={{ background: color + '12', color, border: `1px solid ${color}30` }}>
+                            <I.ExternalLink className="w-3.5 h-3.5" />
+                            Read Full Case Study in Notion
+                        </a>
+                    )}
                 </div>
             )}
         </div>
@@ -1077,10 +1050,9 @@ JOIN avg_error_count ae
             type: 'ops',
             label: 'Operations',
             color: '#F0684C',
-            title: 'Karibu Learning Initiative — Automated Health Tracker',
-            summary: 'Led the build of an automated programme health tracker across 3 concurrent programmes — cutting manual data work by 30% and moving the team from reactive to proactive.',
-            tools: ['Google Sheets', 'Workflow Automation', 'Systems Design', 'Stakeholder Management'],
-            isCaseStudy: true,
+            title: 'Cross-Functional Onboarding Operations System',
+            summary: 'Google Sheets operational tracker covering 250+ employee onboarding records — the source of truth feeding Make.com automations, ClickUp workflows, and Power BI reporting.',
+            tools: ['Google Sheets', 'Make.com', 'ClickUp', 'Power BI', 'Systems Design'],
         },
         'Zapier': {
             type: 'ops',
