@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Keren Wang'ombe | Operations & Analytics</title>
 
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/react@18.2.0/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.23.6/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -856,7 +856,6 @@ JOIN avg_error_count ae
         );
     };
 
-
     const GoogleDriveEmbed = ({ driveId, driveUrl, color }) => {
         return (
             <div className="mt-6 rounded-2xl border p-5 flex items-center justify-between gap-4" style={{ borderColor: color + '25', background: color + '06' }}>
@@ -871,6 +870,7 @@ JOIN avg_error_count ae
             </div>
         );
     };
+
     const NotionEmbed = ({ embedUrl, notionUrl, color }) => {
         const [open, setOpen] = useState(false);
         return (
@@ -1017,7 +1017,7 @@ JOIN avg_error_count ae
             type: 'ops',
             label: 'Operations',
             color: '#F0684C',
-            title: 'The Shift Collective — CRM &amp; Operations Hub',
+            title: 'The Shift Collective — CRM & Operations Hub',
             summary: 'Complete Notion operations hub for a career coaching practice — Client CRM, Session Notes, SOPs, Content Pipeline, Metrics dashboard, and Team Wiki.',
             tools: ['Notion', 'CRM Design', 'SOP Documentation', 'OKR Framework'],
             notionUrl: 'https://paper-belt-9a3.notion.site/The-Shift-Collective-Operations-Hub-3361bb37c5e180f68291d8917dbc2eed?pvs=143',
@@ -1053,7 +1053,7 @@ JOIN avg_error_count ae
             label: 'Data Analytics',
             color: '#1E2D40',
             projects: [
-                { title: 'E-Commerce Sales &amp; Customer Analytics', summary: 'Analysed 12 months of sales data to surface top customer segments, underperforming categories, and regional growth opportunities.', caseStudyKey: 'ecommerce' },
+                { title: 'E-Commerce Sales & Customer Analytics', summary: 'Analysed 12 months of sales data to surface top customer segments, underperforming categories, and regional growth opportunities.', caseStudyKey: 'ecommerce' },
             ],
         },
         'Power BI': {
@@ -1082,10 +1082,10 @@ JOIN avg_error_count ae
         const skillGroups = [
             { cat: "Operations", icon: I.Settings, color: "#F0684C", line: "I design the systems and processes that keep complex operations running reliably at scale.", skills: ["Programme Management", "SOP Design", "Milestone Planning", "Risk Mitigation", "System Design", "Process Mapping", "Programme Evaluation", "Health Tracking Frameworks", "Evaluation Frameworks", "Onboarding Design"] },
             { cat: "Stakeholder Management", icon: I.Users, color: "#1A8B8B", line: "I coordinate across teams and levels — translating operational complexity into clear communication.", skills: ["Executive Reporting", "Cross-functional Coordination", "OKR & KPI Tracking", "Stakeholder Communication", "Facilitation", "Partner Management", "Escalation Management", "Cross-border Coordination"] },
-            { cat: "Data &amp; Reporting", icon: I.ChartLine, color: "#1E2D40", line: "I turn operational data into dashboards and decisions for teams and leadership.", skills: ["Google Sheets", "Excel", "Power BI", "SQL", "Data Storytelling", "KPI Framework Design", "Survey Design &amp; Analysis", "A/B Testing", "Segmentation Analysis", "Dashboard Design"] },
-            { cat: "Workflow Automation &amp; Tools", icon: I.Zap, color: "#F0684C", line: "I connect tools and eliminate manual handoffs so teams focus on higher-value work.", skills: ["Zapier", "Make", "Airtable", "Notion", "Asana", "ClickUp", "Monday.com", "Jira"] },
+            { cat: "Data & Reporting", icon: I.ChartLine, color: "#1E2D40", line: "I turn operational data into dashboards and decisions for teams and leadership.", skills: ["Google Sheets", "Excel", "Power BI", "SQL", "Data Storytelling", "KPI Framework Design", "Survey Design & Analysis", "A/B Testing", "Segmentation Analysis", "Dashboard Design"] },
+            { cat: "Workflow Automation & Tools", icon: I.Zap, color: "#F0684C", line: "I connect tools and eliminate manual handoffs so teams focus on higher-value work.", skills: ["Zapier", "Make", "Airtable", "Notion", "Asana", "ClickUp", "Monday.com", "Jira"] },
             { cat: "Community Management", icon: I.Globe, color: "#1A8B8B", line: "I build the structures that turn groups into engaged, high-retention participants.", skills: ["Community Strategy", "Onboarding Design", "Virtual Event Management", "Engagement Programming", "Member Retention", "Ambassador Programmes"] },
-            { cat: "Communication &amp; Design", icon: I.MessageSquare, color: "#1E2D40", line: "I produce the materials that make programmes feel professional and consistent.", skills: ["Canva", "Content Planning", "Newsletter Management", "Facilitation Guides", "Report Writing", "Presentation Design"] },
+            { cat: "Communication & Design", icon: I.MessageSquare, color: "#1E2D40", line: "I produce the materials that make programmes feel professional and consistent.", skills: ["Canva", "Content Planning", "Newsletter Management", "Facilitation Guides", "Report Writing", "Presentation Design"] },
         ];
 
         const renderChip = (skill, color) => {
@@ -1151,7 +1151,7 @@ JOIN avg_error_count ae
                             </button>
                         </div>
                         <div className="p-6 bg-white">
-                            <h4 className="text-lg font-normal serif mb-2" style={{ color:'#1E2D40' }} dangerouslySetInnerHTML={{ __html: proj.title }} />
+                            <h4 className="text-lg font-normal serif mb-2" style={{ color:'#1E2D40' }}>{proj.title}</h4>
                             <p className="text-sm text-slate-500 leading-relaxed mb-4">{proj.summary}</p>
                             <div className="flex flex-wrap gap-2">
                                 {proj.tools.map((t,i) => <span key={i} className="tool-tag">{t}</span>)}
@@ -1170,13 +1170,6 @@ JOIN avg_error_count ae
                                     <I.ExternalLink className="w-3 h-3" /> Open in Notion
                                 </a>
                             )}
-                            {proj.isCaseStudy && (
-                                <button onClick={() => { switchTab('ops'); setActiveToolPanel(null); }}
-                                        className="inline-flex items-center gap-1.5 mt-4 text-[10px] font-black uppercase tracking-wider"
-                                        style={{ color: proj.color }}>
-                                    <I.ArrowUp className="w-3 h-3 rotate-45" /> Read full case study in Programme Ops
-                                </button>
-                            )}
                         </div>
                     </div>
                 );
@@ -1190,7 +1183,7 @@ JOIN avg_error_count ae
                         </div>
                         {proj.projects.map((p, i) => (
                             <div key={i} className="p-6 bg-white border-b border-slate-100 last:border-b-0">
-                                <h4 className="text-base font-bold mb-1" style={{ color:'#1E2D40' }} dangerouslySetInnerHTML={{ __html: p.title }} />
+                                <h4 className="text-base font-bold mb-1" style={{ color:'#1E2D40' }}>{p.title}</h4>
                                 <p className="text-sm text-slate-500 leading-relaxed mb-3">{p.summary}</p>
                                 <button onClick={() => setActiveCaseStudy(activeCaseStudy === p.caseStudyKey ? null : p.caseStudyKey)}
                                         className="text-[10px] font-black uppercase tracking-wider flex items-center gap-1"
@@ -1215,13 +1208,13 @@ JOIN avg_error_count ae
                     const Icon = group.icon;
                     const hasActiveInGroup = group.skills.some(s => s === activeToolPanel);
                     return (
-                        <div key={gi} className={`bg-white rounded-2xl border p-6 anim-fadeUp delay-${(gi%6)+1} ${hasActiveInGroup ? 'border-slate-200' : 'border-slate-100'}`}
-                             style={{ borderColor: hasActiveInGroup ? group.color + '40' : '' }}>
+                        <div key={gi} className={`bg-white rounded-2xl border p-6 anim-fadeUp delay-${(gi%6)+1}`}
+                             style={{ borderColor: hasActiveInGroup ? group.color + '40' : '#f1f5f9' }}>
                             <div className="flex items-center gap-3 mb-3">
                                 <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: group.color + '12' }}>
                                     <Icon className="w-4 h-4" style={{ color: group.color }} />
                                 </div>
-                                <p className="text-[9px] font-black uppercase tracking-[0.18em]" style={{ color: group.color }} dangerouslySetInnerHTML={{ __html: group.cat }} />
+                                <p className="text-[9px] font-black uppercase tracking-[0.18em]" style={{ color: group.color }}>{group.cat}</p>
                             </div>
                             <p className="text-xs text-slate-400 italic mb-4 leading-relaxed">{group.line}</p>
                             <div className="flex flex-wrap gap-2">
@@ -1263,31 +1256,10 @@ JOIN avg_error_count ae
 
         const domain = domainContent[activeTab];
 
-        const featuredProjects = [
-            {
-                tab: 'ops',
-                color: '#F0684C',
-                label: 'Operations',
-                title: 'Programme Delivery Operations System',
-                desc: '12-week programme delivery system in Asana — 24 participants, 5 phases, dependency mapping, automated escalations, and a full project brief.',
-                tools: ['Asana', 'Dependencies', 'Automations', 'Timeline'],
-                youtubeId: '8v5r37T_dDo',
-            },
-            {
-                tab: 'ds',
-                color: '#1E2D40',
-                label: 'Data Analytics',
-                title: 'Customer Support Operations Analytics',
-                desc: 'Full SQL audit of a support ticket database — 6 targeted queries surfacing SLA breaches, agent workload gaps, and resolution bottlenecks. Power BI dashboard for leadership.',
-                tools: ['SQL', 'Power BI', 'SLA Analysis'],
-                image: 'https://www.datascienceportfol.io/static/profile_pics/pr7_7210F562E361D77B095F.jpg',
-            },
-        ];
-
         return (
             <div className="min-h-screen flex flex-col">
 
-                {/* ── HERO ── */}
+                {/* HERO */}
                 <header className="header-mesh pt-16 pb-28 px-6 text-center relative overflow-hidden">
                     <div style={{ position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)', width:'600px', height:'600px', border:'1px solid rgba(255,255,255,0.04)', borderRadius:'50%', pointerEvents:'none' }} />
                     <div style={{ position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)', width:'900px', height:'900px', border:'1px solid rgba(255,255,255,0.03)', borderRadius:'50%', pointerEvents:'none' }} />
@@ -1300,7 +1272,7 @@ JOIN avg_error_count ae
                     </div>
                 </header>
 
-                {/* ── NAV TABS ── */}
+                {/* NAV TABS */}
                 <div className="max-w-5xl mx-auto w-full px-4 -mt-7 relative z-20">
                     <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-2">
                         <div className="nav-scroll flex gap-1">
@@ -1321,19 +1293,17 @@ JOIN avg_error_count ae
                     </div>
                 </div>
 
-                {/* ── MAIN ── */}
+                {/* MAIN */}
                 <main ref={mainRef} className="max-w-5xl mx-auto w-full px-4 py-14 flex-grow">
 
-                    {/* ── ABOUT TAB ── */}
+                    {/* ABOUT TAB */}
                     {activeTab === 'landing' && (
                         <div className="anim-fadeUp">
-                            {/* Brief summary card */}
                             <div className="bg-white rounded-3xl border border-slate-100 p-8 md:p-10 mb-10">
                                 <p className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-400 mb-5">Professional Summary</p>
                                 <p className="text-sm text-slate-500 leading-relaxed">I design operational systems that help teams execute at scale — streamlining workflows, improving delivery visibility, and using data to drive better operational decisions. With 3+ years building infrastructure across large-scale programmes, I have a track record of diagnosing execution friction and implementing solutions that stick. My work sits at the intersection of operations and analytics — two disciplines that share the same core question: how do we make this organisation run better?</p>
                             </div>
 
-                            {/* What I Do */}
                             <div className="mb-10">
                                 <p className="divider-label text-[10px] font-black uppercase tracking-[0.35em] text-slate-400 mb-8">What I Do</p>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -1372,7 +1342,6 @@ JOIN avg_error_count ae
                                 </div>
                             </div>
 
-                            {/* Tools */}
                             <div className="mb-8">
                                 <p className="divider-label text-[10px] font-black uppercase tracking-[0.35em] text-slate-400 mb-8">Skills</p>
                             </div>
@@ -1380,7 +1349,7 @@ JOIN avg_error_count ae
                         </div>
                     )}
 
-                    {/* ── DOMAIN TABS ── */}
+                    {/* DOMAIN TABS */}
                     {activeTab !== 'landing' && domain && (
                         <div className="anim-fadeUp">
                             <div className="mb-10">
@@ -1388,26 +1357,6 @@ JOIN avg_error_count ae
                                 <h2 className="text-4xl md:text-6xl font-normal serif italic tracking-tight mt-3 mb-4" style={{ color:'#1E2D40' }}>{domain.title}</h2>
                                 <p className="text-sm text-slate-500 leading-relaxed about-quote">{domain.intro}</p>
                             </div>
-                            {domain.externalPortfolio && (
-                                <a href={domain.externalPortfolio} target="_blank" rel="noopener noreferrer"
-                                   className="flex items-center justify-between w-full mb-10 p-5 rounded-2xl border group transition-all hover:shadow-lg"
-                                   style={{ borderColor: domain.color + '30', background: domain.color + '06' }}>
-                                    <div className="flex items-center gap-4">
-                                        <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: domain.color + '15' }}>
-                                            <I.Database className="w-5 h-5" style={{ color: domain.color }} />
-                                        </div>
-                                        <div>
-                                            <p className="text-[9px] font-black uppercase tracking-[0.2em] mb-0.5" style={{ color: domain.color }}>Full Data Portfolio</p>
-                                            <p className="text-sm font-bold" style={{ color: '#1E2D40' }}>View all data projects on datascienceportfol.io</p>
-                                            <p className="text-xs text-slate-400 mt-0.5">datascienceportfol.io/kerenwangombe</p>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center gap-2 flex-shrink-0 text-[10px] font-black uppercase tracking-widest transition-opacity group-hover:opacity-70" style={{ color: domain.color }}>
-                                        <I.ExternalLink className="w-4 h-4" />
-                                        <span className="hidden sm:inline">Open Portfolio</span>
-                                    </div>
-                                </a>
-                            )}
                             <p className="divider-label text-[10px] font-black uppercase tracking-[0.35em] text-slate-400 mb-8">Featured Projects</p>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-12">
                                 {domain.projects.map((proj, i) => (
@@ -1422,7 +1371,7 @@ JOIN avg_error_count ae
                     )}
                 </main>
 
-                {/* ── FOOTER ── */}
+                {/* FOOTER */}
                 <footer className="max-w-5xl mx-auto px-4 mb-12 w-full">
                     <div className="footer-glow rounded-2xl text-white px-8 py-8 relative overflow-hidden">
                         <div style={{ position:'absolute', right:'-60px', top:'-60px', width:'220px', height:'220px', borderRadius:'50%', border:'1px solid rgba(255,255,255,0.05)', pointerEvents:'none' }} />
@@ -1482,4 +1431,3 @@ JOIN avg_error_count ae
 </script>
 </body>
 </html>
-#text
